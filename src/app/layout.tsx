@@ -1,21 +1,13 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+
 import "./globals.css";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 
 import { IBM_Plex_Sans_Arabic } from "next/font/google";
+import { Navbar } from "@/components/ui/navbar";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+
 
 const ibmPlex = IBM_Plex_Sans_Arabic({
   subsets: ["arabic"],
@@ -33,15 +25,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ar" dir="rtl">
       <body className={`${ibmPlex.className}`}>
         <SidebarProvider
+          defaultOpen={true}
           style={{
             "--sidebar-width-icon": "4rem",
+            "--sidebar-width-mobile": "20rem",
           }}
         >
           <AppSidebar />
-          <main>{children}</main>
+
+          <main className="w-full">
+            <Navbar />
+            <div className="p-8">{children}</div>
+          </main>
         </SidebarProvider>
       </body>
     </html>

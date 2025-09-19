@@ -16,7 +16,7 @@ import { ArrowLeftIcon, ArrowRightIcon, DigipLogo } from "./ui/icons";
 import { SidebarCloseIcon, SidebarOpenIcon } from "lucide-react";
 
 export const AppSidebar = () => {
-  const { open, setOpen } = useSidebar();
+  const { open, setOpen, isMobile, setOpenMobile, openMobile } = useSidebar();
   return (
     <Sidebar dir="rtl" side="right" collapsible="icon" variant="sidebar">
       <SidebarHeader className="p-4">
@@ -26,7 +26,8 @@ export const AppSidebar = () => {
               <DigipLogo className="h-6" />
               <ArrowRightIcon
                 onClick={() => {
-                  setOpen(!open);
+                  if (!isMobile) setOpen(!open);
+                  else setOpenMobile(!openMobile);
                 }}
                 className="cursor-pointer w-6 h-6 hover:bg-zinc-100 hover:border hover:rounded"
               />
@@ -34,7 +35,8 @@ export const AppSidebar = () => {
           ) : (
             <ArrowLeftIcon
               onClick={() => {
-                setOpen(!open);
+                if (!isMobile) setOpen(!open);
+                else setOpenMobile(!openMobile);
               }}
               className="cursor-pointer w-6 h-6 hover:bg-zinc-100 hover:border hover:rounded"
             />
@@ -43,14 +45,18 @@ export const AppSidebar = () => {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className={`${!open && "justify-center"}`}>
+          <SidebarGroupLabel
+            className={`${!open && "justify-center"} ${
+              isMobile && "justify-start"
+            }`}
+          >
             الرئيسية
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <a className="mx-auto">
+                  <a className="mx-auto text-start ">
                     <ArrowRightIcon />
                     <span>hii</span>
                   </a>
