@@ -13,7 +13,7 @@ import {
   useSidebar,
 } from "./ui/sidebar";
 import { ArrowLeftIcon, ArrowRightIcon, DigipLogo } from "./ui/icons";
-import { SidebarCloseIcon, SidebarOpenIcon } from "lucide-react";
+
 
 export const AppSidebar = () => {
   const { open, setOpen, isMobile, setOpenMobile, openMobile } = useSidebar();
