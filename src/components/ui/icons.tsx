@@ -97,7 +97,11 @@ export const DigipLogo = (props: React.SVGProps<SVGSVGElement>) => {
 };
 
 export const boilerPlate = (props: React.SVGProps<SVGSVGElement>) => {
-  return <><svg {...props}></svg></>;
+  return (
+    <>
+      <svg {...props}></svg>
+    </>
+  );
 };
 
 export const ArrowLeftIcon = (props: React.SVGProps<SVGSVGElement>) => {
