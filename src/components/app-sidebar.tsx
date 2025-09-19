@@ -26,6 +26,7 @@ import {
   UserRoundPlusIcon,
   UsersIcon,
 } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 const menuItems = {
   home: {
@@ -54,6 +55,8 @@ const menuItems = {
 
 export const AppSidebar = () => {
   const { open, setOpen, isMobile, setOpenMobile, openMobile } = useSidebar();
+  const pathname = usePathname();
+
   return (
     <Sidebar dir="rtl" side="right" collapsible="icon" variant="sidebar">
       <SidebarHeader className="p-4">
@@ -94,7 +97,13 @@ export const AppSidebar = () => {
                       className={`${!open && "mx-auto"}`}
                       key={item.name}
                     >
-                      <SidebarMenuButton asChild>
+                      <SidebarMenuButton
+                        asChild
+                        isActive={pathname === item.href}
+                        onClick={() => {
+                          if (isMobile) setOpenMobile(false);
+                        }}
+                      >
                         <Link className="" href={item.href}>
                           <item.icon /> {item.name}
                         </Link>
