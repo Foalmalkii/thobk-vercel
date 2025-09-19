@@ -29,10 +29,7 @@ export default function RootLayout({
       <body className={`${ibmPlex.className}`}>
         <SidebarProvider
           defaultOpen={true}
-          style={{
-            "--sidebar-width-icon": "4rem",
-            "--sidebar-width-mobile": "20rem",
-          }}
+
         >
           <AppSidebar />
 
