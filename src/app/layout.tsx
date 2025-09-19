@@ -7,8 +7,6 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { IBM_Plex_Sans_Arabic } from "next/font/google";
 import { Navbar } from "@/components/ui/navbar";
 
-
-
 const ibmPlex = IBM_Plex_Sans_Arabic({
   subsets: ["arabic"],
   weight: ["400", "500", "600", "700"],
@@ -27,10 +25,7 @@ export default function RootLayout({
   return (
     <html lang="ar" dir="rtl">
       <body className={`${ibmPlex.className}`}>
-        <SidebarProvider
-          defaultOpen={true}
-
-        >
+        <SidebarProvider defaultOpen={true}>
           <AppSidebar />
 
           <main className="w-full">
