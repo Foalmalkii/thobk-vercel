@@ -13,7 +13,7 @@ export const Navbar = () => {
   return (
     <nav className="px-8 py-4 border-b w-full ">
       <div className="flex max-md:justify-between justify-end w-full h-full items-center">
-        <div>
+        <div className="md:hidden">
           <Button
             onClick={() => {
               setOpenMobile(true);

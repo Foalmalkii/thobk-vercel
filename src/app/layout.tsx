@@ -30,7 +30,7 @@ export default function RootLayout({
 
           <main className="w-full">
             <Navbar />
-            <div className="p-8">{children}</div>
+            <div className="p-8 2xl:px-[15%]">{children}</div>
           </main>
         </SidebarProvider>
       </body>
