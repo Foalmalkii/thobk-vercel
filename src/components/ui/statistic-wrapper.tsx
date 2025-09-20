@@ -14,20 +14,22 @@ const StatisticCardWrapper = ({
 
 const Title = ({
   children,
+  className,
   ...props
 }: {
   children: React.ReactNode;
+  className?: string;
   props?: React.HTMLAttributes<HTMLDivElement>;
 }) => {
   return (
-    <h2 className="text-xl font-bold" {...props}>
+    <h2 className={`text-xl font-bold ${className}`} {...props}>
       {children}
     </h2>
   );
 };
 
 const Container = ({ children }: { children: React.ReactNode }) => {
-  return <div className="mt-4">{children}</div>;
+  return <div className="mt-4 ">{children}</div>;
 };
 
 StatisticCardWrapper.Title = Title;
