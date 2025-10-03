@@ -6,9 +6,8 @@ import { AppSidebar } from "@/components/app-sidebar";
 
 import { IBM_Plex_Sans_Arabic } from "next/font/google";
 import { Navbar } from "@/components/layout/navbar";
-import { NextIntlClientProvider } from "next-intl";
+import { NextIntlClientProvider, useLocale } from "next-intl";
 import { getDirection } from "@/lib/types";
-import { cookies } from "next/headers";
 
 const ibmPlex = IBM_Plex_Sans_Arabic({
   subsets: ["arabic"],
@@ -25,7 +24,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const locale = cookies().get("locale")?.value;
+  const locale = useLocale();
 
   return (
     <html lang={locale} dir={getDirection(locale)}>
