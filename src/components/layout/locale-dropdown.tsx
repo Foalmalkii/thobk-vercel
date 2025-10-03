@@ -13,14 +13,13 @@ import { CheckIcon, GlobeIcon } from "lucide-react";
 import { locales } from "@/middleware";
 import Cookies from "js-cookie";
 import { getDirection } from "@/lib/types";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { SaudiFlagIcon, USFlagIcon } from "../ui/icons";
 
 export const LocaleDropdown = () => {
-  const locale = Cookies.get("locale");
+  const locale = useLocale();
   const localesNew = locales.filter((localeNew) => localeNew !== locale);
-  console.log("localesNew", localesNew);
 
   const t = useTranslations();
   const router = useRouter();

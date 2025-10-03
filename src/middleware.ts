@@ -9,7 +9,7 @@ export const locales: string[] = ["ar", "en"];
 export default function middleware(request: NextRequest) {
   const response = NextResponse.next();
   const locale = request.cookies.get("locale")?.value;
-  if (locales.includes(locale)) {
+  if (locale != undefined && locales.includes(locale)) {
     return response;
   } else {
     response.cookies.set({
