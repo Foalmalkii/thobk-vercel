@@ -109,4 +109,16 @@ a {
   body {
     @apply bg-background text-foreground;
   }
+
+  .font-size-2xl {
+    @apply text-2xl leading-9;
+  }
+
+  .font-size-xl {
+    @apply text-xl leading-7;
+  }
+
+  .font-size-md {
+    @apply text-base leading-[22px];
+  }
 }

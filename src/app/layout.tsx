@@ -5,7 +5,11 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 
 import { IBM_Plex_Sans_Arabic } from "next/font/google";
-import { Navbar } from "@/components/ui/navbar";
+import { Navbar } from "@/components/layout/navbar";
+import { NextIntlClientProvider } from "next-intl";
+import { getDirection } from "@/lib/types";
+import Cookies from "js-cookie";
+import { cookies } from "next/headers";
 
 const ibmPlex = IBM_Plex_Sans_Arabic({
   subsets: ["arabic"],
@@ -22,17 +26,21 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="ar" dir="rtl">
-      <body className={`${ibmPlex.className}`}>
-        <SidebarProvider defaultOpen={true}>
-          <AppSidebar />
+  const locale = cookies().get("locale")?.value;
 
-          <main className="w-full">
-            <Navbar />
-            <div className="p-8 2xl:px-[15%]">{children}</div>
-          </main>
-        </SidebarProvider>
+  return (
+    <html lang={locale} dir={getDirection(locale)}>
+      <body className={`${ibmPlex.className}`}>
+        <NextIntlClientProvider>
+          <SidebarProvider defaultOpen={true}>
+            <AppSidebar />
+
+            <main className="w-full">
+              <Navbar />
+              <div className="p-8 2xl:px-[15%]">{children}</div>
+            </main>
+          </SidebarProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

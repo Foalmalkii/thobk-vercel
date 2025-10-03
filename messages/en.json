@@ -1,0 +1,10 @@
+{
+  "Dashboard": {
+    "home": "Dashboard"
+  },
+  "Navbar": {
+    "choose_locale": "Choose Language",
+    "locale_ar": "Arabic",
+    "locale_en": "English"
+  }
+}

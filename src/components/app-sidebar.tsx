@@ -27,53 +27,84 @@ import {
   UsersIcon,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
-
-const menuItems = {
-  home: {
-    label: "الرئيسية",
-    items: [
-      { name: "عام", href: "/", icon: HomeIcon },
-      { name: "الفواتير", href: "/invoices", icon: FileIcon },
-    ],
-  },
-  customers: {
-    label: "العملاء",
-    items: [
-      { name: "جميع العملاء", href: "/customers", icon: UsersIcon },
-      { name: "إضافة عميل", href: "/customers/add", icon: UserRoundPlusIcon },
-      { name: "القياسات", href: "/customers/sizes", icon: PencilRulerIcon },
-    ],
-  },
-  orders: {
-    label: "الطلبات",
-    items: [
-      { name: "جميع الطلبات", href: "/orders", icon: ListOrderedIcon },
-      { name: "إضافة طلب", href: "/orders/add", icon: FilePlusIcon },
-    ],
-  },
-};
+import Cookies from "js-cookie";
+import { getDirection } from "@/lib/types";
+import { useLocale, useTranslations } from "next-intl";
 
 export const AppSidebar = () => {
   const { open, setOpen, isMobile, setOpenMobile, openMobile } = useSidebar();
   const pathname = usePathname();
-
+  const locale = useLocale();
+  const t = useTranslations();
+  const menuItems = {
+    home: {
+      label: t("messages.home"),
+      items: [
+        { name: "عام", href: "/", icon: HomeIcon },
+        { name: "الفواتير", href: "/invoices", icon: FileIcon },
+      ],
+    },
+    general: {
+      label: t("messages.general"),
+      items: [
+        { name: t("messages.orders"), href: "/orders", icon: UsersIcon },
+        {
+          name: t("messages.customers"),
+          href: "/customers",
+          icon: UserRoundPlusIcon,
+        },
+        { name: "القياسات", href: "/customers/sizes", icon: PencilRulerIcon },
+      ],
+    },
+    orders: {
+      label: "الطلبات",
+      items: [
+        { name: "جميع الطلبات", href: "/orders", icon: ListOrderedIcon },
+        { name: "إضافة طلب", href: "/orders/add", icon: FilePlusIcon },
+      ],
+    },
+  };
+  console.log("hi + " + locale);
   return (
-    <Sidebar dir="rtl" side="right" collapsible="icon" variant="sidebar">
+    <Sidebar
+      dir={getDirection(locale)}
+      side={locale === "ar" ? "right" : "left"}
+      collapsible="icon"
+      variant="sidebar"
+    >
       <SidebarHeader className="p-4">
         <div className="flex justify-between w-full">
           {open ? (
             <>
               <DigipLogo className="h-6" />
-              <ArrowRightIcon
-                onClick={() => {
-                  if (!isMobile) setOpen(!open);
-                  else setOpenMobile(!openMobile);
-                }}
-                className="cursor-pointer w-6 h-6 hover:bg-zinc-100 hover:border hover:rounded"
-              />
+              {getDirection(locale) === "rtl" ? (
+                <ArrowRightIcon
+                  onClick={() => {
+                    if (!isMobile) setOpen(!open);
+                    else setOpenMobile(!openMobile);
+                  }}
+                  className="cursor-pointer w-6 h-6 hover:bg-zinc-100 hover:border hover:rounded"
+                />
+              ) : (
+                <ArrowLeftIcon
+                  onClick={() => {
+                    if (!isMobile) setOpen(!open);
+                    else setOpenMobile(!openMobile);
+                  }}
+                  className="cursor-pointer w-6 h-6 hover:bg-zinc-100 hover:border hover:rounded"
+                />
+              )}
             </>
-          ) : (
+          ) : getDirection(locale) === "rtl" ? (
             <ArrowLeftIcon
+              onClick={() => {
+                if (!isMobile) setOpen(!open);
+                else setOpenMobile(!openMobile);
+              }}
+              className="cursor-pointer w-6 h-6 hover:bg-zinc-100 hover:border hover:rounded"
+            />
+          ) : (
+            <ArrowRightIcon
               onClick={() => {
                 if (!isMobile) setOpen(!open);
                 else setOpenMobile(!openMobile);

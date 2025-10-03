@@ -2,11 +2,15 @@ import React from "react";
 import { Input } from "../ui/input";
 import { SearchIcon } from "../ui/icons";
 
-export const SearchInput = () => {
+export const SearchInput = ({
+  placeholder = "بحث...",
+}: {
+  placeholder?: string;
+}) => {
   return (
     <div className="relative">
       <Input
-        placeholder="ابحث..."
+        placeholder={placeholder}
         type="text"
         className="shadow-none pr-8 max-md:hidden"
       />

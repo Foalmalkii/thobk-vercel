@@ -1,15 +1,19 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { SearchInput } from "../forms/search-input";
-import { Button } from "./button";
-import { BellIcon, QuestionCircleIcon } from "./icons";
-import { Separator } from "./separator";
-import { Avatar, AvatarFallback } from "./avatar";
-import { MenuIcon } from "lucide-react";
-import { useSidebar } from "./sidebar";
+import { Button } from "../ui/button";
+import { QuestionCircleIcon } from "../ui/icons";
+import { Separator } from "../ui/separator";
+import { Avatar, AvatarFallback } from "../ui/avatar";
+import { GlobeIcon, MenuIcon } from "lucide-react";
+import { useSidebar } from "../ui/sidebar";
+import { LocaleDropdown } from "./locale-dropdown";
 
 export const Navbar = () => {
   const { setOpenMobile } = useSidebar();
+
+  const [openLocale, setOpenLocale] = useState<boolean>(false);
+
   return (
     <nav className="px-8 py-4 border-b w-full ">
       <div className="flex max-md:justify-between justify-end w-full h-full items-center">
@@ -26,9 +30,8 @@ export const Navbar = () => {
         </div>
         <div className="flex gap-3">
           <SearchInput />
-          <Button variant={"outline"} size={"icon"} className="shadow-none">
-            <BellIcon className="w-4 h-4" />
-          </Button>
+
+          <LocaleDropdown />
           <Button variant={"outline"} size={"icon"} className="">
             <QuestionCircleIcon className="w-5 h-5" />
           </Button>
