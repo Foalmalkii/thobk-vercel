@@ -27,7 +27,6 @@ import {
   UsersIcon,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
-import Cookies from "js-cookie";
 import { getDirection } from "@/lib/types";
 import { useLocale, useTranslations } from "next-intl";
 

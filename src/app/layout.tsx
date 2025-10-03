@@ -8,7 +8,6 @@ import { IBM_Plex_Sans_Arabic } from "next/font/google";
 import { Navbar } from "@/components/layout/navbar";
 import { NextIntlClientProvider } from "next-intl";
 import { getDirection } from "@/lib/types";
-import Cookies from "js-cookie";
 import { cookies } from "next/headers";
 
 const ibmPlex = IBM_Plex_Sans_Arabic({

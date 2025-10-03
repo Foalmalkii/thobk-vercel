@@ -1,18 +1,16 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { SearchInput } from "../forms/search-input";
 import { Button } from "../ui/button";
 import { QuestionCircleIcon } from "../ui/icons";
 import { Separator } from "../ui/separator";
 import { Avatar, AvatarFallback } from "../ui/avatar";
-import { GlobeIcon, MenuIcon } from "lucide-react";
+import { MenuIcon } from "lucide-react";
 import { useSidebar } from "../ui/sidebar";
 import { LocaleDropdown } from "./locale-dropdown";
 
 export const Navbar = () => {
   const { setOpenMobile } = useSidebar();
-
-  const [openLocale, setOpenLocale] = useState<boolean>(false);
 
   return (
     <nav className="px-8 py-4 border-b w-full ">
