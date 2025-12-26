@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
 
-import "./globals.css";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-sidebar";
+import "../globals.css";
 
 import { IBM_Plex_Sans_Arabic } from "next/font/google";
-import { Navbar } from "@/components/layout/navbar";
 import { NextIntlClientProvider, useLocale } from "next-intl";
 import { getDirection } from "@/lib/types";
+import { useAuth } from "@/hooks/auth";
 
 const ibmPlex = IBM_Plex_Sans_Arabic({
   subsets: ["arabic"],
@@ -30,14 +28,11 @@ export default function RootLayout({
     <html lang={locale} dir={getDirection(locale)}>
       <body className={`${ibmPlex.className}`}>
         <NextIntlClientProvider>
-          <SidebarProvider defaultOpen={true}>
-            <AppSidebar />
-
-            <main className="w-full">
-              <Navbar />
-              <div className="p-8 2xl:px-[15%]">{children}</div>
-            </main>
-          </SidebarProvider>
+          <main className="w-full">
+            <div className="absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2 w-full">
+              {children}
+            </div>
+          </main>
         </NextIntlClientProvider>
       </body>
     </html>

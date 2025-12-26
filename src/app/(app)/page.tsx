@@ -1,17 +1,16 @@
 import { StatisticCard } from "@/components/ui/statistic-card";
+import { useAuth } from "@/hooks/auth";
 
 import { useTranslations } from "next-intl";
 import { getLocale } from "next-intl/server";
 
 export default function Home() {
   const t = useTranslations();
-  const locale = getLocale();
+
   return (
     <>
       <div className="flex flex-col gap-4 border-b pb-4">
-        <h1 className="text-2xl font-semibold">
-          {t("Dashboard.home")} {locale}
-        </h1>
+        <h1 className="text-2xl font-semibold">{t("Dashboard.home")}</h1>
         <p className="text-slate-600">
           تعرض صفحة النظرة العامة لمحة سريعة عن جميع الأنشطة المهمة، مثل الطلبات
           المستحقة اليوم والفواتير والعملاء الجدد. تساعدك هذه الصفحة على متابعة

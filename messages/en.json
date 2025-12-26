@@ -1,6 +1,8 @@
 {
-  "Dashboard": {
-    "home": "Dashboard"
+  "messages": {
+    "home": "Home",
+    "general": "General",
+    "orders": "Orders"
   },
   "Navbar": {
     "choose_locale": "Choose Language",

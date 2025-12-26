@@ -1,4 +1,6 @@
+"use client";
 import { SearchInput } from "@/components/forms/search-input";
+import { CreateCustomer } from "@/components/shared/create-customer";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -8,19 +10,38 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useAuth } from "@/hooks/auth";
+import { useCustomers } from "@/hooks/customers";
+import axios from "@/lib/axios";
+
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import useSWR from "swr";
 
 export default function OrdersCreate() {
   const t = useTranslations("orders");
+  const [openCreateCustomer, setOpenCreateCustomer] = useState<boolean>(false);
+
+  const { customers, mutateCustomers } = useCustomers();
+
+  useEffect(() => {
+    if (openCreateCustomer === false) mutateCustomers();
+  }, [openCreateCustomer]);
   return (
     <div>
+      <CreateCustomer
+        open={openCreateCustomer}
+        setOpen={setOpenCreateCustomer}
+      />
       <h1 className="font-size-2xl font-semibold">{t("choose_customer")}</h1>
+
       <div className="mt-8 flex justify-between">
         <SearchInput placeholder={t("search_by_phone")} />
         <Link href={"/orders/create"}>
-          <Button>{t("new_customer")}</Button>
+          <Button onClick={() => setOpenCreateCustomer(!openCreateCustomer)}>
+            {t("new_customer")}
+          </Button>
         </Link>
       </div>
 
@@ -31,22 +52,22 @@ export default function OrdersCreate() {
               <TableHead>#</TableHead>
               <TableHead>اسم العميل</TableHead>
               <TableHead>رقم الهاتف</TableHead>
-              <TableHead>العنوان</TableHead>
-              <TableHead>المزيد</TableHead>
+
               <TableHead>اختيار</TableHead>
             </TableRow>
           </TableHeader>
 
           <TableBody>
-            {Array.from({ length: 5 }).map((_, index) => (
+            {customers?.map((customer, index: number) => (
               <TableRow key={index} className="text-center">
-                <TableCell>1</TableCell>
-                <TableCell>محمد أحمد</TableCell>
-                <TableCell>01012345678</TableCell>
-                <TableCell>123 شارع النيل، القاهرة</TableCell>
-                <TableCell>s</TableCell>
+                <TableCell>{customer.id}</TableCell>
+                <TableCell>{customer.name}</TableCell>
+                <TableCell>{customer.phone}</TableCell>
+
                 <TableCell>
-                  <Button className="rounded-full h-auto">اختيار</Button>
+                  <Link href={`/orders/create/customer/${customer.id}`}>
+                    <Button className="rounded-full h-auto">اختيار</Button>
+                  </Link>
                 </TableCell>
               </TableRow>
             ))}

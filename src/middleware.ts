@@ -1,3 +1,4 @@
+import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
 export const config = {
@@ -6,12 +7,11 @@ export const config = {
 
 export const locales: string[] = ["ar", "en"];
 
-export default function middleware(request: NextRequest) {
+export default async function middleware(request: NextRequest) {
   const response = NextResponse.next();
+
   const locale = request.cookies.get("locale")?.value;
-  if (locale != undefined && locales.includes(locale)) {
-    return response;
-  } else {
+  if (!locale || !locales.includes(locale)) {
     response.cookies.set({
       name: "locale",
       value: "ar",

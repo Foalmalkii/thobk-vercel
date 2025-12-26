@@ -72,10 +72,10 @@ export const AppSidebar = () => {
       variant="sidebar"
     >
       <SidebarHeader className="p-4">
-        <div className="flex justify-between w-full">
+        <div className="flex justify-between w-full items-center">
           {open ? (
             <>
-              <DigipLogo className="h-6" />
+              <DigipLogo className="h-12" />
               {getDirection(locale) === "rtl" ? (
                 <ArrowRightIcon
                   onClick={() => {
