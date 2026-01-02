@@ -51,7 +51,7 @@ export const NeckMeasurementInfo = () => {
 									<SelectTrigger className="">
 										<SelectValue
 											className="truncate"
-											placeholder={`Select ${key}`}
+											placeholder={t(`neck_select_${key}`)}
 										/>
 									</SelectTrigger>
 									<SelectContent>

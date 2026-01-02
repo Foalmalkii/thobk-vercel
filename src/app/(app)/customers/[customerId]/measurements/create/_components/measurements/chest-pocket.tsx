@@ -1,5 +1,5 @@
 import React from "react";
-import { useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import { CreateMeasurementSectionContainer } from "../layout/section-container";
 import { InputsGrid } from "../layout/inputs-grid";
 import { InputWrapper } from "@/components/ui/input-wrapper";
@@ -18,7 +18,7 @@ import { useTranslations } from "next-intl";
 import z from "zod";
 
 export const ChestPocketMeasurementInfo = () => {
-	const { watch, register } = useFormContext();
+	const { watch, register, control } = useFormContext();
 	const chestValues = watch("chestPocket");
 
 	const t = useTranslations("measurements");
@@ -37,11 +37,12 @@ export const ChestPocketMeasurementInfo = () => {
 						return (
 							<InputWrapper className="w-full" key={key}>
 								<Label>{t(`chestPocket_${key}`)}</Label>
+
 								<Select {...register(`chestPocket.${key}`)}>
 									<SelectTrigger className="">
 										<SelectValue
 											className="truncate"
-											placeholder={`Select ${key}`}
+											placeholder={t(`chestPocket_select_${key}`)}
 										/>
 									</SelectTrigger>
 									<SelectContent>
@@ -62,7 +63,7 @@ export const ChestPocketMeasurementInfo = () => {
 					return (
 						<InputWrapper className="w-full" key={key}>
 							<Label>{t(`chestPocket_${key}`)}</Label>
-							<Input {...register(`chestPocket.${key}`)} />
+							<Input placeholder="قم" {...register(`chestPocket.${key}`)} />
 						</InputWrapper>
 					);
 				})}

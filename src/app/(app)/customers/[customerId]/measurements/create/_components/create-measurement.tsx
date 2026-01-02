@@ -131,7 +131,7 @@ export const CreateMeasurementDialog = ({
 						className="h-full flex flex-col"
 					>
 						<div className="flex flex-1 gap-4 h-full">
-							{/* LEFT: Thobe Image */}
+							{/* LEFT: Thobe  Image */}
 							<div className="w-1/2 h-full bg-zinc-100">
 								<ThobeImage />
 							</div>

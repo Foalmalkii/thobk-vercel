@@ -15,11 +15,15 @@ import z from "zod";
 import { useTranslations } from "next-intl";
 import { Input } from "@/components/ui/input";
 import { measurementSchema } from "./schema";
+import { useAtom } from "jotai";
+import { wristInfoAtom } from "@/lib/atoms";
 
 export const WristInfro = () => {
 	const { watch, register, control } = useFormContext();
 	const wristValues = watch("wrist");
 	const t = useTranslations("measurements");
+
+	const [_, setWristInfo] = useAtom(wristInfoAtom);
 	return (
 		<div className="flex flex-col gap-4">
 			<h1 className="text-xl font-bold">تفاصيل المعصم</h1>
@@ -42,7 +46,12 @@ export const WristInfro = () => {
 									render={({ field }) => (
 										<Select
 											value={field.value}
-											onValueChange={(value) => field.onChange(value)}
+											onValueChange={(value) => {
+												field.onChange(value);
+
+												setWristInfo((prev) => ({ ...prev, [key]: value })); // update jotai
+												console.log(_);
+											}}
 										>
 											<SelectTrigger>
 												<SelectValue
@@ -55,7 +64,7 @@ export const WristInfro = () => {
 												<SelectGroup>
 													{fieldZod.options.map((option) => (
 														<SelectItem key={option} value={option}>
-															{t(`neck_${key}_${option}`)}
+															{t(`wrist_${key}_${option}`)}
 														</SelectItem>
 													))}
 												</SelectGroup>

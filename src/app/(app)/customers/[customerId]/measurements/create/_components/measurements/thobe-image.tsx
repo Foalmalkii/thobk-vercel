@@ -2,12 +2,13 @@ import React from "react";
 import { useFormContext } from "react-hook-form";
 import Image from "next/image";
 import { useAtom } from "jotai";
-import { neckInfoAtom } from "@/lib/atoms";
+import { neckInfoAtom, wristInfoAtom } from "@/lib/atoms";
 import { useTranslations } from "next-intl";
 
 export const ThobeImage = () => {
 	const { watch } = useFormContext();
 	const [neckInfo] = useAtom(neckInfoAtom);
+	const [wristInfo] = useAtom(wristInfoAtom);
 	const t = useTranslations("measurements");
 
 	/**
@@ -177,6 +178,18 @@ export const ThobeImage = () => {
 			{renderValue(watch("wrist.cuffWidth")) && (
 				<div className="absolute top-[33.8%] w-auto -translate-y-1/2 right-[85.2%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
 					{watch("wrist.cuffWidth")}
+				</div>
+			)}
+
+			{/* NECK INFO ENUMS */}
+			{Object.values(wristInfo).some((v) => renderValue(v)) && (
+				<div className="absolute top-[39.1%] w-[24.5%] -translate-y-1/2 right-[87.4%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
+					{Object.entries(wristInfo).map(([key, value], index) => (
+						<span className="text-[10px] font-normal" key={key}>
+							{value && t(`wrist_${key}_${value}`)}
+							{index !== Object.entries(wristInfo).length - 1 && value && " | "}
+						</span>
+					))}
 				</div>
 			)}
 
