@@ -6,19 +6,19 @@ import React from "react";
 import useSWR from "swr";
 
 export const useCustomer = ({ id }: { id?: number }) => {
-  const { isInBranch } = useAuth({ middleware: "auth" });
-  const { getCurrentBranch } = useBranches();
-  const branchId = getCurrentBranch()?.id;
-  const {
-    data: customer,
-    isLoading: isLoadingCustomer,
-    mutate: mutateCustomer,
-  } = useSWR(isInBranch && branchId ? "get_customer" : null, () =>
-    axios
-      .get(`/api/v1/branch/${branchId}/customer/${id}`)
-      .then((res) => res?.data?.data)
-      .catch((e) => console.log(e))
-  );
+	const { isInBranch } = useAuth({ middleware: "auth" });
 
-  return { customer, isLoadingCustomer, mutateCustomer };
+	const {
+		data: customer,
+		isLoading: isLoadingCustomer,
+		mutate: mutateCustomer,
+		isValidating: isValidatingCustomer,
+	} = useSWR(isInBranch && id ? ["get_customer", id] : null, () =>
+		axios
+			.get(`/api/v1/branch/${isInBranch}/customer/${id}`)
+			.then((res) => res.data.data)
+			.catch((e) => console.log(e)),
+	);
+
+	return { customer, isLoadingCustomer, mutateCustomer, isValidatingCustomer };
 };
