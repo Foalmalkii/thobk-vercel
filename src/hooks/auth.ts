@@ -28,10 +28,9 @@ export const useAuth = ({
 				.get("/api/v1/user")
 				.then((res) => res.data.data)
 				.catch((error) => {
-					if (error.response?.status !== 409 && error.response?.status !== 401)
-						throw error;
+					if (error.response?.status !== 409) throw error;
 				}),
-		{ revalidateOnFocus: false },
+		{ shouldRetryOnError: false },
 	);
 
 	const csrf = () => axios.get("/sanctum/csrf-cookie");
@@ -55,8 +54,8 @@ export const useAuth = ({
 		if (!error) {
 			await axios.post("/logout").then(() => mutateUser());
 		}
-
-		window.location.pathname = "/login";
+		mutateUser(undefined, false);
+		router.push("/login");
 	};
 	useEffect(() => {
 		// Only run redirects when not loading

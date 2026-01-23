@@ -33,9 +33,15 @@ export const WristInfro = () => {
 						measurementSchema.shape.wrist.shape[
 							key as keyof typeof measurementSchema.shape.wrist.shape
 						];
-
+					let unwrappedZod: any = fieldZod;
+					while (
+						unwrappedZod instanceof z.ZodNullable ||
+						unwrappedZod instanceof z.ZodOptional
+					) {
+						unwrappedZod = unwrappedZod.unwrap();
+					}
 					// If it's a ZodEnum, render a Select
-					if (fieldZod instanceof z.ZodEnum) {
+					if (unwrappedZod instanceof z.ZodEnum) {
 						return (
 							<InputWrapper className="w-full" key={key}>
 								<Label>{t(`wrist_${key}`)}</Label>
@@ -45,7 +51,7 @@ export const WristInfro = () => {
 									control={control}
 									render={({ field }) => (
 										<Select
-											value={field.value}
+											value={field.value || undefined}
 											onValueChange={(value) => {
 												field.onChange(value);
 
@@ -53,20 +59,27 @@ export const WristInfro = () => {
 												console.log(_);
 											}}
 										>
-											<SelectTrigger>
+											<SelectTrigger
+												className={
+													field.value &&
+													"border-blue-700 bg-blue-100 focus:outline-0 focus-visible:ring-0"
+												}
+											>
 												<SelectValue
-													placeholder={`Select ${key}`}
+													placeholder={t(`wrist_select_${key}`)}
 													className="truncate"
 												/>
 											</SelectTrigger>
 
 											<SelectContent>
 												<SelectGroup>
-													{fieldZod.options.map((option) => (
-														<SelectItem key={option} value={option}>
-															{t(`wrist_${key}_${option}`)}
-														</SelectItem>
-													))}
+													{unwrappedZod.options.map(
+														(option: string | number) => (
+															<SelectItem key={option} value={option as string}>
+																{t(`wrist_${key}_${option}`)}
+															</SelectItem>
+														),
+													)}
 												</SelectGroup>
 											</SelectContent>
 										</Select>
@@ -76,11 +89,18 @@ export const WristInfro = () => {
 						);
 					}
 
-					// Otherwise, render a regular Input for numbers
+					const value = watch(`wrist.${key}`);
 					return (
 						<InputWrapper className="w-full" key={key}>
 							<Label>{t(`wrist_${key}`)}</Label>
-							<Input {...register(`wrist.${key}`)} />
+							<Input
+								placeholder={`${t(`wrist_${key}`)}...`}
+								{...register(`wrist.${key}`)}
+								className={
+									value &&
+									"border-blue-700 bg-blue-100 focus:outline-0 focus-visible:ring-0"
+								}
+							/>
 						</InputWrapper>
 					);
 				})}

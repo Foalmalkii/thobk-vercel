@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import React from "react";
-import { useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import { CreateMeasurementSectionContainer } from "../layout/section-container";
 import { InputsGrid } from "../layout/inputs-grid";
 
@@ -17,55 +17,156 @@ import {
 } from "@/components/ui/select";
 import { measurementSchema } from "./schema";
 import z from "zod";
+import { useAtom } from "jotai";
+import { jabzoorInfoAtom } from "@/lib/atoms";
+import { cn } from "@/lib/utils";
+import { Field, FieldLabel } from "@/components/ui/field";
 
 export const JabzoorMeasurementInfo = () => {
-	const { watch, register } = useFormContext();
+	const { watch, register, control } = useFormContext();
 	const t = useTranslations("measurements");
 
 	const jabzoorValues = watch("jabzoor");
+
+	const [_, setJabzoorInfo] = useAtom(jabzoorInfoAtom);
 
 	return (
 		<CreateMeasurementSectionContainer>
 			<h1 className="text-xl font-bold">تفاصيل الجبزور</h1>
 
 			<InputsGrid>
+				<Controller
+					control={control}
+					name="jabzoorImg"
+					render={({ field, fieldState }) => {
+						const jabzoorImgOptions =
+							measurementSchema.shape.jabzoorImg.unwrap().options;
+
+						return (
+							<Field>
+								<FieldLabel>صورة جيب الصدر</FieldLabel>
+								<Select {...field} onValueChange={field.onChange}>
+									<SelectTrigger
+										className={
+											field.value &&
+											"border-blue-700 bg-blue-100 text-blue-700 focus:ring-blue-700"
+										}
+									>
+										<SelectValue placeholder="choose">
+											{field.value ? (
+												<div className="flex items-center gap-2">
+													<img
+														src={`/images/measurements/ZIPPER_${field.value}.png`}
+														className="w-20 h-20 rotate-90"
+													/>
+													<span>
+														{field.value > 4 ? "أزرار" : "جبزور"} {field.value}
+													</span>
+												</div>
+											) : (
+												"choose"
+											)}
+										</SelectValue>
+									</SelectTrigger>
+									<SelectContent>
+										{jabzoorImgOptions.map((val) => (
+											<SelectItem value={val} key={val}>
+												<div className="flex items-center gap-2">
+													<img
+														loading="lazy"
+														src={`/images/measurements/ZIPPER_${val}.png`}
+														className="w-14 h-14"
+													/>
+													<span>
+														{val > 4 ? "أزرار" : "جبزور"} {val}
+													</span>
+												</div>
+											</SelectItem>
+										))}
+									</SelectContent>
+								</Select>
+							</Field>
+						);
+					}}
+				/>
 				{Object.keys(jabzoorValues).map((key) => {
-					const field =
+					const fieldZod =
 						measurementSchema.shape.jabzoor.shape[
 							key as keyof typeof measurementSchema.shape.jabzoor.shape
 						];
 
 					// If it's a ZodEnum, render a Select
-					if (field instanceof z.ZodEnum) {
+					let unwrappedZod: any = fieldZod;
+					while (
+						unwrappedZod instanceof z.ZodNullable ||
+						unwrappedZod instanceof z.ZodOptional
+					) {
+						unwrappedZod = unwrappedZod.unwrap();
+					}
+					if (unwrappedZod instanceof z.ZodEnum) {
 						return (
-							<InputWrapper className="w-full" key={key}>
-								<Label>{t(`jabzoor_${key}`)}</Label>
-								<Select {...register(`jabzoor.${key}`)}>
-									<SelectTrigger className="">
-										<SelectValue
-											className="truncate"
-											placeholder={`Select ${key}`}
-										/>
-									</SelectTrigger>
-									<SelectContent>
-										<SelectGroup>
-											{field.options.map((option) => (
-												<SelectItem key={option} value={option}>
-													{t(`jabzoor_${key}_${option}`)}
-												</SelectItem>
-											))}
-										</SelectGroup>
-									</SelectContent>
-								</Select>
-							</InputWrapper>
+							<Controller
+								control={control}
+								name={`jabzoor.${key}`}
+								render={({ field }) => {
+									return (
+										<Field>
+											<FieldLabel>{t(`jabzoor_${key}`)}</FieldLabel>
+											<Select
+												{...field}
+												value={field.value || undefined}
+												onValueChange={(value) => {
+													field.onChange(value);
+													setJabzoorInfo((prev) => ({ ...prev, [key]: value }));
+												}}
+											>
+												<SelectTrigger
+													className={
+														field.value &&
+														"border-blue-700 bg-blue-100 focus:ring-blue-700"
+													}
+												>
+													<SelectValue
+														className="truncate"
+														placeholder={t(`jabzoor_select_${key}`)}
+													/>
+												</SelectTrigger>
+												<SelectContent>
+													<SelectGroup>
+														{unwrappedZod.options.map(
+															(option: string | number) => (
+																<SelectItem
+																	key={option}
+																	value={option as string}
+																>
+																	{t(`jabzoor_${key}_${option}`)}
+																</SelectItem>
+															),
+														)}
+													</SelectGroup>
+												</SelectContent>
+											</Select>
+										</Field>
+									);
+								}}
+							/>
 						);
 					}
 
 					// Otherwise, render a regular Input for numbers
+
+					const value = watch(`jabzoor.${key}`);
 					return (
 						<InputWrapper className="w-full" key={key}>
 							<Label>{t(`jabzoor_${key}`)}</Label>
-							<Input {...register(`jabzoor.${key}`)} />
+							<Input
+								placeholder={`${t(`jabzoor_${key}`)}...`}
+								{...register(`jabzoor.${key}`)}
+								className={
+									value &&
+									"border-blue-700 bg-blue-100 focus:outline-0 focus-visible:ring-0"
+								}
+							/>
 						</InputWrapper>
 					);
 				})}

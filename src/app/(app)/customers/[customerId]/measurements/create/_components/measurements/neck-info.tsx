@@ -10,16 +10,17 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import React, { useEffect } from "react";
-import { useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import z from "zod";
 import { useTranslations } from "next-intl";
 import { useAtom } from "jotai";
 import { neckInfoAtom } from "@/lib/atoms";
 import { measurementSchema } from "./schema";
 import { InputsGrid } from "../layout/inputs-grid";
+import { Field, FieldLabel } from "@/components/ui/field";
 
 export const NeckMeasurementInfo = () => {
-	const { register, watch } = useFormContext();
+	const { register, watch, control } = useFormContext();
 	const neckValues = watch("neck") || {};
 	const t = useTranslations("measurements");
 	const [_, setNeckInfo] = useAtom(neckInfoAtom);
@@ -31,49 +32,136 @@ export const NeckMeasurementInfo = () => {
 		<div className="flex flex-col gap-4">
 			<h1 className="text-xl font-bold">مواصفات الرقبة</h1>
 			<InputsGrid>
+				<Controller
+					control={control}
+					name="neckImg"
+					render={({ field, fieldState }) => {
+						const neckImgOptions =
+							measurementSchema.shape.neckImg.unwrap().options;
+
+						return (
+							<Field>
+								<FieldLabel>صورة الرقبة</FieldLabel>
+								<Select {...field} onValueChange={field.onChange}>
+									<SelectTrigger>
+										<SelectValue placeholder="choose">
+											{field.value ? (
+												<div className="flex items-center gap-2">
+													<img
+														src={`/images/measurements/NECK_${field.value}.png`}
+														className="w-12 h-12"
+													/>
+													<span>الرقبة {field.value}</span>
+												</div>
+											) : (
+												"choose"
+											)}
+										</SelectValue>
+									</SelectTrigger>
+									<SelectContent>
+										{neckImgOptions.map((val) => (
+											<SelectItem value={val} key={val}>
+												<div className="flex items-center gap-2">
+													<img
+														loading="lazy"
+														src={`/images/measurements/NECK_${val}.png`}
+														className="w-12 h-12"
+													/>
+													<span>الرقبة {val}</span>
+												</div>
+											</SelectItem>
+										))}
+									</SelectContent>
+								</Select>
+							</Field>
+						);
+					}}
+				/>
 				{Object.keys(neckValues).map((key) => {
-					const field =
+					const fieldZod =
 						measurementSchema.shape.neck.shape[
 							key as keyof typeof measurementSchema.shape.neck.shape
 						];
 
 					// If it's a ZodEnum, render a Select
-					if (field instanceof z.ZodEnum) {
+
+					let unwrappedZod: any = fieldZod;
+					while (
+						unwrappedZod instanceof z.ZodNullable ||
+						unwrappedZod instanceof z.ZodOptional
+					) {
+						unwrappedZod = unwrappedZod.unwrap();
+					}
+					if (unwrappedZod instanceof z.ZodEnum) {
 						return (
-							<InputWrapper className="w-full" key={key}>
-								<Label>{t(`neck_${key}`)}</Label>
-								<Select
-									onValueChange={(value) => {
-										setNeckInfo((prev) => ({ ...prev, [key]: value })); // update jotai
-									}}
-									{...register(`neck.${key}`)}
-								>
-									<SelectTrigger className="">
-										<SelectValue
-											className="truncate"
-											placeholder={t(`neck_select_${key}`)}
-										/>
-									</SelectTrigger>
-									<SelectContent>
-										<SelectGroup>
-											{field.options.map((option) => (
-												<SelectItem key={option} value={option}>
-													{t(`neck_${key}_${option}`)}
-												</SelectItem>
-											))}
-										</SelectGroup>
-									</SelectContent>
-								</Select>
-							</InputWrapper>
+							<Controller
+								control={control}
+								name={`neck.${key}`}
+								key={`neck.${key}`}
+								render={({
+									field: { onChange, value, ...field },
+									fieldState,
+								}) => (
+									<Field>
+										<FieldLabel>{t(`neck_${key}`)}</FieldLabel>
+										<Select
+											{...field}
+											value={value || undefined}
+											onValueChange={(value) => {
+												setNeckInfo((previous) => ({
+													...previous,
+													[key]: value,
+												}));
+												onChange(value);
+											}}
+										>
+											<SelectTrigger
+												className={
+													value &&
+													"border-blue-700 bg-blue-100 focus:outline-0 focus-visible:ring-0"
+												}
+												aria-invalid={fieldState.invalid}
+											>
+												<SelectValue placeholder={t(`neck_select_${key}`)} />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectGroup>
+													{unwrappedZod.options.map(
+														(option: string | number) => (
+															<SelectItem key={option} value={option as string}>
+																{t(`neck_${key}_${option}`)}
+															</SelectItem>
+														),
+													)}
+												</SelectGroup>
+											</SelectContent>
+										</Select>
+									</Field>
+								)}
+							/>
 						);
 					}
 
-					// Otherwise, render a regular Input for numbers
+					const value = watch(`neck.${key}`);
 					return (
-						<InputWrapper className="w-full" key={key}>
-							<Label>{t(`neck_${key}`)}</Label>
-							<Input {...register(`neck.${key}`)} />
-						</InputWrapper>
+						<Controller
+							key={`neck.${key}`}
+							control={control}
+							name={`neck.${key}`}
+							render={({ field, fieldState }) => (
+								<Field>
+									<FieldLabel>{t(`neck_${key}`)}</FieldLabel>
+									<Input
+										placeholder={`${t(`neck_${key}`)}...`}
+										{...field}
+										className={
+											value &&
+											"border-blue-700 bg-blue-100 focus:outline-0 focus-visible:ring-0"
+										}
+									/>
+								</Field>
+							)}
+						/>
 					);
 				})}
 			</InputsGrid>

@@ -5,9 +5,15 @@ import React, { SetStateAction } from "react";
 import { Loading } from "@/components/layout/loading";
 import { Separator } from "@/components/ui/separator";
 
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import z from "zod";
-import { FormProvider, useForm } from "react-hook-form";
+import {
+	Controller,
+	FormProvider,
+	useForm,
+	useFormContext,
+	UseFormSetValue,
+} from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ThobeImage } from "./measurements/thobe-image";
 import { GeneralMeasurementInfo } from "./measurements/general-info";
@@ -18,94 +24,128 @@ import { ChestPocketMeasurementInfo } from "./measurements/chest-pocket";
 import { SidePocketsMeasurementsInfo } from "./measurements/side-pockets";
 import { JabzoorMeasurementInfo } from "./measurements/jabzoor";
 import { Button } from "@/components/ui/button";
-import { SaveIcon } from "lucide-react";
+import { CircleAlertIcon, SaveIcon } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Field, FieldLabel } from "@/components/ui/field";
+import axios from "@/lib/axios";
+import { useAuth } from "@/hooks/auth";
+import { orderRequest } from "@/app/(app)/orders/create/customer/[customerId]/page";
+import { useListMeasurements } from "@/hooks/measurements/listMeasurements";
+import { MeasurementSelector } from "./MeasurementSelector";
+import { useAtom } from "jotai";
+import {
+	openCreateMeasurement,
+	openCreateMeasurementAtom,
+	selectedMeasurementProfileId,
+} from "@/lib/atoms";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 
 export const CreateMeasurementDialog = ({
 	customerId,
-	open,
-	setOpen,
-	orderIdNumber,
+
+	orderItemIndexNumber,
 }: {
 	customerId: number;
-	open: boolean;
-	setOpen: React.Dispatch<SetStateAction<boolean>>;
-	orderIdNumber?: number;
-}) => {
-	const { customer, isLoadingCustomer } = useCustomer({ id: customerId });
-	const { isLoadingMeasurements } = useMeasurements({ customerId });
 
+	orderItemIndexNumber: number;
+}) => {
+	const { isInBranch } = useAuth({ middleware: "auth" });
+	const { customer, isLoadingCustomer } = useCustomer({ id: customerId });
+	const { measurements, loadingMeasurements } = useListMeasurements({
+		branchId: isInBranch,
+		customerId: customerId,
+	});
+	const orderForm = useFormContext();
 	const t = useTranslations("messages");
 
+	const measuermentId = orderForm.watch(
+		`items.${orderItemIndexNumber}.measuermentId`,
+	);
+	const [openCreateMeasurement, setOpenCreateMeasurement] = useAtom(
+		openCreateMeasurementAtom,
+	);
+
 	const defaultValues = {
+		name: null,
+		thobeType: null,
+		neckImg: null,
+		chestPocketImg: null,
+		jabzoorImg: null,
 		general: {
-			thobeLength: "",
-			thobeBackLength: "",
-			shoulderWidth: "",
-			shoulderRotation: "",
-			sleeveLength: "",
-			upperSleeveWidth: "",
-			middleSleeveWidth: "",
-			wristWidth: "",
-			chestFront: "",
-			chestBack: "",
-			chestFull: "",
-			bottomWidth: "",
-			cuffBottomWidth: "",
-			addedInfo: "",
-			sidePocket: "",
-			waistWidth: "",
-			hipWidth: "",
+			generalThobeLength: null,
+			generalThobeBackLength: null,
+			generalShoulderWidth: null,
+			generalShoulderRotation: null,
+			generalSleeveLength: null,
+			generalUpperSleeveWidth: null,
+			generalMiddleSleeveWidth: null,
+			generalWristWidth: null,
+			generalChestFront: null,
+			generalChestBack: null,
+			generalChestFull: null,
+			generalBottomWidth: null,
+			generalCuffBottomWidth: null,
+			generalAddedInfo: null,
+			generalSidePocket: null,
+			generalWaistWidth: null,
+			generalHipWidth: null,
 		},
 
 		neck: {
-			neckLength: "",
-			neckBackLength: "",
-			neckWidth: "",
-			neckButtonCount: "",
-			neckDesign: "plain",
-			neckShape: "square",
-			neckFill: "1",
-			neckButtonType: "normal",
-			neckButtonholeType: "normal",
-			neckButtonMaterial: "plastic",
-			neckButtonVisibility: "visible",
+			neckLength: null,
+			neckBackLength: null,
+			neckWidth: null,
+			neckButtonCount: null,
+			neckDesign: null,
+			neckShape: null,
+			neckFill: null,
+			neckButtonType: null,
+			neckButtonholeType: null,
+			neckButtonMaterial: null,
+			neckButtonVisibility: null,
 		},
 
 		wrist: {
-			cuffType: "normal",
-			cuffLength: "",
-			cuffWidth: "",
-			wristDesign: "plain",
-			wristButtonNumber: "",
-			wristMaterialLayers: "1",
-			sleeveCrumbNumber: "0",
+			wristCuffType: null,
+			wristCuffLength: null,
+			wristCuffWidth: null,
+			wristDesign: null,
+			wristButtonNumber: null,
+			wristMaterialLayers: null,
+			wristSleeveCrumbNumber: null,
 		},
 
 		chestPocket: {
-			chestPocketLength: "",
-			chestPocketWidth: "",
-			betweenChestPocketShoulder: "",
-			chestPocketPenType: "no",
-			chestPocketDesign: "official",
-			chestPocketShape: "rounded",
-			chestPocketVisibility: "visible",
+			chestPocketLength: null,
+			chestPocketWidth: null,
+			betweenChestPocketShoulder: null,
+			chestPocketPenType: null,
+			chestPocketDesign: null,
+			chestPocketShape: null,
+			chestPocketVisibility: null,
 		},
 
 		sidePockets: {
-			phonePocketLength: "",
-			phonePocketWidth: "",
-			walletPocketLength: "",
-			walletPocketWidth: "",
+			sidePhonePocketLength: null,
+			sidePhonePocketWidth: null,
+			sideWalletPocketLength: null,
+			sideWalletPocketWidth: null,
 		},
 
 		jabzoor: {
-			jabzoorHoleType: "push",
-			jabzoorLength: "",
-			jabzoorWidth: "",
-			jabzoorDesign: "normal",
-			jabzoorVisibility: "visible",
-			jabzoorShape: "square",
-			jabzoorPushMaterial: "plastic",
+			jabzoorHoleType: null,
+			jabzoorLength: null,
+			jabzoorWidth: null,
+			jabzoorDesign: null,
+			jabzoorVisibility: null,
+			jabzoorShape: null,
+			jabzoorPushMaterial: null,
 		},
 	};
 
@@ -116,18 +156,61 @@ export const CreateMeasurementDialog = ({
 		defaultValues,
 	});
 
-	if (isLoadingCustomer || isLoadingMeasurements) return <Loading />;
+	if (isLoadingCustomer || loadingMeasurements) return <Loading />;
 
-	console.log("ok here it is", customer);
-	console.log("btw the id is", customerId);
+	const handleSubmit = async (data: measurementData) => {
+		const reqBody = {
+			name: data.name,
+			thobeType: data.thobeType,
+			neckImg: data.neckImg,
+			chestPocketImg: data.neckImg,
+			jabzoorImg: data.jabzoorImg,
+			...data.general,
+			...data.neck,
+			...data.wrist,
+			...data.chestPocket,
+			...data.jabzoor,
+			...data.sidePockets,
+		};
+		console.log("request body", reqBody);
+
+		await axios
+			.post(
+				`/api/v1/branch/${isInBranch}/customer/${customerId}/measurement`,
+				reqBody,
+			)
+			.then((res) => {
+				orderForm.setValue(
+					`items.${orderItemIndexNumber}.measurementId`,
+					Number(res.data.data.id),
+				);
+			})
+			.catch((e) => console.log(e));
+
+		setOpenCreateMeasurement(false);
+	};
+
 	return (
-		<Dialog open={open} onOpenChange={setOpen}>
+		<Dialog
+			open={openCreateMeasurement}
+			onOpenChange={setOpenCreateMeasurement}
+		>
+			<DialogTrigger asChild>
+				<Button
+					variant={"outline"}
+					className=" border-orange-600 text-orange-600 w-full"
+				>
+					<span>القياسات</span> <CircleAlertIcon />
+				</Button>
+			</DialogTrigger>
 			<DialogContent className="max-w-full h-screen flex flex-col">
 				<FormProvider {...form}>
 					<form
-						onSubmit={form.handleSubmit((e) => {
-							console.log("sup");
-						})}
+						onSubmit={(e) => {
+							e.preventDefault();
+							e.stopPropagation();
+							form.handleSubmit(handleSubmit)(e);
+						}}
 						className="h-full flex flex-col"
 					>
 						<div className="flex flex-1 gap-4 h-full">
@@ -148,10 +231,19 @@ export const CreateMeasurementDialog = ({
 									<p className="text-slate-500">
 										{t("create_measurement_description")}
 									</p>
+									<MeasurementSelector
+										branchId={isInBranch}
+										customerId={customerId}
+										orderItemIndex={orderItemIndexNumber}
+										orderForm={orderForm}
+										setOpen={setOpenCreateMeasurement}
+									/>
+
 									<Button
 										onClick={() => {
 											console.log(form.formState.errors);
 										}}
+										type="submit"
 									>
 										{t("save_measurement")} <SaveIcon />
 									</Button>
@@ -160,6 +252,46 @@ export const CreateMeasurementDialog = ({
 
 								{/* Scrollable section */}
 								<div className="flex-1 overflow-y-auto overflow-x-hidden flex flex-col gap-4 p-2">
+									<div className="grid grid-cols-2 gap-4">
+										<Controller
+											name="name"
+											control={form.control}
+											render={({ field, fieldState }) => (
+												<Field>
+													<FieldLabel>{t("measurement_name")}</FieldLabel>
+													<Input placeholder="faisal-shtwy-01" {...field} />
+												</Field>
+											)}
+										/>
+										<Controller
+											name="thobeType"
+											control={form.control}
+											render={({ field, fieldState }) => {
+												const thobeTypes =
+													measurementSchema.shape.thobeType.unwrap().options;
+												return (
+													<Field>
+														<FieldLabel>{t("measurement_name")}</FieldLabel>
+														<Select>
+															<SelectTrigger>
+																<SelectValue placeholder="thobe type" />
+															</SelectTrigger>
+															<SelectContent>
+																{thobeTypes.map((type) => (
+																	<SelectItem key={type} value={type}>
+																		{type}
+																	</SelectItem>
+																))}
+															</SelectContent>
+														</Select>
+													</Field>
+												);
+											}}
+										/>
+									</div>
+
+									<Separator orientation="horizontal" />
+
 									<GeneralMeasurementInfo />
 									<Separator orientation="horizontal" />
 									<NeckMeasurementInfo />
@@ -168,9 +300,10 @@ export const CreateMeasurementDialog = ({
 									<Separator orientation="horizontal" />
 									<ChestPocketMeasurementInfo />
 									<Separator orientation="horizontal" />
-									<SidePocketsMeasurementsInfo />
-									<Separator orientation="horizontal" />
 									<JabzoorMeasurementInfo />
+									<Separator orientation="horizontal" />
+									<SidePocketsMeasurementsInfo />
+									{measuermentId && "NOOOO"}
 								</div>
 							</div>
 						</div>

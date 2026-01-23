@@ -113,7 +113,7 @@ const SelectLabel = React.forwardRef<
 >(({ className, ...props }, ref) => (
 	<SelectPrimitive.Label
 		ref={ref}
-		className={cn("px-2 py-1.5 text-sm font-semibold", className)}
+		className={cn("px-2 py-1.5 text-sm font-semibold text-start", className)}
 		{...props}
 	/>
 ));
@@ -135,7 +135,7 @@ const SelectItem = React.forwardRef<
 			{...props}
 		>
 			<span
-				className={`absolute ${getDirection(locale) === "ltr" ? "right-2" : "left-2"} flex h-3.5 w-3.5 items-center justify-center`}
+				className={`absolute start-2 flex h-3.5 w-3.5 items-center justify-center`}
 			>
 				<SelectPrimitive.ItemIndicator>
 					<Check className="h-4 w-4" />

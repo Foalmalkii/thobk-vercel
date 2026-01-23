@@ -2,4 +2,9 @@ import { atom } from "jotai";
 export const neckInfoAtom = atom<string[]>([]);
 export const wristInfoAtom = atom<string[]>([]);
 export const chestPocketInfoAtom = atom<string[]>([]);
+export const jabzoorInfoAtom = atom<string[]>([]);
 export const activeOrderCustomerIdAtom = atom<number | null>(null);
+export const selectedMeasurementProfileId = atom<number | null>(null);
+
+export const openCreateMeasurementAtom = atom<boolean>(false);
+export const openEditMeasurementAtom = atom<boolean>(false);

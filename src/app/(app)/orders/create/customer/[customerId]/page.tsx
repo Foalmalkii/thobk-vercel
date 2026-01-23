@@ -15,11 +15,17 @@ import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAtom } from "jotai";
 import { activeOrderCustomerIdAtom } from "@/lib/atoms";
+import { InvoiceCard } from "./_components/InvoiceCard";
+import { GeneralInfo } from "./_components/GeneralInfo";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/auth";
+import axios from "@/lib/axios";
 
 export const orderSchema = z.object({
 	customerId: z.number(),
 	dueDate: z.string(),
 	status: z.string(),
+	notes: z.string(),
 	items: z
 		.array(
 			z.object({
@@ -32,7 +38,7 @@ export const orderSchema = z.object({
 		)
 		.nonempty(),
 });
-type orderRequest = z.infer<typeof orderSchema>;
+export type orderRequest = z.infer<typeof orderSchema>;
 export default function OrderNewCustomerPage({
 	params,
 }: {
@@ -43,6 +49,8 @@ export default function OrderNewCustomerPage({
 	const [isAtomInitialized, setIsAtomInitialized] = useState(false);
 	const t = useTranslations("messages");
 	const form = useForm<orderRequest>({ resolver: zodResolver(orderSchema) });
+	const router = useRouter();
+	const { isInBranch } = useAuth({ middleware: "auth" });
 
 	const { customer, isLoadingCustomer } = useCustomer({
 		id: customerId,
@@ -51,15 +59,25 @@ export default function OrderNewCustomerPage({
 	useEffect(() => {
 		setCustomerIdState(customerId);
 		setIsAtomInitialized(true);
+		form.setValue("customerId", customerId);
+		form.setValue("status", "received");
 	}, [customerId, setCustomerIdState]);
 
 	if (isLoadingCustomer || !isAtomInitialized) return <Loading />;
 
+	const onSubmit = async (data: orderRequest) => {
+		await axios
+			.post(`/api/v1/branch/${isInBranch}/order`, data)
+			.then((res) => console.log(res))
+			.catch((e) => console.error(e));
+		router.push("/orders");
+	};
+
 	return (
 		<FormProvider {...form}>
-			<form>
-				<div className="flex justify-between gap-4">
-					<div className="w-full flex flex-col gap-4">
+			<form onSubmit={form.handleSubmit(onSubmit)}>
+				<div className="flex justify-between max-w-full overflow-hidden gap-4">
+					<div className=" flex flex-1 min-w-0 flex-col gap-4">
 						<div className="flex items-center gap-4 bg-zinc-100 rounded-xl p-5">
 							<div className="bg-white rounded-xl p-2 aspect-square w-auto flex flex-col items-center text-center gap-1">
 								<span>الكود</span>
@@ -80,8 +98,11 @@ export default function OrderNewCustomerPage({
 							</div>
 						</div>
 						<OrderItem />
+						<GeneralInfo />
 					</div>
-					<div className="w-1/3 rounded-lg border p-5">الفاتورة</div>
+					<div className=" w-[350px]">
+						<InvoiceCard customerId={customerId} />
+					</div>
 				</div>
 			</form>
 		</FormProvider>
