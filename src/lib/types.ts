@@ -59,6 +59,11 @@ export interface OrderItem {
 	id: number;
 	name: string;
 
+	neckImg: string | null;
+	wristImg: string | null;
+	jabzoorImg: string | null;
+	chestPocketImg: string | null;
+
 	// General measurements
 	generalThobeLength: string | null;
 	generalThobeBackLength: string | null;
@@ -138,6 +143,8 @@ export interface CustomerInOrder {
 export interface GetOrder {
 	id: number;
 	customer: CustomerInOrder;
+	createdAt: string;
+	updatedAt: string;
 	dueDate: string; // ISO date string (YYYY-MM-DD)
 	status: "received" | "in_progress" | "ready" | "delivered" | "canceled";
 	notes: string | null;

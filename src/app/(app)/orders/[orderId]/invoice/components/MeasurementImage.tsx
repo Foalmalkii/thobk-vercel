@@ -62,6 +62,97 @@ export const MeasurementImage = ({
 			}}
 		>
 			<Image src={"/images/thobe.png"} />
+
+			<Image
+				src={`/images/measurements/NECK_${orderItem?.neckImg}.png`}
+				style={{
+					position: "absolute",
+					width: "9.5%",
+					right: "20.5%",
+
+					transformOrigin: "translateX(50%)",
+				}}
+			/>
+			<Image
+				src={`/images/measurements/NECK_${orderItem?.neckImg}.png`}
+				style={{
+					position: "absolute",
+					width: "9.5%",
+					right: "86.5%",
+					top: "5%",
+					transformOrigin: "translateX(50%)",
+				}}
+			/>
+
+			<Image
+				src={`/images/measurements/CUFF_${orderItem?.wristImg}.png`}
+				style={{
+					position: "absolute",
+					width: "10.5%",
+					right: "27.5%",
+					top: "28%",
+					transformOrigin: "translateX(50%)",
+				}}
+			/>
+			<Image
+				src={`/images/measurements/CUFF_${orderItem?.wristImg}.png`}
+				style={{
+					position: "absolute",
+					width: "9.5%",
+					right: "87.4%",
+					top: "24%",
+					transformOrigin: "translateX(50%)",
+				}}
+			/>
+
+			<Image
+				src={`/images/measurements/CHEST_POCKET_${orderItem?.chestPocketImg}.png`}
+				style={{
+					position: "absolute",
+					width: "7%",
+					top: "17.5%",
+					right: "17.7%",
+					opacity: "0.8",
+
+					transformOrigin: "translateX(50%)",
+				}}
+			/>
+
+			<Image
+				src={`/images/measurements/CHEST_POCKET_${orderItem?.chestPocketImg}.png`}
+				style={{
+					position: "absolute",
+					width: "7%",
+					right: "87.5%",
+					top: "46.5%",
+					transformOrigin: "translateX(50%)",
+				}}
+			/>
+
+			<Image
+				src={`/images/measurements/ZIPPER_${orderItem?.jabzoorImg}.png`}
+				style={{
+					position: "absolute",
+					width: "15%",
+					top: "7.7%",
+					right: "18%",
+					opacity: "0.8",
+
+					transformOrigin: "translateX(50%)",
+				}}
+			/>
+
+			<Image
+				src={`/images/measurements/ZIPPER_${orderItem?.jabzoorImg}.png`}
+				style={{
+					position: "absolute",
+					width: "10%",
+					right: "86%",
+					top: "66.5%",
+					transformOrigin: "translateX(50%)",
+				}}
+			/>
+
 			<Text
 				style={{
 					position: "absolute",

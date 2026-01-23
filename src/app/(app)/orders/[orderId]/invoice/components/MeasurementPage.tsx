@@ -37,13 +37,16 @@ export const MeasurementPage = ({
 						<Text>Customer: {order?.customer.name}</Text>
 						<Text>Fabric: {item?.fabricType}</Text>
 					</View>
+
 					<View style={{ flexDirection: "row", gap: "4px" }}>
 						<Text>Customer Phone: {order?.customer.phone}</Text>
 					</View>
 				</View>
+
 				<View style={pdfStyles.bold}>
 					<Text>Order Details</Text>
 				</View>
+
 				<View style={[pdfStyles.light, { fontSize: "8px" }]}>
 					<Text>Order No.: #{order?.id}</Text>
 					<Text>Branch: {branch?.name}</Text>
@@ -73,6 +76,38 @@ export const MeasurementPage = ({
 				<View style={[{ textAlign: "left" }, pdfStyles.cell]}>
 					<Text style={pdfStyles.bold}>Branch</Text>
 					<Text style={{ fontSize: "10px" }}>#{order.id}</Text>
+				</View>
+				<View style={[{ textAlign: "left" }, pdfStyles.cell]}>
+					<Text style={pdfStyles.bold}>Ordered At</Text>
+					<Text style={{ fontSize: "10px" }}>
+						{order.createdAt.slice(0, 10)}
+					</Text>
+				</View>
+			</View>
+			<View
+				style={[
+					{
+						marginTop: "20px",
+						flexDirection: "row",
+						fontSize: "12px",
+						gap: "50px",
+						paddingHorizontal: "40px",
+						alignItems: "center",
+					},
+					pdfStyles.regular,
+				]}
+			>
+				<View style={[{ textAlign: "left" }, pdfStyles.cell]}>
+					<Text style={[pdfStyles.bold]}>Customer ID.</Text>
+					<Text style={{ fontSize: "10px" }}>#{order.customer.id}</Text>
+				</View>
+				<View style={[{ textAlign: "left" }, pdfStyles.cell]}>
+					<Text style={pdfStyles.bold}>Customer</Text>
+					<Text style={{ fontSize: "10px" }}>{order.customer.name}</Text>
+				</View>
+				<View style={[{ textAlign: "left" }, pdfStyles.cell]}>
+					<Text style={pdfStyles.bold}>Customer Phone</Text>
+					<Text style={{ fontSize: "10px" }}>{order.customer.phone}</Text>
 				</View>
 			</View>
 			<View

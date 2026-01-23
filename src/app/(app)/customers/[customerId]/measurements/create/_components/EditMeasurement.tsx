@@ -80,6 +80,7 @@ export const EditMeasurementDialog = ({
 			neckImg: data.neckImg,
 			chestPocketImg: data.neckImg,
 			jabzoorImg: data.jabzoorImg,
+			wristImg: data.wristImg,
 			...data.general,
 			...data.neck,
 			...data.wrist,

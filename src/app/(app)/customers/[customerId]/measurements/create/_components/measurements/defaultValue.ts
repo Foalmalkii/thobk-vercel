@@ -5,6 +5,7 @@ export type MeasurementRequest = {
 	neckImg: string | null;
 	chestPocketImg: string | null;
 	jabzoorImg: string | null;
+	wristImg: string | null;
 	// General
 	generalThobeLength: string | null;
 	generalThobeBackLength: string | null;
@@ -78,6 +79,7 @@ export const defaultValue = (measurement: MeasurementRequest) => {
 		neckImg: measurement?.neckImg,
 		chestPocketImg: measurement?.chestPocketImg,
 		jabzoorImg: measurement?.jabzoorImg,
+		wristImg: measurement?.wristImg,
 		general: {
 			generalThobeLength: measurement?.generalThobeLength,
 			generalThobeBackLength: measurement?.generalThobeBackLength,

@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { measurementSchema } from "./schema";
 import { useAtom } from "jotai";
 import { wristInfoAtom } from "@/lib/atoms";
+import { Field, FieldLabel } from "@/components/ui/field";
 
 export const WristInfro = () => {
 	const { watch, register, control } = useFormContext();
@@ -28,6 +29,51 @@ export const WristInfro = () => {
 		<div className="flex flex-col gap-4">
 			<h1 className="text-xl font-bold">تفاصيل المعصم</h1>
 			<div className="grid grid-cols-4 gap-4 w-full">
+				<Controller
+					control={control}
+					name="wristImg"
+					render={({ field, fieldState }) => {
+						const wristImgOptions =
+							measurementSchema.shape.wristImg.unwrap().options;
+
+						return (
+							<Field>
+								<FieldLabel>صورة جيب الصدر</FieldLabel>
+								<Select {...field} onValueChange={field.onChange}>
+									<SelectTrigger>
+										<SelectValue placeholder="choose">
+											{field.value ? (
+												<div className="flex items-center gap-2">
+													<img
+														src={`/images/measurements/CUFF_${field.value}.png`}
+														className="w-12 h-12"
+													/>
+													<span>كفة {field.value}</span>
+												</div>
+											) : (
+												"choose"
+											)}
+										</SelectValue>
+									</SelectTrigger>
+									<SelectContent>
+										{wristImgOptions.map((val) => (
+											<SelectItem value={val} key={val}>
+												<div className="flex items-center gap-2">
+													<img
+														loading="lazy"
+														src={`/images/measurements/CUFF_${val}.png`}
+														className="w-12 h-12"
+													/>
+													<span>كفة {val}</span>
+												</div>
+											</SelectItem>
+										))}
+									</SelectContent>
+								</Select>
+							</Field>
+						);
+					}}
+				/>
 				{Object.keys(wristValues).map((key) => {
 					const fieldZod =
 						measurementSchema.shape.wrist.shape[
@@ -43,13 +89,12 @@ export const WristInfro = () => {
 					// If it's a ZodEnum, render a Select
 					if (unwrappedZod instanceof z.ZodEnum) {
 						return (
-							<InputWrapper className="w-full" key={key}>
-								<Label>{t(`wrist_${key}`)}</Label>
-
-								<Controller
-									name={`wrist.${key}`}
-									control={control}
-									render={({ field }) => (
+							<Controller
+								name={`wrist.${key}`}
+								control={control}
+								render={({ field }) => (
+									<Field>
+										<FieldLabel>{t(`wrist_${key}`)}</FieldLabel>
 										<Select
 											value={field.value || undefined}
 											onValueChange={(value) => {
@@ -83,25 +128,32 @@ export const WristInfro = () => {
 												</SelectGroup>
 											</SelectContent>
 										</Select>
-									)}
-								/>
-							</InputWrapper>
+									</Field>
+								)}
+							/>
 						);
 					}
 
 					const value = watch(`wrist.${key}`);
 					return (
-						<InputWrapper className="w-full" key={key}>
-							<Label>{t(`wrist_${key}`)}</Label>
-							<Input
-								placeholder={`${t(`wrist_${key}`)}...`}
-								{...register(`wrist.${key}`)}
-								className={
-									value &&
-									"border-blue-700 bg-blue-100 focus:outline-0 focus-visible:ring-0"
-								}
-							/>
-						</InputWrapper>
+						<Controller
+							key={`wrist.${key}`}
+							control={control}
+							name={`wrist.${key}`}
+							render={({ field, fieldState }) => (
+								<Field>
+									<FieldLabel>{t(`wrist_${key}`)}</FieldLabel>
+									<Input
+										placeholder={`${t(`wrist_${key}`)}...`}
+										{...field}
+										className={
+											value &&
+											"border-blue-700 bg-blue-100 focus:outline-0 focus-visible:ring-0"
+										}
+									/>
+								</Field>
+							)}
+						/>
 					);
 				})}
 			</div>

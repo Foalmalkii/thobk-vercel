@@ -13,6 +13,7 @@ import { BranchLayout } from "@/components/layout/branch-layout";
 import { JotaiLayout } from "@/components/layout/jotai-layout";
 import { DirectionProvider } from "@radix-ui/react-direction";
 import { DirectionLayout } from "@/components/layout/DirectionLayout";
+import { Toaster } from "sonner";
 
 const ibmPlex = IBM_Plex_Sans_Arabic({
 	subsets: ["arabic"],
@@ -45,8 +46,10 @@ export default function RootLayout({
 										<Navbar />
 										<BranchLayout>
 											<div className="p-8 ">{children}</div>
+												<Toaster/>
 										</BranchLayout>
 									</main>
+								
 								</SidebarProvider>
 							</DirectionLayout>
 						</NextIntlClientProvider>

@@ -51,7 +51,7 @@ export const OrdersTable = ({
 								<span className="text-muted-foreground">{order.dueDate}</span>
 							</TableCell>
 							<TableCell>
-								<OrderOperationsDropdown />
+								<OrderOperationsDropdown orderId={order.id} />
 							</TableCell>
 						</TableRow>
 					))}

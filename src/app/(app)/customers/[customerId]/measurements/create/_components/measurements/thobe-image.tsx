@@ -94,6 +94,22 @@ export const ThobeImage = () => {
 					/>
 				</div>
 			)}
+			{renderValue(watch("wristImg")) && (
+				<div className="absolute top-[34%] w-auto -translate-y-1/2 right-[34%] font-bold translate-x-1/2 w-[10.5%]">
+					<img
+						src={`/images/measurements/CUFF_${watch("wristImg")}.png`}
+						className="w-full"
+					/>
+				</div>
+			)}
+			{renderValue(watch("wristImg")) && (
+				<div className="absolute top-[31%] w-auto -translate-y-1/2 right-[92%] font-bold translate-x-1/2 w-[10.5%]">
+					<img
+						src={`/images/measurements/CUFF_${watch("wristImg")}.png`}
+						className="w-full"
+					/>
+				</div>
+			)}
 			{/* SLEEVE LENGTH */}
 			{renderValue(watch("general.generalSleeveLength")) && (
 				<div className="absolute top-[29%] w-auto -translate-y-1/2 right-[8.9%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">

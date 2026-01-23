@@ -7,6 +7,7 @@ import { NextIntlClientProvider, useLocale } from "next-intl";
 import { getDirection } from "@/lib/types";
 import { useAuth } from "@/hooks/auth";
 import { DirectionProvider } from "@radix-ui/react-direction";
+import { DirectionLayout } from "@/components/layout/DirectionLayout";
 
 const ibmPlex = IBM_Plex_Sans_Arabic({
 	subsets: ["arabic"],
@@ -29,13 +30,11 @@ export default function RootLayout({
 		<html lang={locale} dir={getDirection(locale)}>
 			<body className={`${ibmPlex.className}`}>
 				<NextIntlClientProvider>
-					<DirectionProvider dir={getDirection(locale)}>
-						<main className="w-full">
-							<div className="absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2 w-full">
-								{children}
-							</div>
-						</main>
-					</DirectionProvider>
+					<main className="w-full">
+						<div className="absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2 w-full">
+							<DirectionLayout>{children}</DirectionLayout>
+						</div>
+					</main>
 				</NextIntlClientProvider>
 			</body>
 		</html>

@@ -77,6 +77,7 @@ export const CreateMeasurementDialog = ({
 		neckImg: null,
 		chestPocketImg: null,
 		jabzoorImg: null,
+		wristImg: null,
 		general: {
 			generalThobeLength: null,
 			generalThobeBackLength: null,
@@ -165,6 +166,7 @@ export const CreateMeasurementDialog = ({
 			neckImg: data.neckImg,
 			chestPocketImg: data.neckImg,
 			jabzoorImg: data.jabzoorImg,
+			wristImg: data.wristImg,
 			...data.general,
 			...data.neck,
 			...data.wrist,

@@ -50,12 +50,14 @@ export const OrderOperationsDropdown = ({ orderId }: { orderId: number }) => {
 						</Link>
 					</DropdownMenuItem>
 				</DropdownMenuGroup>
+				{/*
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
 					<DropdownMenuItem asChild>
-						<DeleteOrderConfirmation />
+						<DeleteOrderConfirmation orderId={orderId} />
 					</DropdownMenuItem>
 				</DropdownMenuGroup>
+*/}
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);
