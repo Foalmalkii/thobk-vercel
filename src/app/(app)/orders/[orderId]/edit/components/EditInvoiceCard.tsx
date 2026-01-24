@@ -95,16 +95,6 @@ export const EditInvoiceCard = () => {
 
 					<div className="flex flex-col gap-2">
 						<h2 className="font-semibold">معلومات الدفع</h2>
-						<div className="flex w-full justify-between">
-							<p className="text-muted-foreground flex gap-2 items-center">
-								<CreditCardIcon className="w-4 h-4" />
-								<span>شبكة</span>
-							</p>
-							<p className="flex gap-2 items-center">
-								<span>{totalPrice}</span>
-								<RiyalIcon className="w-3.5 h-3.5" />
-							</p>
-						</div>
 
 						<div className="flex w-full justify-between">
 							<p className="text-muted-foreground flex gap-2 items-center">
@@ -112,7 +102,7 @@ export const EditInvoiceCard = () => {
 								<span>نقدي</span>
 							</p>
 							<p className="flex gap-2 items-center">
-								<span>{totalPrice}</span>
+								<span>{totalPrice / 100}</span>
 								<RiyalIcon className="w-3.5 h-3.5" />
 							</p>
 						</div>

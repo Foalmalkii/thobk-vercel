@@ -102,7 +102,7 @@ export const InvoiceCard = ({ customerId }: { customerId: number }) => {
 								<span>نقدي</span>
 							</p>
 							<p className="flex gap-2 items-center">
-								<span>{totalPrice/100}</span>
+								<span>{totalPrice}</span>
 								<RiyalIcon className="w-3.5 h-3.5" />
 							</p>
 						</div>
