@@ -1,77 +1,78 @@
-import { useAuth } from "@/hooks/auth";
-import React from "react";
+import { Building2, Plus, MousePointerClick } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { useTranslations } from "next-intl";
 
-// --- Skeleton Component ---
-// This component mimics the pulsing, rounded rectangles of shadcn/ui Skeletons.
-const Skeleton = ({ className }: { className: string }) => (
-  <div
-    className={`animate-pulse rounded-md bg-gray-200 dark:bg-gray-700 ${className}`}
-  />
-);
-
-// --- The Main Loading Component (Simulating your original export) ---
 export const BranchLoading = () => {
-  return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4 sm:p-8">
-      <div className="max-w-6xl mx-auto space-y-10">
-        {/* 1. Heading Skeleton */}
-        <div className="pt-4 space-y-2">
-          <Skeleton className="w-5/12 h-10 md:h-12" />
-        </div>
+	const t = useTranslations("noBranch");
 
-        {/* 2. Paragraph Skeleton */}
-        <div className="space-y-3">
-          <Skeleton className="w-full h-4" />
-          <Skeleton className="w-11/12 h-4" />
-          <Skeleton className="w-3/5 h-4" />
-        </div>
+	return (
+		<div
+			className="min-h-screen bg-slate-50 flex items-center justify-center p-6"
+			dir="rtl"
+		>
+			<div className="max-w-lg w-full space-y-8">
+				{/* Main Card */}
+				<Card className="border border-slate-200 shadow-sm">
+					<CardContent className="p-10 text-center space-y-6">
+						{/* Icon */}
+						<div className="inline-flex items-center justify-center w-20 h-20 bg-slate-100 rounded-full">
+							<Building2
+								className="w-10 h-10 text-slate-400"
+								strokeWidth={1.5}
+							/>
+						</div>
 
-        {/* 3. Two Cards (Responsive Grid) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Card 1 */}
-          <div className="p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 space-y-4 shadow-sm">
-            <Skeleton className="w-1/3 h-6" /> {/* Card Title */}
-            <Skeleton className="w-3/4 h-4" /> {/* Metric Line 1 */}
-            <Skeleton className="w-1/4 h-4" />{" "}
-            {/* Metric Line 2 (smaller data point) */}
-          </div>
+						{/* Title */}
+						<div className="space-y-2">
+							<h1 className="text-2xl font-semibold text-slate-900">
+								{t("title")}
+							</h1>
+							<p className="text-slate-600 text-sm leading-relaxed">
+								{t("description")}
+							</p>
+						</div>
 
-          {/* Card 2 */}
-          <div className="p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 space-y-4 shadow-sm">
-            <Skeleton className="w-1/3 h-6" /> {/* Card Title */}
-            <Skeleton className="w-3/4 h-4" /> {/* Metric Line 1 */}
-            <Skeleton className="w-1/4 h-4" />{" "}
-            {/* Metric Line 2 (smaller data point) */}
-          </div>
-        </div>
+						{/* Divider */}
+						<div className="border-t border-slate-200 my-6" />
 
-        {/* 4. Table Skeleton */}
-        <div className="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden bg-white dark:bg-gray-800 shadow-lg">
-          {/* Table Header Row */}
-          <div className="grid grid-cols-5 gap-4 p-4 bg-gray-100 dark:bg-gray-700/50">
-            <Skeleton className="h-4 w-3/4" />
-            <Skeleton className="h-4 w-1/2" />
-            <Skeleton className="h-4 w-3/4" />
-            <Skeleton className="h-4 w-2/3" />
-            <Skeleton className="h-4 w-1/4" />
-          </div>
+						{/* Instructions */}
+						<div className="bg-slate-50 rounded-lg p-6 space-y-4 text-right">
+							<div className="flex items-start gap-4">
+								<div className="flex-shrink-0 w-8 h-8 bg-slate-900 text-white rounded-full flex items-center justify-center text-sm font-medium">
+									1
+								</div>
+								<div className="flex-1">
+									<p className="text-slate-900 font-medium">{t("step1")}</p>
+									<p className="text-slate-600 text-sm mt-1">
+										{t("step1_hint")}
+									</p>
+								</div>
+							</div>
 
-          {/* Table Body Rows (5 rows) */}
-          <div className="divide-y divide-gray-200 dark:divide-gray-700">
-            {[...Array(5)].map((_, i) => (
-              <div key={i} className="grid grid-cols-5 gap-4 p-4">
-                <Skeleton className="h-4 w-full" />
-                <Skeleton className="h-4 w-2/3" />
-                <Skeleton className="h-4 w-3/4" />
-                <Skeleton className="h-4 w-1/2" />
-                <Skeleton className="h-4 w-1/3" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+							<div className="flex items-start gap-4">
+								<div className="flex-shrink-0 w-8 h-8 bg-slate-900 text-white rounded-full flex items-center justify-center text-sm font-medium">
+									2
+								</div>
+								<div className="flex-1">
+									<p className="text-slate-900 font-medium">{t("step2")}</p>
+									<p className="text-slate-600 text-sm mt-1">
+										{t("step2_hint")}
+									</p>
+								</div>
+							</div>
+						</div>
+
+						{/* Footer Note */}
+						<p className="text-xs text-slate-500 pt-2">{t("footer_note")}</p>
+					</CardContent>
+				</Card>
+
+				{/* Helper Indicator */}
+				<div className="flex items-center justify-center gap-2 text-slate-600">
+					<MousePointerClick className="w-4 h-4" />
+					<p className="text-sm font-medium">{t("click_hint")}</p>
+				</div>
+			</div>
+		</div>
+	);
 };
-
-// Required wrapper for the single-file React environment

@@ -44,7 +44,7 @@ export const JabzoorMeasurementInfo = () => {
 
 						return (
 							<Field>
-								<FieldLabel>صورة جيب الصدر</FieldLabel>
+								<FieldLabel>{t("jabzoor_select_jabzoorImg")}</FieldLabel>
 								<Select {...field} onValueChange={field.onChange}>
 									<SelectTrigger
 										className={
@@ -60,11 +60,11 @@ export const JabzoorMeasurementInfo = () => {
 														className="w-20 h-20 rotate-90"
 													/>
 													<span>
-														{field.value > 4 ? "أزرار" : "جبزور"} {field.value}
+														{t("jabzoor")} {field.value}
 													</span>
 												</div>
 											) : (
-												"choose"
+												t("jabzoor_select_jabzoorImg")
 											)}
 										</SelectValue>
 									</SelectTrigger>
@@ -78,7 +78,7 @@ export const JabzoorMeasurementInfo = () => {
 														className="w-14 h-14"
 													/>
 													<span>
-														{val > 4 ? "أزرار" : "جبزور"} {val}
+														{t("jabzoor")} {val}
 													</span>
 												</div>
 											</SelectItem>

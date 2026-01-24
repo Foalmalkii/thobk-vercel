@@ -1,8 +1,15 @@
-import { MessageSquareIcon, PhoneIcon } from "lucide-react";
+import {
+	MessageSquareIcon,
+	PhoneIcon,
+	AlertTriangleIcon,
+	CheckCircleIcon,
+} from "lucide-react";
 import { Card, CardContent } from "../ui/card";
 import { User } from "@/lib/types";
+import { useTranslations } from "next-intl";
 
 export const CreditBadgeCard = ({ user }: { user: User }) => {
+	const t = useTranslations("credit");
 	const { type, amount } = user.tailor.credit;
 
 	const isLow = amount <= 10;
@@ -11,66 +18,115 @@ export const CreditBadgeCard = ({ user }: { user: User }) => {
 	const getStyles = () => {
 		if (isCritical) {
 			return {
-				gradient: "bg-gradient-to-br from-red-50 via-red-100 to-rose-100",
-				border: "border-red-200/60",
-				text: "text-red-700",
-				badge: "bg-red-500/10 text-red-700 border-red-300/50",
-				glow: "shadow-red-100/50",
+				container: "bg-gradient-to-br from-red-500 to-rose-600",
+				icon: "text-white/90",
+				amount: "text-white",
+				label: "text-white/80",
+				statusIcon: AlertTriangleIcon,
+				statusText: "text-white/90",
 			};
 		}
 		if (isLow) {
 			return {
-				gradient:
-					"bg-gradient-to-br from-amber-50 via-yellow-100 to-orange-100",
-				border: "border-yellow-200/60",
-				text: "text-yellow-700",
-				badge: "bg-yellow-500/10 text-yellow-700 border-yellow-300/50",
-				glow: "shadow-yellow-100/50",
+				container: "bg-gradient-to-br from-amber-500 to-orange-600",
+				icon: "text-white/90",
+				amount: "text-white",
+				label: "text-white/80",
+				statusIcon: AlertTriangleIcon,
+				statusText: "text-white/90",
 			};
 		}
 		return {
-			gradient: "bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50",
-			border: "border-blue-200/60",
-			text: "text-blue-700",
-			badge: "bg-blue-500/10 text-blue-700 border-blue-300/50",
-			glow: "shadow-blue-100/50",
+			container: "bg-gradient-to-br from-blue-500 to-indigo-600",
+			icon: "text-white/90",
+			amount: "text-white",
+			label: "text-white/80",
+			statusIcon: CheckCircleIcon,
+			statusText: "text-white/90",
 		};
 	};
 
 	const styles = getStyles();
 	const CreditIcon = type === "sms" ? MessageSquareIcon : PhoneIcon;
+	const StatusIcon = styles.statusIcon;
 
 	return (
 		<Card
-			className={`${styles.gradient} ${styles.border} border backdrop-blur-sm shadow-sm ${styles.glow} transition-all hover:shadow-md group-data-[state=collapsed]:p-0`}
+			className={`${styles.container} border-0 shadow-lg overflow-hidden group-data-[state=collapsed]:shadow-md`}
 			dir="rtl"
 		>
-			<CardContent className="p-3 group-data-[state=collapsed]:p-2">
-				<div className="flex items-center justify-between gap-2 group-data-[state=collapsed]:flex-col group-data-[state=collapsed]:gap-1">
-					<div className="flex items-center gap-2 group-data-[state=collapsed]:flex-col group-data-[state=collapsed]:gap-0.5">
-						<div className={`p-1.5 rounded-lg ${styles.badge} border`}>
-							<CreditIcon className="h-3.5 w-3.5" />
+			<CardContent className="p-4 group-data-[state=collapsed]:p-3">
+				{/* Expanded View */}
+				<div className="group-data-[state=collapsed]:hidden space-y-3">
+					{/* Header */}
+					<div className="flex items-center justify-between">
+						<div className="flex items-center gap-2">
+							<div className="w-8 h-8 rounded-lg bg-white/20 backdrop-blur-sm flex items-center justify-center">
+								<CreditIcon
+									className={`w-4 h-4 ${styles.icon}`}
+									strokeWidth={2.5}
+								/>
+							</div>
+							<span className={`text-sm font-semibold ${styles.label}`}>
+								{type === "sms" ? t("sms") : t("whatsapp")}
+							</span>
 						</div>
+						<StatusIcon
+							className={`w-4 h-4 ${styles.statusText}`}
+							strokeWidth={2.5}
+						/>
+					</div>
+
+					{/* Amount Display */}
+					<div className="flex items-baseline gap-2">
 						<span
-							className={`text-xs font-medium ${styles.text} group-data-[state=collapsed]:hidden`}
+							className={`text-3xl font-bold ${styles.amount} tabular-nums`}
 						>
-							{type === "sms" ? "SMS" : "WhatsApp"}
+							{amount}
+						</span>
+						<span className={`text-sm ${styles.label}`}>
+							{t("credits_remaining")}
 						</span>
 					</div>
-					<div className={`text-xl font-bold ${styles.text} tabular-nums`}>
-						{amount}
+
+					{/* Status Message */}
+					<div
+						className={`text-xs font-medium ${styles.statusText} flex items-center gap-1.5`}
+					>
+						{isCritical ? (
+							<>
+								<span>⚠️</span>
+								<span>{t("critical_alert")}</span>
+							</>
+						) : isLow ? (
+							<>
+								<span>⚡</span>
+								<span>{t("low_alert")}</span>
+							</>
+						) : (
+							<>
+								<span>✓</span>
+								<span>{t("good_status")}</span>
+							</>
+						)}
 					</div>
 				</div>
-				{(isLow || isCritical) && (
-					<div
-						className={`mt-2 text-[10px] font-medium ${styles.text} flex items-center gap-1 group-data-[state=collapsed]:hidden`}
-					>
-						<span className="text-xs">{isCritical ? "⚠️" : "⚡"}</span>
-						<span className="opacity-80">
-							{isCritical ? "شحن عاجل" : "رصيد منخفض"}
-						</span>
+
+				{/* Collapsed View */}
+				<div className="hidden group-data-[state=collapsed]:flex flex-col items-center gap-2">
+					<div className="w-10 h-10 rounded-lg bg-white/20 backdrop-blur-sm flex items-center justify-center">
+						<CreditIcon
+							className={`w-5 h-5 ${styles.icon}`}
+							strokeWidth={2.5}
+						/>
 					</div>
-				)}
+					<span className={`text-2xl font-bold ${styles.amount} tabular-nums`}>
+						{amount}
+					</span>
+					{(isLow || isCritical) && (
+						<div className="w-2 h-2 rounded-full bg-white animate-pulse" />
+					)}
+				</div>
 			</CardContent>
 		</Card>
 	);

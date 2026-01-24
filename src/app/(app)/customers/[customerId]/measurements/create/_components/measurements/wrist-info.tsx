@@ -38,7 +38,7 @@ export const WristInfro = () => {
 
 						return (
 							<Field>
-								<FieldLabel>صورة جيب الصدر</FieldLabel>
+								<FieldLabel>{t("wrist_select_wristImg")}</FieldLabel>
 								<Select {...field} onValueChange={field.onChange}>
 									<SelectTrigger>
 										<SelectValue placeholder="choose">
@@ -48,10 +48,12 @@ export const WristInfro = () => {
 														src={`/images/measurements/CUFF_${field.value}.png`}
 														className="w-12 h-12"
 													/>
-													<span>كفة {field.value}</span>
+													<span>
+														{t("wrist")} {field.value}
+													</span>
 												</div>
 											) : (
-												"choose"
+												t("wrist_select_wristImg")
 											)}
 										</SelectValue>
 									</SelectTrigger>
@@ -64,7 +66,9 @@ export const WristInfro = () => {
 														src={`/images/measurements/CUFF_${val}.png`}
 														className="w-12 h-12"
 													/>
-													<span>كفة {val}</span>
+													<span>
+														{t("wrist")} {val}
+													</span>
 												</div>
 											</SelectItem>
 										))}

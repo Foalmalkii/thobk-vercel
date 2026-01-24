@@ -24,7 +24,9 @@ import {
 	ListOrderedIcon,
 	PencilRulerIcon,
 	UserRoundPlusIcon,
+	Users2Icon,
 	UsersIcon,
+	WarehouseIcon,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { getDirection } from "@/lib/types";
@@ -39,30 +41,18 @@ export const AppSidebar = () => {
 	const t = useTranslations();
 	const { user } = useAuth({ middleware: "auth" });
 	const menuItems = {
-		home: {
-			label: t("messages.home"),
-			items: [
-				{ name: "عام", href: "/", icon: HomeIcon },
-				{ name: "الفواتير", href: "/invoices", icon: FileIcon },
-			],
-		},
 		general: {
 			label: t("messages.general"),
 			items: [
+				{ name: t("messages.general"), href: "/", icon: HomeIcon },
 				{ name: t("messages.orders"), href: "/orders", icon: UsersIcon },
 				{
 					name: t("messages.customers"),
 					href: "/customers",
 					icon: UserRoundPlusIcon,
 				},
-				{ name: "القياسات", href: "/customers/sizes", icon: PencilRulerIcon },
-			],
-		},
-		orders: {
-			label: "الطلبات",
-			items: [
-				{ name: "جميع الطلبات", href: "/orders", icon: ListOrderedIcon },
-				{ name: "إضافة طلب", href: "/orders/add", icon: FilePlusIcon },
+				{ name: t("messages.storage"), href: "/storage", icon: WarehouseIcon },
+				{ name: t("messages.erp"), href: "/erp", icon: Users2Icon },
 			],
 		},
 	};
@@ -150,7 +140,6 @@ export const AppSidebar = () => {
 								</SidebarMenu>
 							</SidebarGroupContent>
 						</SidebarGroup>
-						{key !== "orders" && <SidebarSeparator />}
 					</>
 				))}
 			</SidebarContent>

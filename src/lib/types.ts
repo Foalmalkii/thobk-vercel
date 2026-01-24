@@ -56,6 +56,8 @@ const localeDirection: Record<Locale, "ltr" | "rtl"> = {
 	fr: "ltr",
 	ar: "rtl",
 	he: "rtl",
+	hi: "ltr",
+	bn: "ltr",
 };
 
 // Helper function

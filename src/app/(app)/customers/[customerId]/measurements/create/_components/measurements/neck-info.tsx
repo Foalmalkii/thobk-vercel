@@ -41,7 +41,7 @@ export const NeckMeasurementInfo = () => {
 
 						return (
 							<Field>
-								<FieldLabel>صورة الرقبة</FieldLabel>
+								<FieldLabel>{t("neck_select_neckImg")}</FieldLabel>
 								<Select {...field} onValueChange={field.onChange}>
 									<SelectTrigger>
 										<SelectValue placeholder="choose">
@@ -51,10 +51,12 @@ export const NeckMeasurementInfo = () => {
 														src={`/images/measurements/NECK_${field.value}.png`}
 														className="w-12 h-12"
 													/>
-													<span>الرقبة {field.value}</span>
+													<span>
+														{t("neck")} {field.value}
+													</span>
 												</div>
 											) : (
-												"choose"
+												t("neck_select_neckImg")
 											)}
 										</SelectValue>
 									</SelectTrigger>
@@ -67,7 +69,9 @@ export const NeckMeasurementInfo = () => {
 														src={`/images/measurements/NECK_${val}.png`}
 														className="w-12 h-12"
 													/>
-													<span>الرقبة {val}</span>
+													<span>
+														{t("neck")} {val}
+													</span>
 												</div>
 											</SelectItem>
 										))}

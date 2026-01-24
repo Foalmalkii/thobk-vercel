@@ -38,7 +38,9 @@ export const ChestPocketMeasurementInfo = () => {
 
 						return (
 							<Field>
-								<FieldLabel>صورة جيب الصدر</FieldLabel>
+								<FieldLabel>
+									{t("chestPocket_select_chestPocketImg")}
+								</FieldLabel>
 								<Select {...field} onValueChange={field.onChange}>
 									<SelectTrigger>
 										<SelectValue placeholder="choose">
@@ -48,10 +50,12 @@ export const ChestPocketMeasurementInfo = () => {
 														src={`/images/measurements/CHEST_POCKET_${field.value}.png`}
 														className="w-7 h-7"
 													/>
-													<span>جيب الصدر {field.value}</span>
+													<span>
+														{t("chestPocket")} {field.value}
+													</span>
 												</div>
 											) : (
-												"choose"
+												t("chestPocket_select_chestPocketImg")
 											)}
 										</SelectValue>
 									</SelectTrigger>
@@ -64,7 +68,9 @@ export const ChestPocketMeasurementInfo = () => {
 														src={`/images/measurements/CHEST_POCKET_${val}.png`}
 														className="w-12 h-12"
 													/>
-													<span>جيب الصدر {val}</span>
+													<span>
+														{t("chestPocket")} {val}
+													</span>
 												</div>
 											</SelectItem>
 										))}

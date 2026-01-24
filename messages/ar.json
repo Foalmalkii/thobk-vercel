@@ -8,22 +8,283 @@
 		"new_customer_description": "أدخل بيانات العميل أدناه لإضافته إلى سجلاتك.",
 		"choose_branch": "اختيار الفرع",
 		"add_branch": "إضافة فرع",
-		"branches": "الفروع"
+		"branches": "الفروع",
+		"order_items": "عناصر الطلب",
+		"new_order_item": "عنصر طلب جديد",
+		"fabric": "القماش",
+		"color": "اللون",
+		"measurement": "المقاسات",
+		"quantity": "الكمية",
+		"price": "السعر",
+		"subtotal": "الإجمالي الفرعي",
+		"decisions": "الإجراءات",
+		"no_order_items": "لا توجد عناصر مضافة للطلب",
+		"order_operations": "إجراءات الطلب",
+		"update_order": "تحديث الطلب",
+		"print_invoice": "طباعة الفاتورة",
+		"print_receipt": "طباعة سند القبض",
+		"print_measurements": "طباعة المقاسات",
+		"loading": "جاري التحميل...",
+		"branch_name": "اسم الفرع",
+		"streetAdress": "اسم الشارع",
+		"phone": "رقم الهاتف",
+		"email": "البريد الإلكتروني",
+		"buildingNumber": "رقم المبنى",
+		"additionalNumber": "رقم إضافي",
+		"postalCode": "الرمز البريدي",
+		"storage": "إدارة المخزون",
+		"erp": "إدارة الأعمال"
 	},
 	"Navbar": {
 		"choose_locale": "اختر اللغة",
 		"locale_ar": "العربية",
-		"locale_en": "الإنجليزية"
+		"locale_en": "English",
+		"locale_hi": "हिन्दी",
+		"locale_bn": "বাংলা"
 	},
 
 	"orders": {
 		"orders": "الطلبات",
 		"page_description": "صفحة الطلبات في لوحة التحكم تتيح لك إدارة جميع الطلبات بسهولة. يمكنك من خلالها عرض الطلبات الحالية مع تفاصيلها مثل رقم الطلب، حالة التنفيذ، وقيمة الطلب، بالإضافة إلى إمكانية إنشاء طلب جديد وإدخال جميع بياناته. توفر الصفحة أيضًا عرضًا شاملاً لمعلومات كل طلب لمتابعته بشكل منظم ودقيق.",
-		"new_customer": "إضافة عميل جديد"
+		"choose_customer": "اختيار العميل",
+		"search_by_phone": "البحث برقم الهاتف",
+		"new_customer": "عميل جديد",
+		"customer_name": "اسم العميل",
+		"phone_number": "رقم الهاتف",
+		"select": "اختيار",
+		"order_id": "معرف الطلب",
+		"customer": "العميل",
+		"order_status": "حالة الطلب",
+		"order_date": "تاريخ الطلب",
+		"actions": "الإجراءات",
+		"no_orders": "لا يوجد أي طلبات",
+		"new_order": "طلب جديد"
 	},
 
 	"auth": {
-		"v_email_email": "يجب كتابة بريد الكتروني صحيح"
+		"v_email_email": "يجب كتابة بريد الكتروني صحيح",
+		"welcome": "مرحبًا بك",
+		"enter_credentials": "يرجى إدخال بيانات الدخول",
+		"email": "البريد الإلكتروني",
+		"password": "كلمة المرور",
+		"enter_password": "ادخل كلمة المرور...",
+		"login": "الدخول للنظام"
+	},
+	"insights": {
+		"title": "لوحة التحليلات الذكية",
+		"description": "نظام سحابي متكامل يوفر لك رؤية شاملة لأعمالك في أي وقت ومن أي مكان. تتبع الأداء، راقب المبيعات، وخذ قرارات مبنية على البيانات.",
+		"coming_soon": "قريباً",
+		"launch_date": "الإطلاق المتوقع: فبراير 2026",
+
+		"feature_1": "سحابي بالكامل",
+		"feature_2": "تحديثات فورية",
+		"feature_3": "رؤية شاملة",
+		"feature_4": "متاح دائماً",
+
+		"preview_title": "نظرة على لوحة التحكم",
+		"preview_subtitle": "مؤشرات الأداء الرئيسية في الوقت الفعلي",
+
+		"metric_1": {
+			"title": "الطلبات اليومية"
+		},
+		"metric_2": {
+			"title": "الإيرادات (ر.س)"
+		},
+		"metric_3": {
+			"title": "إجمالي العملاء"
+		},
+		"metric_4": {
+			"title": "الطلبات المعلقة"
+		},
+
+		"capabilities_title": "الإمكانيات المتقدمة",
+		"capabilities_subtitle": "كل ما تحتاجه لإدارة أعمالك بذكاء",
+
+		"capability_1": {
+			"title": "تحليلات المبيعات",
+			"desc": "تقارير مفصلة عن الإيرادات، أنماط المبيعات، والمنتجات الأكثر طلباً"
+		},
+		"capability_2": {
+			"title": "إحصائيات العملاء",
+			"desc": "تتبع سلوك العملاء، معدلات الاحتفاظ، والعملاء الأكثر قيمة"
+		},
+		"capability_3": {
+			"title": "إدارة المخزون",
+			"desc": "مراقبة مستويات المخزون وتنبيهات عند انخفاض المواد"
+		},
+		"capability_4": {
+			"title": "تقارير زمنية",
+			"desc": "تحليلات يومية، أسبوعية، وشهرية لتتبع الأداء عبر الزمن"
+		},
+
+		"footer_badge": "ذكاء الأعمال",
+		"footer_message": "نبني لك نظاماً ذكياً يساعدك على فهم أعمالك بشكل أفضل واتخاذ قرارات مستنيرة. انتظرونا!"
+	},
+	"createCustomer": {
+		"new_customer": "عميل جديد",
+		"new_customer_description": "أضف عميل جديد مع التفاصيل الأساسية مثل الاسم ورقم الهاتف وأي ملاحظات.",
+		"name": "الاسم",
+		"enter_name": "أدخل الاسم",
+		"phone": "رقم الهاتف",
+		"enter_phone": "أدخل رقم الهاتف",
+		"notes": "ملاحظات",
+		"enter_notes": "أدخل أي ملاحظات",
+		"submit": "إرسال",
+		"v_name_name": "الاسم مطلوب"
+	},
+	"storage": {
+		"title": "إدارة المخزون الذكية",
+		"description": "نظام شامل لإدارة الأقمشة والمواد مع تتبع دقيق للمخزون، تحليلات المبيعات، وتقارير مفصلة. قريباً ستتمكن من إدارة مخزونك بكفاءة أعلى.",
+		"launch_date": "الإطلاق المتوقع: فبراير 2026",
+		"feature_1": "تتبع المخزون الآلي",
+		"feature_2": "تحليلات متقدمة",
+		"feature_3": "إدارة الطلبات",
+		"sneak_peek": "نظرة مسبقة",
+		"sneak_peek_subtitle": "أكثر الأقمشة طلباً هذا الموسم",
+		"most_ordered": "الأكثر طلباً",
+		"sku": "رمز المنتج",
+		"orders": "عدد الطلبات",
+		"revenue": "الإيرادات",
+		"winter": "شتوي",
+		"summer": "صيفي",
+		"footer_message": "المزيد من الميزات قادمة قريباً! ترقبوا التحديثات.",
+		"fabric_1": {
+			"name": "قماش ستان فاخر"
+		},
+		"fabric_2": {
+			"name": "قماش كتان خفيف"
+		},
+		"fabric_3": {
+			"name": "قماش رمادي كلاسيكي"
+		}
+	},
+	"erp": {
+		"title": "نظام إدارة الأعمال المتكامل",
+		"description": "منصة شاملة لأصحاب الأعمال لإدارة الفروع، الخياطين، والعملاء. تتبع النشاطات، راجع السجلات، وأدر الصلاحيات بسهولة تامة من لوحة تحكم واحدة.",
+		"coming_soon": "قريباً",
+		"launch_date": "الإطلاق المتوقع: فبراير 2026",
+
+		"benefit_1": "إدارة الخياطين",
+		"benefit_2": "تعدد الفروع",
+		"benefit_3": "تقارير شاملة",
+		"benefit_4": "أمان متقدم",
+
+		"features_title": "الميزات الرئيسية",
+		"features_subtitle": "نظرة مسبقة على ما سيقدمه النظام",
+
+		"feature_1": {
+			"title": "إدارة الفروع المركزية",
+			"description": "تحكم كامل في جميع الفروع من مكان واحد مع إمكانية تخصيص الصلاحيات والإعدادات لكل فرع"
+		},
+		"feature_2": {
+			"title": "مراقبة حسابات الخياطين",
+			"description": "إنشاء وإدارة حسابات الخياطين، تحديد الصلاحيات، ومراقبة أدائهم بشكل مستمر"
+		},
+		"feature_3": {
+			"title": "سجلات النشاط المباشرة",
+			"description": "تتبع جميع العمليات والنشاطات في الوقت الفعلي مع إمكانية مراجعة السجلات التاريخية"
+		},
+
+		"branches": "فرع",
+		"tailors": "خياط",
+		"real_time": "مباشر",
+		"current_usage": "الاستخدام الحالي",
+
+		"capabilities_title": "الإمكانيات المتقدمة",
+		"capabilities_subtitle": "أدوات احترافية لإدارة أعمالك بكفاءة",
+
+		"capability_1": "التحكم في الصلاحيات والأدوار",
+		"capability_2": "تقارير الأداء التفصيلية",
+		"capability_3": "مراقبة النشاطات لحظياً",
+		"capability_4": "إعدادات مخصصة لكل فرع",
+		"capability_5": "سجل زمني للعمليات",
+		"capability_6": "تقارير مالية وإحصائية",
+
+		"footer_badge": "نظام متكامل",
+		"footer_message": "نعمل بجد لتقديم أفضل تجربة إدارية لأعمالك. ترقبوا الإطلاق قريباً!"
+	},
+
+	"order": {
+		"order_details": "تفاصيل الطلب",
+		"order_date": "تاريخ الطلب",
+		"delivery_date": "تاريخ الاستلام",
+		"order_items": "تفاصيل الطلب",
+		"thobe": "ثوب",
+		"subtotal": "الإجمالي الفرعي",
+		"discount": "الخصم",
+		"total_after_discount": "الإجمالي بعد الخصم",
+		"customer_info": "معلومات العميل",
+		"customer": "العميل",
+		"phone": "الهاتف",
+		"payment_info": "معلومات الدفع",
+		"cash": "نقدي",
+		"notify_customer": "إخطار العميل",
+		"send_order": "إرسال الطلب",
+		"general_notes_title": "ملاحظات عامة للطلب",
+		"general_notes_description": "أدخل أي ملاحظات عامة حول الطلب هنا.",
+		"general_notes_placeholder": "أدخل الملاحظات العامة",
+		"expected_delivery_date": "تاريخ التسليم المتوقع",
+		"select_date": "تحديد تاريخ"
+	},
+	"customers": {
+		"title": "إدارة العملاء الذكية",
+		"description": "نظام متطور لإدارة بيانات العملاء، تتبع طلباتهم، وإرسال حملات تسويقية مستهدفة. تواصل مع عملائك بفعالية وزد من ولائهم لعلامتك التجارية.",
+		"coming_soon": "قريباً",
+		"launch_date": "الإطلاق المتوقع: فبراير 2026",
+
+		"benefit_1": "تتبع الطلبات",
+		"benefit_2": "حملات تسويقية",
+		"benefit_3": "تحليل البيانات",
+		"benefit_4": "برامج الولاء",
+
+		"top_customers_title": "أفضل العملاء",
+		"top_customers_subtitle": "العملاء الأكثر طلباً وإنفاقاً",
+
+		"customer_1": {
+			"name": "عبدالله العتيبي"
+		},
+		"customer_2": {
+			"name": "محمد السالم"
+		},
+		"customer_3": {
+			"name": "خالد الدوسري"
+		},
+
+		"vip": "VIP",
+		"gold": "ذهبي",
+		"member_since": "عضو منذ",
+		"orders": "الطلبات",
+		"revenue": "الإيرادات",
+		"growth": "النمو",
+
+		"features_title": "الميزات الرئيسية",
+		"features_subtitle": "أدوات قوية لإدارة علاقاتك مع العملاء",
+
+		"feature_1": {
+			"title": "قاعدة بيانات شاملة",
+			"description": "احفظ جميع معلومات العملاء، تفضيلاتهم، وتاريخ طلباتهم في مكان واحد منظم"
+		},
+		"feature_2": {
+			"title": "حملات تسويقية ذكية",
+			"description": "أرسل رسائل نصية وإعلانات مستهدفة للعملاء بناءً على اهتماماتهم وسلوكهم الشرائي"
+		},
+		"feature_3": {
+			"title": "تحليلات متقدمة",
+			"description": "تقارير مفصلة عن سلوك العملاء، أنماط الشراء، والعملاء الأكثر ربحية"
+		},
+
+		"capabilities_title": "الإمكانيات المتقدمة",
+		"capabilities_subtitle": "كل ما تحتاجه لبناء علاقات قوية مع عملائك",
+
+		"capability_1": "حملات مستهدفة بدقة",
+		"capability_2": "رسائل بريد إلكتروني آلية",
+		"capability_3": "رسائل SMS و WhatsApp",
+		"capability_4": "برامج مكافآت وولاء",
+		"capability_5": "إشعارات فورية للعملاء",
+		"capability_6": "عروض خاصة ومناسبات",
+
+		"footer_badge": "تجربة عملاء مميزة",
+		"footer_message": "نبني لك أدوات احترافية لتعزيز علاقتك بعملائك وزيادة مبيعاتك. انتظرونا قريباً!"
 	},
 
 	"measurements": {
@@ -82,9 +343,11 @@
 
 		"neck_neckButtonVisibility_visible": "ظاهر",
 		"neck_neckButtonVisibility_invisibile": "مخفي",
+		"neck": "الرقبة",
 
 		"neck_select_neckDesign": "تصميم الرقبة",
 		"neck_select_neckShape": "شكل الرقبة",
+		"neck_select_neckImg": "صورة الرقبة",
 		"neck_select_neckFill": "حشوة الرقبة",
 		"neck_select_neckButtonType": "نوع زر الرقبة",
 		"neck_select_neckButtonholeType": "نوع عروة الزر",
@@ -112,6 +375,7 @@
 		"wrist_wristDesign_french": "فرنسي",
 		"wrist_wristDesign_double": "مزدوج",
 
+		"wrist": "المعصم",
 		"wrist_wristMaterialLayers_1": "طبقة واحدة",
 		"wrist_wristMaterialLayers_2": "طبقتان",
 
@@ -119,6 +383,7 @@
 		"wrist_wristSleeveCrumbNumber_1": "ثنية واحدة",
 		"wrist_wristSleeveCrumbNumber_2": "ثنيتان",
 
+		"wrist_select_wristImg": "صورة المعصم",
 		"wrist_select_wristCuffType": "نوع الكُف",
 		"wrist_select_wristDesign": "تصميم الكم",
 		"wrist_select_wristMaterialLayers": "عدد طبقات الكم",
@@ -146,7 +411,9 @@
 
 		"chestPocket_chestPocketVisibility_visible": "ظاهر",
 		"chestPocket_chestPocketVisibility_invisible": "مخفي",
+		"chestPocket": "جيب الصدر",
 
+		"chestPocket_select_chestPocketImg": "صورة جيب الصدر",
 		"chestPocket_select_chestPocketPenType": "نوع فتحة القلم",
 		"chestPocket_select_chestPocketDesign": "تصميم جيب الصدر",
 		"chestPocket_select_chestPocketShape": "شكل جيب الصدر",
@@ -180,13 +447,33 @@
 		"jabzoor_jabzoorShape_square": "مربّع",
 		"jabzoor_jabzoorShape_rounded": "مستدير",
 		"jabzoor_jabzoorShape_minced": "مفروم",
+		"jabzoor": "جبزور",
 
 		"jabzoor_jabzoorPushMaterial_plastic": "بلاستيك",
 		"jabzoor_jabzoorPushMaterial_steel": "حديد",
+		"jabzoor_select_jabzoorImg": "صورة الجبزور",
 		"jabzoor_select_jabzoorHoleType": "نوع الجبزور",
 		"jabzoor_select_jabzoorDesign": "تصميم الجبزور",
 		"jabzoor_select_jabzoorVisibility": "ظهور الجبزور",
 		"jabzoor_select_jabzoorShape": "شكل الجبزور",
 		"jabzoor_select_jabzoorPushMaterial": "مادة الكبّاس"
+	},
+	"noBranch": {
+		"title": "لا يوجد فرع نشط",
+		"description": "لبدء استخدام النظام، قم بإضافة فرعك الأول من القائمة في شريط التنقل",
+		"step1": "اضغط على قائمة الفروع",
+		"step1_hint": "ستجدها في شريط التنقل العلوي",
+		"step2": "اختر 'إضافة فرع جديد'",
+		"step2_hint": "املأ البيانات المطلوبة وابدأ العمل",
+		"footer_note": "يمكنك إضافة وإدارة عدة فروع بسهولة",
+		"click_hint": "ابحث عن قائمة الفروع في الأعلى"
+	},
+	"credit": {
+		"sms": "رسائل نصية",
+		"whatsapp": "واتساب",
+		"credits_remaining": "رصيد متبقي",
+		"critical_alert": "شحن عاجل مطلوب",
+		"low_alert": "رصيد منخفض",
+		"good_status": "الرصيد جيد"
 	}
 }

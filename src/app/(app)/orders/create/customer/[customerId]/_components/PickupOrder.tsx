@@ -7,43 +7,50 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import { CalendarIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
 
 export const PickupOrder = () => {
 	const orderForm = useFormContext();
 	const dueDate = orderForm.watch("dueDate");
+	const t = useTranslations("order");
+
 	return (
 		<Controller
 			name="dueDate"
 			control={orderForm.control}
 			render={({ field }) => (
 				<Field>
-					<FieldLabel>تاريخ التسليم المتوقع</FieldLabel>
+					<FieldLabel>{t("expected_delivery_date")}</FieldLabel>
+
 					<Popover>
 						<PopoverTrigger asChild>
 							<Button
-								variant={"outline"}
+								variant="outline"
 								className={
 									dueDate &&
 									"border-blue-600 bg-blue-100 hover:bg-blue-100 text-blue-600 hover:text-blue-600"
 								}
 							>
 								<CalendarIcon />
-								{dueDate ? <span>{dueDate}</span> : <span>تحديد تاريخ</span>}
+								{dueDate ? (
+									<span>{dueDate}</span>
+								) : (
+									<span>{t("select_date")}</span>
+								)}
 							</Button>
 						</PopoverTrigger>
+
 						<PopoverContent>
 							<Calendar
 								dir="ltr"
 								mode="single"
 								disabled={{ before: new Date() }}
 								timeZone="Asia/Riyadh"
-								onSelect={(date) => {
-									console.log(date);
-									console.log("in iso", date?.toISOString());
-									field.onChange(date?.toISOString().slice(0, 10));
-								}}
+								onSelect={(date) =>
+									field.onChange(date?.toISOString().slice(0, 10))
+								}
 								selected={dueDate}
 							/>
 						</PopoverContent>

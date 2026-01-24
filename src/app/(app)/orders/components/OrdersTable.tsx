@@ -8,12 +8,11 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 import { listOrderResponse } from "@/hooks/orders/listOrders";
-import { BoxIcon } from "lucide-react";
 import React from "react";
 import { OrderStatusDropdown } from "./OrderStatusDropdown";
 import { OrderOperationsDropdown } from "./OrderOperationsDropdown";
-import { useAuth } from "@/hooks/auth";
 import { useGetBranch } from "@/hooks/branches/getBranch";
+import { useTranslations } from "next-intl";
 
 export const OrdersTable = ({
 	orders,
@@ -22,23 +21,27 @@ export const OrdersTable = ({
 	orders: listOrderResponse | undefined;
 	branchId: number;
 }) => {
-	const { branch } = useGetBranch({ branchId: branchId });
+	const t = useTranslations("orders");
+	const { branch } = useGetBranch({ branchId });
+
 	return (
 		<div>
 			<Table className="bg-slate-50">
 				<TableHeader>
 					<TableRow>
-						<TableHead className="text-black">معرف الطلب</TableHead>
-						<TableHead className="text-black">العميل</TableHead>
-						<TableHead className="text-black">حالة الطلب</TableHead>
-						<TableHead className="text-black">تاريخ الطلب</TableHead>
-						<TableHead className="text-black">الإجراءات</TableHead>
+						<TableHead className="text-black">{t("order_id")}</TableHead>
+						<TableHead className="text-black">{t("customer")}</TableHead>
+						<TableHead className="text-black">{t("order_status")}</TableHead>
+						<TableHead className="text-black">{t("order_date")}</TableHead>
+						<TableHead className="text-black">{t("actions")}</TableHead>
 					</TableRow>
 				</TableHeader>
+
 				<TableBody className="text-center">
 					{orders?.map((order) => (
 						<TableRow key={order.id}>
 							<TableCell>#{order.id}</TableCell>
+
 							<TableCell>
 								<div className="flex flex-col gap-1">
 									<span>{order.customer.name}</span>
@@ -47,24 +50,28 @@ export const OrdersTable = ({
 									</span>
 								</div>
 							</TableCell>
+
 							<TableCell>
 								<div className="max-w-[200px] mx-auto">
 									<OrderStatusDropdown defaultValue={order.status} />
 								</div>
 							</TableCell>
+
 							<TableCell>
 								<span className="text-muted-foreground">{order.dueDate}</span>
 							</TableCell>
+
 							<TableCell>
 								<OrderOperationsDropdown orderId={order.id} branch={branch} />
 							</TableCell>
 						</TableRow>
 					))}
+
 					{orders?.length === 0 && (
 						<TableRow>
 							<TableCell colSpan={5}>
 								<div className="p-2 text-muted-foreground">
-									لا يوجد أي طلبات
+									{t("no_orders")}
 								</div>
 							</TableCell>
 						</TableRow>
