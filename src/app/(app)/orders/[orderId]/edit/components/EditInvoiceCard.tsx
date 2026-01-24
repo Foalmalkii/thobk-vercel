@@ -9,7 +9,7 @@ import { CoinsIcon, CreditCardIcon } from "lucide-react";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Button } from "@/components/ui/button";
 
-export const InvoiceCard = ({ customerId }: { customerId: number }) => {
+export const EditInvoiceCard = () => {
 	const orderForm = useFormContext();
 	const items: orderRequest["items"] = orderForm.watch("items");
 
@@ -17,12 +17,11 @@ export const InvoiceCard = ({ customerId }: { customerId: number }) => {
 		(sum, item) => sum + item.quantity * item.unitPrice,
 		0,
 	);
-
-	const { customer } = useCustomer({ id: customerId });
+	const customer = orderForm.getValues("customer");
 	const dueDate = orderForm.watch("dueDate");
 	console.log(orderForm.watch());
 	return (
-		<div className="w-full p-6 border rounded-lg h-full shadow flex flex-col justify-between">
+		<div className="w-full p-6 border rounded-lg h-full shadow flex flex-col justify-between max-h-[730px]">
 			<div>
 				<div className="flex flex-col gap-1.5">
 					<h1 className="text-lg font-bold">تفاصيل الطلب</h1>
@@ -44,7 +43,7 @@ export const InvoiceCard = ({ customerId }: { customerId: number }) => {
 								</p>
 
 								<p className="flex gap-2 items-center">
-									{item.unitPrice * item.quantity}{" "}
+									{(item.unitPrice / 100) * item.quantity}{" "}
 									<RiyalIcon className="w-3.5 h-3.5" />
 								</p>
 							</div>
@@ -55,7 +54,7 @@ export const InvoiceCard = ({ customerId }: { customerId: number }) => {
 						<div className="flex w-full justify-between">
 							<p className="text-muted-foreground">الإجمالي الفرعي</p>
 							<p className="flex gap-2 items-center">
-								<span>{totalPrice}</span>
+								<span>{totalPrice / 100}</span>
 								<RiyalIcon className="w-3.5 h-3.5" />
 							</p>
 						</div>
@@ -69,7 +68,7 @@ export const InvoiceCard = ({ customerId }: { customerId: number }) => {
 						<div className="flex w-full justify-between">
 							<p className="text-muted-foreground">الإجمالي بعد الخصم</p>
 							<p className="flex gap-2 items-center">
-								<span>{totalPrice}</span>
+								<span>{totalPrice / 100}</span>
 								<RiyalIcon className="w-3.5 h-3.5" />
 							</p>
 						</div>
@@ -98,11 +97,22 @@ export const InvoiceCard = ({ customerId }: { customerId: number }) => {
 						<h2 className="font-semibold">معلومات الدفع</h2>
 						<div className="flex w-full justify-between">
 							<p className="text-muted-foreground flex gap-2 items-center">
+								<CreditCardIcon className="w-4 h-4" />
+								<span>شبكة</span>
+							</p>
+							<p className="flex gap-2 items-center">
+								<span>{totalPrice}</span>
+								<RiyalIcon className="w-3.5 h-3.5" />
+							</p>
+						</div>
+
+						<div className="flex w-full justify-between">
+							<p className="text-muted-foreground flex gap-2 items-center">
 								<CoinsIcon className="w-4 h-4" />
 								<span>نقدي</span>
 							</p>
 							<p className="flex gap-2 items-center">
-								<span>{totalPrice/100}</span>
+								<span>{totalPrice}</span>
 								<RiyalIcon className="w-3.5 h-3.5" />
 							</p>
 						</div>
@@ -116,7 +126,12 @@ export const InvoiceCard = ({ customerId }: { customerId: number }) => {
 						<FieldLabel>إخطار العميل</FieldLabel>
 					</Field>
 
-					<Button type="submit">إرسال الطلب</Button>
+					<Button
+						onClick={() => console.log(orderForm.formState.errors)}
+						type="submit"
+					>
+						تحديث الطلب
+					</Button>
 				</FieldGroup>
 			</div>
 		</div>

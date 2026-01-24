@@ -29,12 +29,15 @@ import {
 import { usePathname } from "next/navigation";
 import { getDirection } from "@/lib/types";
 import { useLocale, useTranslations } from "next-intl";
+import { useAuth } from "@/hooks/auth";
+import { CreditBadgeCard } from "./layout/CreditBadgeCard";
 
 export const AppSidebar = () => {
 	const { open, setOpen, isMobile, setOpenMobile, openMobile } = useSidebar();
 	const pathname = usePathname();
 	const locale = useLocale();
 	const t = useTranslations();
+	const { user } = useAuth({ middleware: "auth" });
 	const menuItems = {
 		home: {
 			label: t("messages.home"),
@@ -154,6 +157,9 @@ export const AppSidebar = () => {
 
 			<SidebarFooter className="border-t py-6">
 				<SidebarMenu>
+					<SidebarMenuItem>
+						<CreditBadgeCard user={user} />
+					</SidebarMenuItem>
 					<SidebarMenuItem className={`${!open && "mx-auto"}`}>
 						<SidebarMenuButton asChild>
 							<Link href={"/settings"}>

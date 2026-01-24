@@ -12,12 +12,17 @@ import { BoxIcon } from "lucide-react";
 import React from "react";
 import { OrderStatusDropdown } from "./OrderStatusDropdown";
 import { OrderOperationsDropdown } from "./OrderOperationsDropdown";
+import { useAuth } from "@/hooks/auth";
+import { useGetBranch } from "@/hooks/branches/getBranch";
 
 export const OrdersTable = ({
 	orders,
+	branchId,
 }: {
 	orders: listOrderResponse | undefined;
+	branchId: number;
 }) => {
+	const { branch } = useGetBranch({ branchId: branchId });
 	return (
 		<div>
 			<Table className="bg-slate-50">
@@ -51,7 +56,7 @@ export const OrdersTable = ({
 								<span className="text-muted-foreground">{order.dueDate}</span>
 							</TableCell>
 							<TableCell>
-								<OrderOperationsDropdown orderId={order.id} />
+								<OrderOperationsDropdown orderId={order.id} branch={branch} />
 							</TableCell>
 						</TableRow>
 					))}

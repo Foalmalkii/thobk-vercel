@@ -13,6 +13,8 @@ type listOrderItem = {
 	};
 	dueDate: string;
 	status: string;
+	createdAt: string;
+	updatedAt: string;
 };
 
 export type listOrderResponse = listOrderItem[];

@@ -39,7 +39,7 @@ export default function OrdersPage() {
 			</div>
 
 			<div className=" mt-8">
-				<OrdersTable orders={orders} />
+				<OrdersTable orders={orders} branchId={isInBranch} />
 			</div>
 		</div>
 	);

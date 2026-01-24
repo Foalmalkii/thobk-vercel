@@ -4,9 +4,6 @@ import { Page, pdf, Text, View } from "@react-pdf/renderer";
 import React from "react";
 import { pdfStyles } from "../page";
 import { MeasurementImage } from "./MeasurementImage";
-import { useTranslations } from "next-intl";
-import { useGetBranch } from "@/hooks/branches/getBranch";
-import { useAuth } from "@/hooks/auth";
 
 export const MeasurementPage = ({
 	order,
@@ -17,7 +14,6 @@ export const MeasurementPage = ({
 	item: OrderItem;
 	branch: GetBranch;
 }) => {
-	const t = useTranslations("measurements");
 	return (
 		<Page style={{ padding: "10px" }}>
 			<View
@@ -70,18 +66,18 @@ export const MeasurementPage = ({
 					<Text style={{ fontSize: "10px" }}>#{order.id}</Text>
 				</View>
 				<View style={[{ textAlign: "left" }, pdfStyles.cell]}>
-					<Text style={pdfStyles.bold}>Time created</Text>
-					<Text style={{ fontSize: "10px" }}>#{order.id}</Text>
+					<Text style={pdfStyles.bold}>Ordered At</Text>
+					<Text style={{ fontSize: "10px" }}>
+						{order.createdAt.slice(0, 10)}
+					</Text>
 				</View>
 				<View style={[{ textAlign: "left" }, pdfStyles.cell]}>
 					<Text style={pdfStyles.bold}>Branch</Text>
 					<Text style={{ fontSize: "10px" }}>#{order.id}</Text>
 				</View>
 				<View style={[{ textAlign: "left" }, pdfStyles.cell]}>
-					<Text style={pdfStyles.bold}>Ordered At</Text>
-					<Text style={{ fontSize: "10px" }}>
-						{order.createdAt.slice(0, 10)}
-					</Text>
+					<Text style={pdfStyles.bold}>Order Due</Text>
+					<Text style={{ fontSize: "10px" }}>{order.dueDate}</Text>
 				</View>
 			</View>
 			<View
@@ -124,16 +120,16 @@ export const MeasurementPage = ({
 				]}
 			>
 				<View style={[{ textAlign: "left" }, pdfStyles.cell]}>
-					<Text style={[pdfStyles.bold]}>Customer ID.</Text>
-					<Text style={{ fontSize: "10px" }}>#{order.customer.id}</Text>
+					<Text style={[pdfStyles.bold]}>Fabric ID.</Text>
+					<Text style={{ fontSize: "10px" }}>#SFH002211</Text>
 				</View>
 				<View style={[{ textAlign: "left" }, pdfStyles.cell]}>
-					<Text style={pdfStyles.bold}>Customer</Text>
-					<Text style={{ fontSize: "10px" }}>{order.customer.name}</Text>
+					<Text style={pdfStyles.bold}>Fabric Name</Text>
+					<Text style={{ fontSize: "10px" }}>Samiramis</Text>
 				</View>
 				<View style={[{ textAlign: "left" }, pdfStyles.cell]}>
-					<Text style={pdfStyles.bold}>Customer Phone</Text>
-					<Text style={{ fontSize: "10px" }}>{order.customer.phone}</Text>
+					<Text style={pdfStyles.bold}>Fabric Color</Text>
+					<Text style={{ fontSize: "10px" }}>White</Text>
 				</View>
 			</View>
 

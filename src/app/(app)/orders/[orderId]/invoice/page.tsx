@@ -12,10 +12,8 @@ import {
 } from "@react-pdf/renderer";
 import { useGetBranch } from "@/hooks/branches/getBranch";
 import { useAuth } from "@/hooks/auth";
-import { MeasurementImage } from "./components/MeasurementImage";
 import { useGetOrder } from "@/hooks/orders/getOrder";
-import { MeasurementPage } from "./components/MeasurementPage";
-import { NextIntlClientProvider, useTranslations } from "next-intl";
+import { MeasurementDocument } from "./components/MeasurementDocument";
 
 // Register IBM Plex Sans Arabic font family
 Font.register({
@@ -85,22 +83,11 @@ export default function OrderInvoicePage({
 	});
 
 	const { branch } = useGetBranch({ branchId: isInBranch });
-
+	if (!branch || !order) return;
 	return (
 		<div className="h-screen w-full">
 			<PDFViewer className="w-full h-full">
-				<NextIntlClientProvider locale={"ar"}>
-					<Document>
-						{order?.items.map((item) => (
-							<MeasurementPage
-								key={item.id}
-								order={order}
-								item={item}
-								branch={branch}
-							/>
-						))}
-					</Document>
-				</NextIntlClientProvider>
+				<MeasurementDocument branch={branch} order={order} />
 			</PDFViewer>
 		</div>
 	);

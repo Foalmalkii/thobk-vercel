@@ -70,7 +70,9 @@ export const jabzoorMessages: Record<string, string> = {
 	jabzoor_jabzoorShape_square: "مربّع",
 	jabzoor_jabzoorShape_rounded: "مستدير",
 	jabzoor_jabzoorShape_minced: "مفروم",
-
 	jabzoor_jabzoorPushMaterial_plastic: "بلاستيك",
 	jabzoor_jabzoorPushMaterial_steel: "حديد",
+	jabzoor_jabzoorHoleType_push: "كبس",
+	jabzoor_jabzoorHoleType_buttons: "أزرار",
+	jabzoor_jabzoorHoleType_zip: "سحاب",
 };
