@@ -1,6 +1,5 @@
 import { OrderItem } from "@/lib/types";
 import { Image, Text, View } from "@react-pdf/renderer";
-import { useTranslations } from "next-intl";
 import React, { useState } from "react";
 import { pdfStyles } from "../page";
 import {
@@ -46,8 +45,6 @@ export const MeasurementImage = ({
 		jabzoorPushMaterial: orderItem?.jabzoorPushMaterial,
 	};
 
-	const t = useTranslations("measurements");
-
 	console.log(neckInfo);
 	return (
 		<View
@@ -89,8 +86,8 @@ export const MeasurementImage = ({
 				style={{
 					position: "absolute",
 					width: "10.5%",
-					right: "27.5%",
-					top: "28%",
+					right: "28.7%",
+					top: "27%",
 					transformOrigin: "translateX(50%)",
 				}}
 			/>
@@ -134,8 +131,8 @@ export const MeasurementImage = ({
 				style={{
 					position: "absolute",
 					width: "15%",
-					top: "7.7%",
-					right: "18%",
+					top: "7.2%",
+					right: "17.7%",
 					opacity: "0.8",
 
 					transformOrigin: "translateX(50%)",

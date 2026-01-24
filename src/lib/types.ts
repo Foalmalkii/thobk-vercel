@@ -1,3 +1,4 @@
+import { InvoicesResponse } from "@/app/(app)/orders/[orderId]/edit/components/Payments";
 import { locales } from "@/middleware";
 
 export type User = {
@@ -8,6 +9,12 @@ export type User = {
 	role: string;
 	preferences: {
 		activeBranchId: number | null;
+	};
+	tailor: {
+		credit: {
+			type: "sms" | "whatsapp";
+			amount: number;
+		};
 	};
 };
 
@@ -59,6 +66,7 @@ export interface OrderItem {
 	id: number;
 	name: string;
 
+	thobeType: string | null;
 	neckImg: string | null;
 	wristImg: string | null;
 	jabzoorImg: string | null;
@@ -149,6 +157,7 @@ export interface GetOrder {
 	status: "received" | "in_progress" | "ready" | "delivered" | "canceled";
 	notes: string | null;
 	items: OrderItem[];
+	invoices: InvoicesResponse;
 }
 
 export type ListMeasurementItem = {
@@ -172,4 +181,5 @@ export type GetBranch = {
 		city: string;
 		country: string;
 	};
+	invoices: InvoicesResponse;
 };

@@ -45,7 +45,7 @@ export const ThobeImage = () => {
 			)}
 
 			{renderValue(watch("neckImg")) && (
-				<div className="absolute top-[6.5%] w-auto z-20 -translate-y-1/2 right-[25.7%] font-bold translate-x-1/2 w-[10%]">
+				<div className="absolute top-[6.5%]  z-20 -translate-y-1/2 right-[25.7%] font-bold translate-x-1/2 w-[10%]">
 					<img
 						src={`/images/measurements/NECK_${watch("neckImg")}.png`}
 						className="w-full"
@@ -53,7 +53,7 @@ export const ThobeImage = () => {
 				</div>
 			)}
 			{renderValue(watch("neckImg")) && (
-				<div className="absolute top-[11.5%] w-auto -translate-y-1/2 right-[91.7%] font-bold translate-x-1/2 w-[10%]">
+				<div className="absolute top-[11.5%]  -translate-y-1/2 right-[91.7%] font-bold translate-x-1/2 w-[10%]">
 					<img
 						src={`/images/measurements/NECK_${watch("neckImg")}.png`}
 						className="w-full"
@@ -61,7 +61,7 @@ export const ThobeImage = () => {
 				</div>
 			)}
 			{renderValue(watch("chestPocketImg")) && (
-				<div className="absolute top-[22.3%] w-auto -translate-y-1/2 right-[21.4%] font-bold translate-x-1/2 w-[7%] opacity-80">
+				<div className="absolute top-[22.3%] -translate-y-1/2 right-[21.4%] font-bold translate-x-1/2 w-[7%] opacity-80">
 					<img
 						src={`/images/measurements/CHEST_POCKET_${watch("chestPocketImg")}.png`}
 						className="w-full"
@@ -70,7 +70,7 @@ export const ThobeImage = () => {
 			)}
 
 			{renderValue(watch("chestPocketImg")) && (
-				<div className="absolute top-[52.3%] w-auto -translate-y-1/2 right-[91.4%] font-bold translate-x-1/2 w-[7%] opacity-80">
+				<div className="absolute top-[52.3%] -translate-y-1/2 right-[91.4%] font-bold translate-x-1/2 w-[7%] opacity-80">
 					<img
 						src={`/images/measurements/CHEST_POCKET_${watch("chestPocketImg")}.png`}
 						className="w-full"
@@ -95,7 +95,7 @@ export const ThobeImage = () => {
 				</div>
 			)}
 			{renderValue(watch("wristImg")) && (
-				<div className="absolute top-[34%] w-auto -translate-y-1/2 right-[34%] font-bold translate-x-1/2 w-[10.5%]">
+				<div className="absolute top-[34%]  -translate-y-1/2 right-[34%] font-bold translate-x-1/2 w-[10.5%]">
 					<img
 						src={`/images/measurements/CUFF_${watch("wristImg")}.png`}
 						className="w-full"
@@ -103,7 +103,7 @@ export const ThobeImage = () => {
 				</div>
 			)}
 			{renderValue(watch("wristImg")) && (
-				<div className="absolute top-[31%] w-auto -translate-y-1/2 right-[92%] font-bold translate-x-1/2 w-[10.5%]">
+				<div className="absolute top-[31%] -translate-y-1/2 right-[92%] font-bold translate-x-1/2 w-[10.5%]">
 					<img
 						src={`/images/measurements/CUFF_${watch("wristImg")}.png`}
 						className="w-full"
