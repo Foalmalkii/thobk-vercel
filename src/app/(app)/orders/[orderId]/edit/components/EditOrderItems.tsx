@@ -1,3 +1,7 @@
+import { Provider } from "jotai";
+import { useTranslations } from "next-intl";
+import React from "react";
+import { useFieldArray, useFormContext } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
 	Table,
@@ -7,13 +11,9 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { useTranslations } from "next-intl";
-import React from "react";
-import { useFieldArray, useFormContext } from "react-hook-form";
 import { OrderItemCard } from "../../../create/customer/[customerId]/_components/ui/order-item-card";
-import { EditOrderItemCard } from "./EditOrderItemCard";
 import { defaultValues } from "./EditMeasurementSchema";
-import { Provider } from "jotai";
+import { EditOrderItemCard } from "./EditOrderItemCard";
 
 export const EditOrderItems = () => {
 	const t = useTranslations("messages");

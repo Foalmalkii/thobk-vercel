@@ -1,10 +1,10 @@
-import { Input } from "@/components/ui/input";
 import { useTranslations } from "next-intl";
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { Field, FieldLabel } from "@/components/ui/field";
-import { CreateMeasurementSectionContainer } from "@/app/(app)/customers/[customerId]/measurements/create/_components/layout/section-container";
 import { InputsGrid } from "@/app/(app)/customers/[customerId]/measurements/create/_components/layout/inputs-grid";
+import { CreateMeasurementSectionContainer } from "@/app/(app)/customers/[customerId]/measurements/create/_components/layout/section-container";
+import { Field, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 
 export const GeneralMeasurementInfo = ({
 	orderItemIndex,
@@ -17,7 +17,7 @@ export const GeneralMeasurementInfo = ({
 
 	return (
 		<CreateMeasurementSectionContainer>
-			<h1 className="text-xl font-bold">المواصفات العامة</h1>
+			<h1 className="text-xl font-bold">{t("general")}</h1>
 			<InputsGrid>
 				{Object.keys(generalValues ?? {}).map((key) => {
 					const value = form.watch(`items.${orderItemIndex}.general.${key}`);

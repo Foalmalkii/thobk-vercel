@@ -1,3 +1,12 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useDirection } from "@radix-ui/react-direction";
+import { Asterisk } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
+import type React from "react";
+import { type SetStateAction, useEffect } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { mutate } from "swr";
+import z from "zod";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -18,14 +27,6 @@ import { InputWrapper } from "@/components/ui/input-wrapper";
 import { Label } from "@/components/ui/label";
 import { useBranches } from "@/hooks/branches";
 import axios from "@/lib/axios";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useDirection } from "@radix-ui/react-direction";
-import { Asterisk } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
-import React, { SetStateAction, useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { mutate } from "swr";
-import z from "zod";
 
 const branchSchema = z.object({
 	name: z.string().nonempty(),

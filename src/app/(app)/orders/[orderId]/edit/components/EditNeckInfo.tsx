@@ -1,3 +1,10 @@
+import { useAtom } from "jotai";
+import { useTranslations } from "next-intl";
+import React, { useEffect } from "react";
+import { Controller, useFormContext } from "react-hook-form";
+import z from "zod";
+import { InputsGrid } from "@/app/(app)/customers/[customerId]/measurements/create/_components/layout/inputs-grid";
+import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { InputWrapper } from "@/components/ui/input-wrapper";
 import { Label } from "@/components/ui/label";
@@ -9,16 +16,9 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import React, { useEffect } from "react";
-import { Controller, useFormContext } from "react-hook-form";
-import z from "zod";
-import { useTranslations } from "next-intl";
-import { useAtom } from "jotai";
 import { neckInfoAtom } from "@/lib/atoms";
-import { measurementSchema } from "./EditMeasurementSchema";
-import { Field, FieldLabel } from "@/components/ui/field";
-import { InputsGrid } from "@/app/(app)/customers/[customerId]/measurements/create/_components/layout/inputs-grid";
 import { editMeasurementSchema, editOrderSchema } from "../page";
+import { measurementSchema } from "./EditMeasurementSchema";
 
 export const EditNeckMeasurementInfo = ({
 	orderItemIndexNumber,

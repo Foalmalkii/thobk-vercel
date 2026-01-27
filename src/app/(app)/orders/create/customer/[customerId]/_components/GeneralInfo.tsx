@@ -1,9 +1,9 @@
-import { Field, FieldError } from "@/components/ui/field";
-import React from "react";
-import { PickupOrder } from "./PickupOrder";
-import { Textarea } from "@/components/ui/textarea";
-import { Controller, useFormContext } from "react-hook-form";
 import { useTranslations } from "next-intl";
+import React from "react";
+import { Controller, useFormContext } from "react-hook-form";
+import { Field, FieldError } from "@/components/ui/field";
+import { Textarea } from "@/components/ui/textarea";
+import { PickupOrder } from "./PickupOrder";
 
 export const GeneralInfo = () => {
 	const orderForm = useFormContext();

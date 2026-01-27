@@ -1,3 +1,7 @@
+import { CheckIcon, ChevronDown, PlusIcon } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
+import React, { useEffect, useState } from "react";
+import useSWR from "swr";
 import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
@@ -8,16 +12,12 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useAuth } from "@/hooks/auth";
-import axios from "@/lib/axios";
-import { branch, getDirection } from "@/lib/types";
-import { CheckIcon, ChevronDown, PlusIcon } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
-import React, { useEffect, useState } from "react";
-import useSWR from "swr";
-import { NewBranchDialog } from "./NewBranchDialog";
-import { useBranches } from "@/hooks/branches";
 import { Spinner } from "@/components/ui/spinner";
+import { useAuth } from "@/hooks/auth";
+import { useBranches } from "@/hooks/branches";
+import axios from "@/lib/axios";
+import { type branch, getDirection } from "@/lib/types";
+import { NewBranchDialog } from "./NewBranchDialog";
 
 export const BranchDropdown = () => {
 	const locale = useLocale();

@@ -1,7 +1,7 @@
-import axios from "@/lib/axios";
-import { GetOrder } from "@/lib/types";
 import React from "react";
 import useSWR from "swr";
+import axios from "@/lib/axios";
+import type { GetOrder } from "@/lib/types";
 
 export const useGetOrder = ({
 	branchId,

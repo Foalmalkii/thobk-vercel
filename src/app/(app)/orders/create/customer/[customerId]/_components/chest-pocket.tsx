@@ -1,5 +1,13 @@
+import { useAtom } from "jotai";
+import { useTranslations } from "next-intl";
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
+import z from "zod";
+import { InputsGrid } from "@/app/(app)/customers/[customerId]/measurements/create/_components/layout/inputs-grid";
+import { CreateMeasurementSectionContainer } from "@/app/(app)/customers/[customerId]/measurements/create/_components/layout/section-container";
+import { measurementSchema } from "@/app/(app)/customers/[customerId]/measurements/create/_components/measurements/schema";
+import { Field, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 import {
 	Select,
 	SelectContent,
@@ -8,15 +16,8 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { useTranslations } from "next-intl";
-import z from "zod";
-import { useAtom } from "jotai";
+import { Textarea } from "@/components/ui/textarea";
 import { chestPocketInfoAtom } from "@/lib/atoms";
-import { Field, FieldLabel } from "@/components/ui/field";
-import { CreateMeasurementSectionContainer } from "@/app/(app)/customers/[customerId]/measurements/create/_components/layout/section-container";
-import { InputsGrid } from "@/app/(app)/customers/[customerId]/measurements/create/_components/layout/inputs-grid";
-import { measurementSchema } from "@/app/(app)/customers/[customerId]/measurements/create/_components/measurements/schema";
 
 export const ChestPocketMeasurementInfo = ({
 	orderItemIndex,
@@ -30,7 +31,7 @@ export const ChestPocketMeasurementInfo = ({
 
 	return (
 		<CreateMeasurementSectionContainer>
-			<h1 className="text-xl font-bold">تفاصيل جيب الصدر</h1>
+			<h1 className="text-xl font-bold">{t("chestPocket")}</h1>
 			<InputsGrid>
 				<Controller
 					control={control}
@@ -88,6 +89,9 @@ export const ChestPocketMeasurementInfo = ({
 					}}
 				/>
 				{Object.keys(chestValues ?? {}).map((key) => {
+					// Skip chestPocketNotes here as it will be rendered separately
+					if (key === "chestPocketNotes") return null;
+
 					const fieldZod =
 						measurementSchema.shape.chestPocket.shape[
 							key as keyof typeof measurementSchema.shape.chestPocket.shape
@@ -173,6 +177,34 @@ export const ChestPocketMeasurementInfo = ({
 					);
 				})}
 			</InputsGrid>
+
+			{/* Render chestPocketNotes as textarea outside the grid */}
+			{chestValues?.hasOwnProperty("chestPocketNotes") && (
+				<Controller
+					control={control}
+					name={`items.${orderItemIndex}.chestPocket.chestPocketNotes`}
+					render={({ field, fieldState }) => {
+						const value = watch(
+							`items.${orderItemIndex}.chestPocket.chestPocketNotes`,
+						);
+						return (
+							<Field>
+								<FieldLabel>{t("chestPocket_chestPocketNotes")}</FieldLabel>
+								<Textarea
+									placeholder={`${t("chestPocket_chestPocketNotes")}...`}
+									{...field}
+									value={field.value || ""}
+									className={
+										value &&
+										"border-blue-700 bg-blue-100 focus:outline-0 focus-visible:ring-0"
+									}
+									rows={4}
+								/>
+							</Field>
+						);
+					}}
+				/>
+			)}
 		</CreateMeasurementSectionContainer>
 	);
 };

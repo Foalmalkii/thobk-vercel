@@ -1,10 +1,10 @@
-import axios from "@/lib/axios";
-import { branch } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { SetStateAction, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import useSWR from "swr";
 import z from "zod";
+import axios from "@/lib/axios";
+import type { branch } from "@/lib/types";
 import { useAuth } from "./auth";
 
 const branchSchema = z.object({

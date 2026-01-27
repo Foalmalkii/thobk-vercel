@@ -1,3 +1,6 @@
+import { useTranslations } from "next-intl";
+import React from "react";
+import { useFieldArray, useFormContext } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
 	Table,
@@ -7,9 +10,6 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { useTranslations } from "next-intl";
-import React from "react";
-import { useFieldArray, useFormContext } from "react-hook-form";
 import { OrderItemCard } from "../ui/order-item-card";
 
 export const OrderItem = () => {
@@ -21,18 +21,21 @@ export const OrderItem = () => {
 	const isEmpty = fields.length === 0;
 
 	const handleAddItem = () => {
+		const currentDate = new Date().toISOString().slice(0, 10);
+		const newIndex = fields.length + 1;
+		const name = `${currentDate}-${newIndex}`;
+
 		append({
-			fabricType: "",
-			color: "",
 			unitPrice: 0,
 			quantity: 1,
 			// Default measurement values
-			name: null,
+			fabricId: undefined,
 			thobeType: null,
 			neckImg: null,
 			chestPocketImg: null,
 			jabzoorImg: null,
 			wristImg: null,
+			name: name,
 			general: {
 				generalThobeLength: null,
 				generalThobeBackLength: null,
@@ -45,6 +48,8 @@ export const OrderItem = () => {
 				generalWristWidth: null,
 				generalChestFront: null,
 				generalChestFull: null,
+				generalTakaleesLength: null,
+				generalTakaleesWidth: null,
 				generalBottomWidth: null,
 				generalCuffBottomWidth: null,
 				generalWaistWidth: null,
@@ -61,12 +66,14 @@ export const OrderItem = () => {
 				wristCuffType: null,
 				wristCuffLength: null,
 				wristCuffWidth: null,
+				wristNotes: null,
 			},
 			chestPocket: {
 				chestPocketLength: null,
 				chestPocketWidth: null,
 				betweenChestPocketShoulder: null,
 				chestPocketPenType: null,
+				chestPocketNotes: null,
 			},
 			sidePockets: {
 				sidePhonePocketLength: null,
@@ -82,6 +89,19 @@ export const OrderItem = () => {
 		});
 	};
 
+	const handleCopyItem = (index: number) => {
+		const itemToCopy = items[index];
+		// Create a deep copy of the item
+		const copiedItem = JSON.parse(JSON.stringify(itemToCopy));
+
+		// Update the name with new date and index
+		const currentDate = new Date().toISOString().slice(0, 10);
+		const newIndex = fields.length + 1;
+		copiedItem.name = `${currentDate}-${newIndex}`;
+
+		append(copiedItem);
+	};
+
 	return (
 		<div className="rounded-xl border p-6">
 			<div className="flex justify-between">
@@ -95,7 +115,6 @@ export const OrderItem = () => {
 					<TableHeader>
 						<TableRow className="text-center">
 							<TableHead>{t("fabric")}</TableHead>
-							<TableHead>{t("color")}</TableHead>
 							<TableHead>{t("measurement")}</TableHead>
 							<TableHead>{t("quantity")}</TableHead>
 							<TableHead>{t("price")}</TableHead>
@@ -118,6 +137,7 @@ export const OrderItem = () => {
 								key={field.id}
 								index={index}
 								onRemove={() => remove(index)}
+								onCopy={() => handleCopyItem(index)}
 							/>
 						))}
 					</TableBody>

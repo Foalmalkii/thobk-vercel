@@ -1,7 +1,7 @@
-import axios from "@/lib/axios";
-import { ListMeasurementResponse } from "@/lib/types";
 import React from "react";
 import useSWR from "swr";
+import axios from "@/lib/axios";
+import type { ListMeasurementResponse } from "@/lib/types";
 
 export const useListMeasurements = ({
 	branchId,

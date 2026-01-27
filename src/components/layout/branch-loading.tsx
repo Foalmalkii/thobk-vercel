@@ -1,6 +1,6 @@
-import { Building2, Plus, MousePointerClick } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Building2, MousePointerClick, Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { Card, CardContent } from "@/components/ui/card";
 
 export const BranchLoading = () => {
 	const t = useTranslations("noBranch");

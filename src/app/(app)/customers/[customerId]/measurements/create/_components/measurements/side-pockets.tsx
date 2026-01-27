@@ -1,11 +1,11 @@
+import { useTranslations } from "next-intl";
 import React from "react";
-import { CreateMeasurementSectionContainer } from "../layout/section-container";
 import { useFormContext } from "react-hook-form";
-import { InputsGrid } from "../layout/inputs-grid";
+import { Input } from "@/components/ui/input";
 import { InputWrapper } from "@/components/ui/input-wrapper";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { useTranslations } from "next-intl";
+import { InputsGrid } from "../layout/inputs-grid";
+import { CreateMeasurementSectionContainer } from "../layout/section-container";
 
 export const SidePocketsMeasurementsInfo = () => {
 	const { watch, register } = useFormContext();

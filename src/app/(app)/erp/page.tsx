@@ -1,25 +1,25 @@
 "use client";
 
-import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-	Building2,
-	Users,
 	Activity,
-	Shield,
-	Calendar,
 	BarChart3,
-	Settings,
-	Eye,
+	Building2,
+	Calendar,
 	Clock,
-	TrendingUp,
-	Sparkles,
-	GitBranch,
-	UserCog,
+	Eye,
 	FileText,
+	GitBranch,
+	Settings,
+	Shield,
+	Sparkles,
+	TrendingUp,
+	UserCog,
+	Users,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import React from "react";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function ERPPage() {
 	const t = useTranslations("erp");

@@ -1,12 +1,12 @@
 import {
-	MessageSquareIcon,
-	PhoneIcon,
 	AlertTriangleIcon,
 	CheckCircleIcon,
+	MessageSquareIcon,
+	PhoneIcon,
 } from "lucide-react";
-import { Card, CardContent } from "../ui/card";
-import { User } from "@/lib/types";
 import { useTranslations } from "next-intl";
+import type { User } from "@/lib/types";
+import { Card, CardContent } from "../ui/card";
 
 export const CreditBadgeCard = ({ user }: { user: User }) => {
 	const t = useTranslations("credit");

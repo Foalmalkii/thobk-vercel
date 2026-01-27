@@ -1,14 +1,14 @@
+import { useAtom } from "jotai";
+import Image from "next/image";
+import { useTranslations } from "next-intl";
 import React from "react";
 import { useFormContext } from "react-hook-form";
-import Image from "next/image";
-import { useAtom } from "jotai";
 import {
 	chestPocketInfoAtom,
 	jabzoorInfoAtom,
 	neckInfoAtom,
 	wristInfoAtom,
 } from "@/lib/atoms";
-import { useTranslations } from "next-intl";
 
 export const ThobeImage = () => {
 	const { watch } = useFormContext();

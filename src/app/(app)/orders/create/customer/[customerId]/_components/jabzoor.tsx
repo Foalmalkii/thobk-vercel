@@ -1,6 +1,12 @@
+import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
+import z from "zod";
+import { InputsGrid } from "@/app/(app)/customers/[customerId]/measurements/create/_components/layout/inputs-grid";
+import { CreateMeasurementSectionContainer } from "@/app/(app)/customers/[customerId]/measurements/create/_components/layout/section-container";
+import { measurementSchema } from "@/app/(app)/customers/[customerId]/measurements/create/_components/measurements/schema";
+import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { InputWrapper } from "@/components/ui/input-wrapper";
 import { Label } from "@/components/ui/label";
@@ -12,13 +18,8 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import z from "zod";
-import { useAtom } from "jotai";
+import { Textarea } from "@/components/ui/textarea";
 import { jabzoorInfoAtom } from "@/lib/atoms";
-import { Field, FieldLabel } from "@/components/ui/field";
-import { CreateMeasurementSectionContainer } from "@/app/(app)/customers/[customerId]/measurements/create/_components/layout/section-container";
-import { InputsGrid } from "@/app/(app)/customers/[customerId]/measurements/create/_components/layout/inputs-grid";
-import { measurementSchema } from "@/app/(app)/customers/[customerId]/measurements/create/_components/measurements/schema";
 
 export const JabzoorMeasurementInfo = ({
 	orderItemIndex,
@@ -32,7 +33,7 @@ export const JabzoorMeasurementInfo = ({
 
 	return (
 		<CreateMeasurementSectionContainer>
-			<h1 className="text-xl font-bold">تفاصيل الجبزور</h1>
+			<h1 className="text-xl font-bold">{t("jabzoor")}</h1>
 
 			<InputsGrid>
 				<Controller
@@ -94,6 +95,9 @@ export const JabzoorMeasurementInfo = ({
 					}}
 				/>
 				{Object.keys(jabzoorValues ?? {}).map((key) => {
+					// Skip jabzoorNotes here as it will be rendered separately
+					if (key === "jabzoorNotes") return null;
+
 					const fieldZod =
 						measurementSchema.shape.jabzoor.shape[
 							key as keyof typeof measurementSchema.shape.jabzoor.shape
@@ -175,6 +179,32 @@ export const JabzoorMeasurementInfo = ({
 					);
 				})}
 			</InputsGrid>
+
+			{/* Render jabzoorNotes as textarea outside the grid */}
+			{jabzoorValues?.hasOwnProperty("jabzoorNotes") && (
+				<Controller
+					control={control}
+					name={`items.${orderItemIndex}.jabzoor.jabzoorNotes`}
+					render={({ field, fieldState }) => {
+						const value = watch(`items.${orderItemIndex}.jabzoor.jabzoorNotes`);
+						return (
+							<Field>
+								<FieldLabel>{t("jabzoor_jabzoorNotes")}</FieldLabel>
+								<Textarea
+									placeholder={`${t("jabzoor_jabzoorNotes")}...`}
+									{...field}
+									value={field.value || ""}
+									className={
+										value &&
+										"border-blue-700 bg-blue-100 focus:outline-0 focus-visible:ring-0"
+									}
+									rows={4}
+								/>
+							</Field>
+						);
+					}}
+				/>
+			)}
 		</CreateMeasurementSectionContainer>
 	);
 };

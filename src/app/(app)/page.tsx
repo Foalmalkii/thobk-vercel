@@ -1,25 +1,25 @@
 "use client";
 
-import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
+	Activity,
+	ArrowUpRight,
 	BarChart3,
-	TrendingUp,
-	DollarSign,
-	Users,
 	Calendar,
-	Sparkles,
-	Cloud,
-	Zap,
-	Eye,
 	Clock,
+	Cloud,
+	DollarSign,
+	Eye,
 	Package,
 	ShoppingBag,
-	ArrowUpRight,
-	Activity,
+	Sparkles,
+	TrendingUp,
+	Users,
+	Zap,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import React from "react";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RiyalIcon } from "@/components/ui/icons";
 
 export default function Home() {

@@ -1,8 +1,8 @@
 "use client";
-import { getDirection } from "@/lib/types";
 import { DirectionProvider } from "@radix-ui/react-direction";
 import { useLocale } from "next-intl";
-import React from "react";
+import type React from "react";
+import { getDirection } from "@/lib/types";
 
 export const DirectionLayout = ({
 	children,

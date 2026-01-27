@@ -1,7 +1,12 @@
 "use client";
-import { GetBranch, GetOrder, Order, OrderItem } from "@/lib/types";
 import { Page, pdf, Text, View } from "@react-pdf/renderer";
 import React from "react";
+import {
+	type GetBranch,
+	type GetOrder,
+	Order,
+	type OrderItem,
+} from "@/lib/types";
 import { pdfStyles } from "../page";
 import { MeasurementImage } from "./MeasurementImage";
 

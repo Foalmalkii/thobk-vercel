@@ -1,12 +1,12 @@
-import { Input } from "@/components/ui/input";
-import { InputWrapper } from "@/components/ui/input-wrapper";
-import { Label } from "@/components/ui/label";
 import { useTranslations } from "next-intl";
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
+import { Field, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { InputWrapper } from "@/components/ui/input-wrapper";
+import { Label } from "@/components/ui/label";
 import { InputsGrid } from "../layout/inputs-grid";
 import { CreateMeasurementSectionContainer } from "../layout/section-container";
-import { Field, FieldLabel } from "@/components/ui/field";
 
 export const GeneralMeasurementInfo = () => {
 	const form = useFormContext();

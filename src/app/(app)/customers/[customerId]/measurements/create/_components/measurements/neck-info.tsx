@@ -1,3 +1,9 @@
+import { useAtom } from "jotai";
+import { useTranslations } from "next-intl";
+import React, { useEffect } from "react";
+import { Controller, useFormContext } from "react-hook-form";
+import z from "zod";
+import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { InputWrapper } from "@/components/ui/input-wrapper";
 import { Label } from "@/components/ui/label";
@@ -9,15 +15,9 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import React, { useEffect } from "react";
-import { Controller, useFormContext } from "react-hook-form";
-import z from "zod";
-import { useTranslations } from "next-intl";
-import { useAtom } from "jotai";
 import { neckInfoAtom } from "@/lib/atoms";
-import { measurementSchema } from "./schema";
 import { InputsGrid } from "../layout/inputs-grid";
-import { Field, FieldLabel } from "@/components/ui/field";
+import { measurementSchema } from "./schema";
 
 export const NeckMeasurementInfo = () => {
 	const { register, watch, control } = useFormContext();
@@ -30,7 +30,7 @@ export const NeckMeasurementInfo = () => {
 	}, [_]);
 	return (
 		<div className="flex flex-col gap-4">
-			<h1 className="text-xl font-bold">مواصفات الرقبة</h1>
+			<h1 className="text-xl font-bold">{t("neck")}</h1>
 			<InputsGrid>
 				<Controller
 					control={control}

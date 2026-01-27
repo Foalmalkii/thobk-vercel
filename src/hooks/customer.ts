@@ -1,9 +1,9 @@
+import React from "react";
+import useSWR from "swr";
 import { useAuth } from "@/hooks/auth";
 import { useBranches } from "@/hooks/branches";
 import axios from "@/lib/axios";
 import { customer } from "@/lib/types";
-import React from "react";
-import useSWR from "swr";
 
 export const useCustomer = ({ id }: { id?: number }) => {
 	const { isInBranch } = useAuth({ middleware: "auth" });

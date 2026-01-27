@@ -1,20 +1,20 @@
 import React from "react";
-import { Input } from "../ui/input";
 import { SearchIcon } from "../ui/icons";
+import { Input } from "../ui/input";
 
 export const SearchInput = ({
-  placeholder = "بحث...",
+	placeholder = "بحث...",
 }: {
-  placeholder?: string;
+	placeholder?: string;
 }) => {
-  return (
-    <div className="relative">
-      <Input
-        placeholder={placeholder}
-        type="text"
-        className="shadow-none pr-8 max-md:hidden"
-      />
-      <SearchIcon className="absolute w-5 h-5 top-2 right-2 max-md:hidden" />
-    </div>
-  );
+	return (
+		<div className="relative">
+			<Input
+				placeholder={placeholder}
+				type="text"
+				className="shadow-none pr-8 max-md:hidden"
+			/>
+			<SearchIcon className="absolute w-5 h-5 top-2 right-2 max-md:hidden" />
+		</div>
+	);
 };

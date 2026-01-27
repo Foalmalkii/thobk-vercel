@@ -1,9 +1,9 @@
 "use client";
-import axios from "@/lib/axios";
-import { User } from "@/lib/types";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
+import axios from "@/lib/axios";
+import type { User } from "@/lib/types";
 
 export const useAuth = ({
 	middleware,

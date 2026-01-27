@@ -1,4 +1,13 @@
-import React, { SetStateAction } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useLocale, useTranslations } from "next-intl";
+import type React from "react";
+import type { SetStateAction } from "react";
+import { useForm } from "react-hook-form";
+import z from "zod";
+import { useBranches } from "@/hooks/branches";
+import axios from "@/lib/axios";
+import { getDirection } from "@/lib/types";
+import { Button } from "../ui/button";
 import {
 	Dialog,
 	DialogContent,
@@ -6,17 +15,9 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "../ui/dialog";
-import { useLocale, useTranslations } from "next-intl";
-import { getDirection } from "@/lib/types";
-import { Label } from "../ui/label";
 import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
-import { Button } from "../ui/button";
-import z from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "@/lib/axios";
-import { useBranches } from "@/hooks/branches";
 
 export const CreateCustomer = ({
 	open,

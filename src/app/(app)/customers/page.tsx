@@ -1,27 +1,27 @@
 "use client";
 
-import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-	Users,
-	TrendingUp,
-	Crown,
-	Mail,
-	Calendar,
-	Sparkles,
-	MessageSquare,
+	Award,
 	BarChart3,
-	Target,
-	Star,
+	Calendar,
+	Crown,
+	Gift,
+	Heart,
+	Mail,
+	MessageSquare,
 	Phone,
 	ShoppingBag,
-	Award,
+	Sparkles,
+	Star,
+	Target,
+	TrendingUp,
+	Users,
 	Zap,
-	Heart,
-	Gift,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import React from "react";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function CustomersPage() {
 	const t = useTranslations("customers");

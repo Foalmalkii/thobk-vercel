@@ -1,6 +1,12 @@
+import { useAtom } from "jotai";
+import { useTranslations } from "next-intl";
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
-
+import z from "zod";
+import { InputsGrid } from "@/app/(app)/customers/[customerId]/measurements/create/_components/layout/inputs-grid";
+import { CreateMeasurementSectionContainer } from "@/app/(app)/customers/[customerId]/measurements/create/_components/layout/section-container";
+import { Field, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 import { InputWrapper } from "@/components/ui/input-wrapper";
 import { Label } from "@/components/ui/label";
 import {
@@ -11,15 +17,8 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { measurementSchema } from "./EditMeasurementSchema";
-import { useTranslations } from "next-intl";
-import z from "zod";
-import { useAtom } from "jotai";
 import { chestPocketInfoAtom } from "@/lib/atoms";
-import { Field, FieldLabel } from "@/components/ui/field";
-import { CreateMeasurementSectionContainer } from "@/app/(app)/customers/[customerId]/measurements/create/_components/layout/section-container";
-import { InputsGrid } from "@/app/(app)/customers/[customerId]/measurements/create/_components/layout/inputs-grid";
+import { measurementSchema } from "./EditMeasurementSchema";
 
 export const EditChestPocketMeasurementInfo = ({
 	orderItemIndexNumber,

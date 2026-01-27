@@ -1,3 +1,12 @@
+// Update the AddFabricDialog component
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { PlusIcon, Trash2Icon } from "lucide-react";
+import { useTranslations } from "next-intl";
+import React, { useState } from "react";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { mutate } from "swr";
+import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -8,9 +17,9 @@ import {
 } from "@/components/ui/dialog";
 import {
 	Field,
-	FieldLabel,
 	FieldDescription,
 	FieldError,
+	FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import {
@@ -20,35 +29,35 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { PlusIcon, Trash2Icon } from "lucide-react";
-import React, { useState } from "react";
-import { useForm, useFieldArray, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import axios from "@/lib/axios";
 import { useAuth } from "@/hooks/auth";
+import axios from "@/lib/axios";
 
-const batchSchema = z.object({
-	sku: z.string().min(1, "رقم التعريف مطلوب"),
-	initialLength: z.string().min(1, "الطول الأولي مطلوب"),
-	remainingLength: z.string().min(1, "الطول المتبقي مطلوب"),
-	costPerMeter: z.string().min(1, "التكلفة للمتر مطلوبة"),
-});
+interface AddFabricDialogProps {
+	onFabricCreated?: (fabricId: number) => void;
+}
 
-const fabricSchema = z.object({
-	name: z.string().min(1, "اسم القماش مطلوب"),
-	supplier: z.string().min(1, "اسم المورد مطلوب"),
-	type: z.string().min(1, "نوع المنتج مطلوب"),
-	color: z.string().min(1, "اللون مطلوب"),
-	batches: z.array(batchSchema).min(1, "يجب إضافة دفعة واحدة على الأقل"),
-});
-
-type FabricFormData = z.infer<typeof fabricSchema>;
-
-export const AddFabricDialog = () => {
+export const AddFabricDialog = ({ onFabricCreated }: AddFabricDialogProps) => {
 	const [open, setOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const { isInBranch } = useAuth({ middleware: "auth" });
+	const t = useTranslations("fabric");
+
+	const batchSchema = z.object({
+		sku: z.string().min(1, t("sku_required")),
+		initialLength: z.string().min(1, t("initial_length_required")),
+		remainingLength: z.string().min(1, t("remaining_length_required")),
+		costPerMeter: z.string().min(1, t("cost_per_meter_required")),
+	});
+
+	const fabricSchema = z.object({
+		name: z.string().min(1, t("name_required")),
+		supplier: z.string().min(1, t("supplier_required")),
+		type: z.string().min(1, t("type_required")),
+		color: z.string().min(1, t("color_required")),
+		batches: z.array(batchSchema).min(1, t("batches_required")),
+	});
+
+	type FabricFormData = z.infer<typeof fabricSchema>;
 
 	const form = useForm<FabricFormData>({
 		resolver: zodResolver(fabricSchema),
@@ -76,13 +85,22 @@ export const AddFabricDialog = () => {
 	const onSubmit = async (data: FabricFormData) => {
 		setIsLoading(true);
 		try {
-			// Replace with your actual API call
-			// const response = await axios.post(`/api/v1/branch/${branchNumber}/stock`, data);
-			console.log("Form data:", data);
-			await axios
-				.post(`/api/v1/branch/${isInBranch}/stock`, data)
-				.then((res) => console.log(res))
-				.catch((e) => console.error(e));
+			const response = await axios.post(
+				`/api/v1/branch/${isInBranch}/stock`,
+				data,
+			);
+
+			// Get the created fabric ID from response
+			const createdFabricId = response.data?.data?.id;
+
+			// Refresh the fabric list in all components using SWR
+			await mutate(`/api/v1/branch/${isInBranch}/stock`);
+
+			// Notify parent component
+			if (createdFabricId && onFabricCreated) {
+				onFabricCreated(createdFabricId);
+			}
+
 			// Reset form and close dialog on success
 			form.reset();
 			setOpen(false);
@@ -96,16 +114,13 @@ export const AddFabricDialog = () => {
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
-				<Button size={"icon"} variant={"outline"}>
+				<Button size={"icon"} variant={"outline"} type="button">
 					<PlusIcon />
 				</Button>
 			</DialogTrigger>
-			<DialogContent
-				className="max-w-3xl max-h-[90vh] overflow-y-auto"
-				dir="rtl"
-			>
+			<DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
 				<DialogHeader>
-					<DialogTitle>إضافة قماش جديد</DialogTitle>
+					<DialogTitle>{t("add_new_fabric")}</DialogTitle>
 				</DialogHeader>
 
 				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -115,12 +130,14 @@ export const AddFabricDialog = () => {
 							control={form.control}
 							render={({ field, fieldState }) => (
 								<Field data-invalid={fieldState.invalid}>
-									<FieldLabel htmlFor={field.name}>اسم القماش</FieldLabel>
+									<FieldLabel htmlFor={field.name}>
+										{t("fabric_name")}
+									</FieldLabel>
 									<Input
 										{...field}
 										id={field.name}
 										aria-invalid={fieldState.invalid}
-										placeholder="سميراميس"
+										placeholder={t("fabric_name_placeholder")}
 										autoComplete="off"
 									/>
 									{fieldState.invalid && (
@@ -135,12 +152,12 @@ export const AddFabricDialog = () => {
 							control={form.control}
 							render={({ field, fieldState }) => (
 								<Field data-invalid={fieldState.invalid}>
-									<FieldLabel htmlFor={field.name}>المورد</FieldLabel>
+									<FieldLabel htmlFor={field.name}>{t("supplier")}</FieldLabel>
 									<Input
 										{...field}
 										id={field.name}
 										aria-invalid={fieldState.invalid}
-										placeholder="جريسي"
+										placeholder={t("supplier_placeholder")}
 										autoComplete="off"
 									/>
 									{fieldState.invalid && (
@@ -155,7 +172,9 @@ export const AddFabricDialog = () => {
 							control={form.control}
 							render={({ field, fieldState }) => (
 								<Field data-invalid={fieldState.invalid}>
-									<FieldLabel htmlFor={field.name}>نوع المنتج</FieldLabel>
+									<FieldLabel htmlFor={field.name}>
+										{t("product_type")}
+									</FieldLabel>
 									<Select
 										onValueChange={field.onChange}
 										defaultValue={field.value}
@@ -164,12 +183,14 @@ export const AddFabricDialog = () => {
 											id={field.name}
 											aria-invalid={fieldState.invalid}
 										>
-											<SelectValue placeholder="اختر النوع" />
+											<SelectValue placeholder={t("select_type")} />
 										</SelectTrigger>
 										<SelectContent>
-											<SelectItem value="fabric">قماش</SelectItem>
-											<SelectItem value="accessory">إكسسوار</SelectItem>
-											<SelectItem value="button">زر</SelectItem>
+											<SelectItem value="fabric">{t("type_fabric")}</SelectItem>
+											<SelectItem value="accessory">
+												{t("type_accessory")}
+											</SelectItem>
+											<SelectItem value="button">{t("type_button")}</SelectItem>
 										</SelectContent>
 									</Select>
 									{fieldState.invalid && (
@@ -184,12 +205,12 @@ export const AddFabricDialog = () => {
 							control={form.control}
 							render={({ field, fieldState }) => (
 								<Field data-invalid={fieldState.invalid}>
-									<FieldLabel htmlFor={field.name}>اللون</FieldLabel>
+									<FieldLabel htmlFor={field.name}>{t("color")}</FieldLabel>
 									<Input
 										{...field}
 										id={field.name}
 										aria-invalid={fieldState.invalid}
-										placeholder="أبيض"
+										placeholder={t("color_placeholder")}
 										autoComplete="off"
 									/>
 									{fieldState.invalid && (
@@ -202,7 +223,7 @@ export const AddFabricDialog = () => {
 
 					<div className="space-y-4">
 						<div className="flex items-center justify-between">
-							<h3 className="text-lg font-semibold">الدفعات</h3>
+							<h3 className="text-lg font-semibold">{t("batches")}</h3>
 							<Button
 								type="button"
 								variant="outline"
@@ -217,7 +238,7 @@ export const AddFabricDialog = () => {
 								}
 							>
 								<PlusIcon className="w-4 h-4 ml-2" />
-								إضافة دفعة
+								{t("add_batch")}
 							</Button>
 						</div>
 
@@ -227,7 +248,9 @@ export const AddFabricDialog = () => {
 								className="p-4 border rounded-lg space-y-4 bg-muted/30"
 							>
 								<div className="flex items-center justify-between mb-2">
-									<h4 className="font-medium">دفعة {index + 1}</h4>
+									<h4 className="font-medium">
+										{t("batch_number", { number: index + 1 })}
+									</h4>
 									{fields.length > 1 && (
 										<Button
 											type="button"
@@ -246,14 +269,12 @@ export const AddFabricDialog = () => {
 										control={form.control}
 										render={({ field, fieldState }) => (
 											<Field data-invalid={fieldState.invalid}>
-												<FieldLabel htmlFor={field.name}>
-													رقم التعريف (SKU)
-												</FieldLabel>
+												<FieldLabel htmlFor={field.name}>{t("sku")}</FieldLabel>
 												<Input
 													{...field}
 													id={field.name}
 													aria-invalid={fieldState.invalid}
-													placeholder="SFH201937"
+													placeholder={t("sku_placeholder")}
 													autoComplete="off"
 												/>
 												{fieldState.invalid && (
@@ -269,7 +290,7 @@ export const AddFabricDialog = () => {
 										render={({ field, fieldState }) => (
 											<Field data-invalid={fieldState.invalid}>
 												<FieldLabel htmlFor={field.name}>
-													التكلفة للمتر
+													{t("cost_per_meter")}
 												</FieldLabel>
 												<Input
 													{...field}
@@ -277,7 +298,7 @@ export const AddFabricDialog = () => {
 													type="number"
 													step="0.01"
 													aria-invalid={fieldState.invalid}
-													placeholder="50.00"
+													placeholder={t("cost_per_meter_placeholder")}
 													autoComplete="off"
 												/>
 												{fieldState.invalid && (
@@ -293,7 +314,7 @@ export const AddFabricDialog = () => {
 										render={({ field, fieldState }) => (
 											<Field data-invalid={fieldState.invalid}>
 												<FieldLabel htmlFor={field.name}>
-													الطول الأولي (متر)
+													{t("initial_length")}
 												</FieldLabel>
 												<Input
 													{...field}
@@ -301,7 +322,7 @@ export const AddFabricDialog = () => {
 													type="number"
 													step="0.01"
 													aria-invalid={fieldState.invalid}
-													placeholder="300.00"
+													placeholder={t("initial_length_placeholder")}
 													autoComplete="off"
 												/>
 												{fieldState.invalid && (
@@ -317,7 +338,7 @@ export const AddFabricDialog = () => {
 										render={({ field, fieldState }) => (
 											<Field data-invalid={fieldState.invalid}>
 												<FieldLabel htmlFor={field.name}>
-													الطول المتبقي (متر)
+													{t("remaining_length")}
 												</FieldLabel>
 												<Input
 													{...field}
@@ -325,7 +346,7 @@ export const AddFabricDialog = () => {
 													type="number"
 													step="0.01"
 													aria-invalid={fieldState.invalid}
-													placeholder="270.00"
+													placeholder={t("remaining_length_placeholder")}
 													autoComplete="off"
 												/>
 												{fieldState.invalid && (
@@ -341,7 +362,7 @@ export const AddFabricDialog = () => {
 
 					<div className="flex gap-3 pt-4">
 						<Button type="submit" disabled={isLoading} className="flex-1">
-							{isLoading ? "جاري الإضافة..." : "إضافة"}
+							{isLoading ? t("adding") : t("add")}
 						</Button>
 						<Button
 							type="button"
@@ -353,7 +374,7 @@ export const AddFabricDialog = () => {
 							disabled={isLoading}
 							className="flex-1"
 						>
-							إلغاء
+							{t("cancel")}
 						</Button>
 					</div>
 				</form>

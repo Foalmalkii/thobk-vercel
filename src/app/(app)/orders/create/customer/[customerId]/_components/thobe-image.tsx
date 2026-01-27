@@ -1,14 +1,14 @@
+import { useAtom } from "jotai";
+import Image from "next/image";
+import { useTranslations } from "next-intl";
 import React from "react";
 import { useFormContext } from "react-hook-form";
-import Image from "next/image";
-import { useAtom } from "jotai";
 import {
 	chestPocketInfoAtom,
 	jabzoorInfoAtom,
 	neckInfoAtom,
 	wristInfoAtom,
 } from "@/lib/atoms";
-import { useTranslations } from "next-intl";
 
 export const ThobeImage = ({ orderItemIndex }: { orderItemIndex: number }) => {
 	const { watch } = useFormContext();
@@ -41,11 +41,6 @@ export const ThobeImage = ({ orderItemIndex }: { orderItemIndex: number }) => {
 	return (
 		<div className="inline-block relative top-1/2 -translate-y-1/2 right-1/2 translate-x-1/2 w-full">
 			{/* FRONT LENGTH */}
-			{renderValue(watchItem("general.generalThobeLength")) && (
-				<div className="absolute top-[50.5%] w-auto -translate-y-1/2 right-[21.4%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
-					{watchItem("general.generalThobeLength")}
-				</div>
-			)}
 
 			{renderValue(watchItem("neckImg")) && (
 				<div className="absolute top-[11.5%]  -translate-y-1/2 right-[91.7%] font-bold translate-x-1/2 w-[10%]">
@@ -82,110 +77,128 @@ export const ThobeImage = ({ orderItemIndex }: { orderItemIndex: number }) => {
 					/>
 				</div>
 			)}
+			{renderValue(watchItem("general.generalThobeLength")) && (
+				<div className="absolute top-[52.5%] w-auto -translate-y-1/2 right-[23.2%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
+					{watchItem("general.generalThobeLength")}
+				</div>
+			)}
+
 			{/* SLEEVE LENGTH */}
 			{renderValue(watchItem("general.generalSleeveLength")) && (
-				<div className="absolute top-[28.4%] w-auto -translate-y-1/2 right-[26.4%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
+				<div className="absolute top-[30.4%] w-auto -translate-y-1/2 right-[28.2%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
 					{watchItem("general.generalSleeveLength")}
 				</div>
 			)}
 
 			{/* UPPER SLEEVE WIDTH */}
 			{renderValue(watchItem("general.generalUpperSleeveWidth")) && (
-				<div className="absolute top-[22.4%] w-auto -translate-y-1/2 right-[31.8%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
+				<div className="absolute top-[24.4%] w-auto -translate-y-1/2 right-[33.6%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
 					{watchItem("general.generalUpperSleeveWidth")}
 				</div>
 			)}
 
 			{/* BACK LENGTH done */}
 			{renderValue(watchItem("general.generalThobeBackLength")) && (
-				<div className="absolute top-[50.8%] w-auto -translate-y-1/2 right-[64.8%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
+				<div className="absolute top-[52.8%] w-auto -translate-y-1/2 right-[66.6%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
 					{watchItem("general.generalThobeBackLength")}
 				</div>
 			)}
 
 			{/* SHOULDER WIDTH */}
 			{renderValue(watchItem("general.generalShoulderWidth")) && (
-				<div className="absolute top-[3.8%] w-auto -translate-y-1/2 right-[37.4%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
+				<div className="absolute top-[4.2%] w-auto -translate-y-1/2 right-[37.9%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
 					{watchItem("general.generalShoulderWidth")}
 				</div>
 			)}
 			{renderValue(watchItem("general.generalShoulderLeft")) && (
-				<div className="absolute top-[7.3%] w-auto -translate-y-1/2 right-[28.9%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
+				<div className="absolute top-[9.3%] w-auto -translate-y-1/2 right-[30.7%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
 					{watchItem("general.generalShoulderLeft")}
 				</div>
 			)}
 			{renderValue(watchItem("general.generalShoulderRight")) && (
-				<div className="absolute top-[6%] w-auto -translate-y-1/2 right-[56.8%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
+				<div className="absolute top-[8%] w-auto -translate-y-1/2 right-[58.6%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
 					{watchItem("general.generalShoulderRight")}
+				</div>
+			)}
+
+			{renderValue(watchItem("general.generalTakaleesLength")) && (
+				<div className="absolute top-[38.2%] w-auto -translate-y-1/2 right-[62.9%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
+					Takalees Length {watchItem("general.generalTakaleesLength")}
+				</div>
+			)}
+
+			{renderValue(watchItem("general.generalTakaleesWidth")) && (
+				<div className="absolute top-[42.2%] w-auto -translate-y-1/2 right-[62.9%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
+					Takalees Width {watchItem("general.generalTakaleesWidth")}
 				</div>
 			)}
 
 			{/* SHOULDER ROTATION */}
 			{renderValue(watchItem("general.generalShoulderRotation")) && (
-				<div className="absolute top-[8.8%] w-auto -translate-y-1/2 right-[34.4%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
+				<div className="absolute top-[10.8%] w-auto -translate-y-1/2 right-[36.2%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
 					{watchItem("general.generalShoulderRotation")}
 				</div>
 			)}
 
 			{/* MIDDLE SLEEVE WIDTH */}
 			{renderValue(watchItem("general.generalMiddleSleeveWidth")) && (
-				<div className="absolute top-[22.8%] w-auto -translate-y-1/2 right-[58.4%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
+				<div className="absolute top-[24.8%] w-auto -translate-y-1/2 right-[60.2%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
 					{watchItem("general.generalMiddleSleeveWidth")}
 				</div>
 			)}
 
 			{/* WRIST WIDTH */}
 			{renderValue(watchItem("general.generalWristWidth")) && (
-				<div className="absolute top-[39.2%] w-auto -translate-y-1/2 right-[31%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
+				<div className="absolute top-[41.2%] w-auto -translate-y-1/2 right-[32.8%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
 					{watchItem("general.generalWristWidth")}
 				</div>
 			)}
 
 			{/* CHEST FRONT */}
 			{renderValue(watchItem("general.generalChestFront")) && (
-				<div className="absolute top-[19.8%] w-auto -translate-y-1/2 right-[46.9%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
+				<div className="absolute top-[21.8%] w-auto -translate-y-1/2 right-[48.7%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
 					{watchItem("general.generalChestFront")}
 				</div>
 			)}
 
 			{/* CHEST BACK */}
 			{renderValue(watchItem("general.generalChestBack")) && (
-				<div className="absolute top-[15.8%] w-auto -translate-y-1/2 right-[62.9%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
+				<div className="absolute top-[17.8%] w-auto -translate-y-1/2 right-[64.7%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
 					{watchItem("general.generalChestBack")}
 				</div>
 			)}
 
 			{/* CHEST FULL */}
 			{renderValue(watchItem("general.generalChestFull")) && (
-				<div className="absolute top-[13%] w-auto -translate-y-1/2 right-[48%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
+				<div className="absolute top-[15%] w-auto -translate-y-1/2 right-[49.8%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
 					{watchItem("general.generalChestFull")}
 				</div>
 			)}
 
 			{/* BOTTOM WIDTH */}
 			{renderValue(watchItem("general.generalBottomWidth")) && (
-				<div className="absolute top-[94.4%] w-auto -translate-y-1/2 right-[43.6%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
+				<div className="absolute top-[96.4%] w-auto -translate-y-1/2 right-[45.4%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
 					{watchItem("general.generalBottomWidth")}
 				</div>
 			)}
 
 			{/* CUFF BOTTOM WIDTH */}
 			{renderValue(watchItem("general.generalCuffBottomWidth")) && (
-				<div className="absolute top-[88.5%] w-auto -translate-y-1/2 right-[57.5%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
+				<div className="absolute top-[90.5%] w-auto -translate-y-1/2 right-[59.3%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
 					{watchItem("general.generalCuffBottomWidth")}
 				</div>
 			)}
 
 			{/* WAIST WIDTH */}
 			{renderValue(watchItem("general.generalWaistWidth")) && (
-				<div className="absolute top-[34.2%] w-auto -translate-y-1/2 right-[43%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
+				<div className="absolute top-[36.2%] w-auto -translate-y-1/2 right-[44.8%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
 					{watchItem("general.generalWaistWidth")}
 				</div>
 			)}
 
 			{/* HIP WIDTH */}
 			{renderValue(watchItem("general.generalHipWidth")) && (
-				<div className="absolute top-[53.6%] w-auto -translate-y-1/2 right-[43%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
+				<div className="absolute top-[55.6%] w-auto -translate-y-1/2 right-[44.8%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
 					{watchItem("general.generalHipWidth")}
 				</div>
 			)}
@@ -208,6 +221,35 @@ export const ThobeImage = ({ orderItemIndex }: { orderItemIndex: number }) => {
 			{renderValue(watchItem("neck.neckWidth")) && (
 				<div className="absolute top-[4.1%] w-auto -translate-y-1/2 right-[91.4%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
 					{watchItem("neck.neckWidth")}
+				</div>
+			)}
+
+			{/* NECK WIDTH */}
+			{renderValue(watchItem("neck.neckFill")) && (
+				<div className="absolute top-[4.1%] w-auto -translate-y-1/2 right-[79.3%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
+					Collar Hashwa {watchItem("neck.neckFill")}
+				</div>
+			)}
+
+			{/* NECK WIDTH */}
+			{renderValue(watchItem("neck.neckNotes")) && (
+				<div className="absolute top-[20.1%] w-auto -translate-y-1/2 right-[87.3%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center whitespace-pre-line">
+					{watchItem("neck.neckNotes")}
+				</div>
+			)}
+			{renderValue(watchItem("wrist.wristNotes")) && (
+				<div className="absolute top-[39.1%] w-auto -translate-y-1/2 right-[87.3%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center whitespace-pre-line">
+					{watchItem("wrist.wristNotes")}
+				</div>
+			)}
+			{renderValue(watchItem("chestPocket.chestPocketNotes")) && (
+				<div className="absolute top-[60.1%] w-auto -translate-y-1/2 right-[87.3%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center whitespace-pre-line">
+					{watchItem("chestPocket.chestPocketNotes")}
+				</div>
+			)}
+			{renderValue(watchItem("jabzoor.jabzoorNotes")) && (
+				<div className="absolute top-[82.1%] w-auto -translate-y-1/2 right-[87.3%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center whitespace-pre-line">
+					{watchItem("jabzoor.jabzoorNotes")}
 				</div>
 			)}
 
@@ -276,14 +318,14 @@ export const ThobeImage = ({ orderItemIndex }: { orderItemIndex: number }) => {
 
 			{/* WALLET POCKET LENGTH */}
 			{renderValue(watchItem("sidePockets.sideWalletPocketLength")) && (
-				<div className="absolute top-[65%] w-auto -translate-y-1/2 right-[91.4%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
+				<div className="absolute top-[92.5%] w-auto -translate-y-1/2 right-[88.6%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
 					{watchItem("sidePockets.sideWalletPocketLength")}
 				</div>
 			)}
 
 			{/* WALLET POCKET WIDTH */}
 			{renderValue(watchItem("sidePockets.sideWalletPocketWidth")) && (
-				<div className="absolute top-[65%] w-auto -translate-y-1/2 right-[91.4%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
+				<div className="absolute top-[87.4%] w-auto -translate-y-1/2 right-[94%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center">
 					{watchItem("sidePockets.sideWalletPocketWidth")}
 				</div>
 			)}

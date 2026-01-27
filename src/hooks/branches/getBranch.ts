@@ -1,8 +1,8 @@
 "use client";
-import axios from "@/lib/axios";
-import { GetBranch } from "@/lib/types";
 import React from "react";
 import useSWR from "swr";
+import axios from "@/lib/axios";
+import type { GetBranch } from "@/lib/types";
 
 export const useGetBranch = ({ branchId }: { branchId: number | null }) => {
 	const { data: branch, isLoading: loadingBranches } = useSWR<GetBranch>(

@@ -1,9 +1,9 @@
-import React from "react";
+import type React from "react";
 
 export const CreateMeasurementSectionContainer = ({
-  children,
+	children,
 }: {
-  children: React.ReactNode;
+	children: React.ReactNode;
 }) => {
-  return <div className="flex flex-col gap-4">{children}</div>;
+	return <div className="flex flex-col gap-4">{children}</div>;
 };

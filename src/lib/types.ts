@@ -1,5 +1,5 @@
-import { InvoicesResponse } from "@/app/(app)/orders/[orderId]/edit/components/Payments";
-import { locales } from "@/middleware";
+import type { InvoicesResponse } from "@/app/(app)/orders/[orderId]/edit/components/Payments";
+import type { locales } from "@/middleware";
 
 export type User = {
 	id: number;

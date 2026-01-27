@@ -1,13 +1,13 @@
+import { CoinsIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import React from "react";
 import { useFormContext } from "react-hook-form";
-import { orderRequest } from "../page";
+import { Button } from "@/components/ui/button";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { RiyalIcon } from "@/components/ui/icons";
 import { Separator } from "@/components/ui/separator";
 import { useCustomer } from "@/hooks/customer";
-import { CoinsIcon } from "lucide-react";
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
-import { Button } from "@/components/ui/button";
-import { useTranslations } from "next-intl";
+import type { orderRequest } from "../page";
 
 export const InvoiceCard = ({ customerId }: { customerId: number }) => {
 	const orderForm = useFormContext();
@@ -128,7 +128,12 @@ export const InvoiceCard = ({ customerId }: { customerId: number }) => {
 						<FieldLabel>{t("notify_customer")}</FieldLabel>
 					</Field>
 
-					<Button type="submit">{t("send_order")}</Button>
+					<Button
+						onClick={() => console.log(orderForm.formState.errors)}
+						type="submit"
+					>
+						{t("send_order")}
+					</Button>
 				</FieldGroup>
 			</div>
 		</div>

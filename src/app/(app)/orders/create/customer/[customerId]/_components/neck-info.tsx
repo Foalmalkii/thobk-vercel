@@ -1,3 +1,11 @@
+import { useAtom } from "jotai";
+import { useTranslations } from "next-intl";
+import React, { useEffect } from "react";
+import { Controller, useFormContext } from "react-hook-form";
+import z from "zod";
+import { InputsGrid } from "@/app/(app)/customers/[customerId]/measurements/create/_components/layout/inputs-grid";
+import { measurementSchema } from "@/app/(app)/customers/[customerId]/measurements/create/_components/measurements/schema";
+import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import {
 	Select,
@@ -7,15 +15,8 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import React, { useEffect } from "react";
-import { Controller, useFormContext } from "react-hook-form";
-import z from "zod";
-import { useTranslations } from "next-intl";
-import { useAtom } from "jotai";
+import { Textarea } from "@/components/ui/textarea";
 import { neckInfoAtom } from "@/lib/atoms";
-import { Field, FieldLabel } from "@/components/ui/field";
-import { InputsGrid } from "@/app/(app)/customers/[customerId]/measurements/create/_components/layout/inputs-grid";
-import { measurementSchema } from "@/app/(app)/customers/[customerId]/measurements/create/_components/measurements/schema";
 
 export const NeckMeasurementInfo = ({
 	orderItemIndex,
@@ -33,7 +34,7 @@ export const NeckMeasurementInfo = ({
 
 	return (
 		<div className="flex flex-col gap-4">
-			<h1 className="text-xl font-bold">مواصفات الرقبة</h1>
+			<h1 className="text-xl font-bold">{t("neck")}</h1>
 			<InputsGrid>
 				<Controller
 					control={control}
@@ -89,6 +90,9 @@ export const NeckMeasurementInfo = ({
 					}}
 				/>
 				{Object.keys(neckValues).map((key) => {
+					// Skip neckNotes here as it will be rendered separately
+					if (key === "neckNotes") return null;
+
 					const fieldZod =
 						measurementSchema.shape.neck.shape[
 							key as keyof typeof measurementSchema.shape.neck.shape
@@ -176,6 +180,32 @@ export const NeckMeasurementInfo = ({
 					);
 				})}
 			</InputsGrid>
+
+			{/* Render neckNotes as textarea outside the grid */}
+			{Object.hasOwn(neckValues, "neckNotes") && (
+				<Controller
+					control={control}
+					name={`items.${orderItemIndex}.neck.neckNotes`}
+					render={({ field, fieldState }) => {
+						const value = watch(`items.${orderItemIndex}.neck.neckNotes`);
+						return (
+							<Field>
+								<FieldLabel>{t("neck_neckNotes")}</FieldLabel>
+								<Textarea
+									placeholder={`${t("neck_neckNotes")}...`}
+									{...field}
+									value={field.value || ""}
+									className={
+										value &&
+										"border-blue-700 bg-blue-100 focus:outline-0 focus-visible:ring-0"
+									}
+									rows={4}
+								/>
+							</Field>
+						);
+					}}
+				/>
+			)}
 		</div>
 	);
 };

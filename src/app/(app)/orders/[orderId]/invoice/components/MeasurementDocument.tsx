@@ -1,6 +1,6 @@
-import { GetBranch, GetOrder } from "@/lib/types";
 import { Document } from "@react-pdf/renderer";
 import React from "react";
+import type { GetBranch, GetOrder } from "@/lib/types";
 import { MeasurementPage } from "./MeasurementPage";
 
 export const MeasurementDocument = ({

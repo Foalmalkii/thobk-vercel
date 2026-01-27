@@ -1,22 +1,25 @@
+import { Provider, useAtom } from "jotai";
+import { CopyIcon, TrashIcon } from "lucide-react";
+import React, { useMemo, useState } from "react";
+import { Controller, useFormContext } from "react-hook-form";
 import { AddFabricDialog } from "@/app/(app)/orders/[orderId]/edit/components/AddFabricDialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { activeOrderCustomerIdAtom } from "@/lib/atoms";
-import { Provider, useAtom } from "jotai";
-import { TrashIcon, CheckCircle2Icon } from "lucide-react";
-import React, { useState, useMemo } from "react";
-import { useFormContext } from "react-hook-form";
+import { FabricSelect } from "../FabricSelect";
 import { NewMeasurementDialog } from "../NewMeasurementDialog";
 
 export const OrderItemCard = ({
 	index,
 	onRemove,
+	onCopy,
 }: {
 	index: number;
 	onRemove: () => void;
+	onCopy: () => void;
 }) => {
-	const { register, watch } = useFormContext();
+	const { register, watch, control, setValue } = useFormContext();
 	const [customerId] = useAtom(activeOrderCustomerIdAtom);
 	const qty = watch(`items.${index}.quantity`);
 	const price = watch(`items.${index}.unitPrice`);
@@ -50,7 +53,6 @@ export const OrderItemCard = ({
 	};
 
 	const hasMeasurement =
-		hasValue(name) ||
 		hasValue(thobeType) ||
 		hasValue(neckImg) ||
 		hasValue(chestPocketImg) ||
@@ -63,24 +65,26 @@ export const OrderItemCard = ({
 		hasObjectValue(sidePockets) ||
 		hasObjectValue(jabzoor);
 
-	console.log("Measurement check:", {
-		name,
-		thobeType,
-		general,
-		hasMeasurement,
-	});
+	const handleFabricCreated = (fabricId: number) => {
+		setValue(`items.${index}.fabricId`, fabricId);
+	};
 
 	return (
 		<TableRow>
 			<TableCell>
 				<div className="flex gap-1">
-					<Input {...register(`items.${index}.fabricType`)} />
-					<AddFabricDialog />
+					<Controller
+						name={`items.${index}.fabricId`}
+						control={control}
+						render={({ field }) => (
+							<FabricSelect
+								value={field.value}
+								onValueChange={field.onChange}
+							/>
+						)}
+					/>
+					<AddFabricDialog onFabricCreated={handleFabricCreated} />
 				</div>
-			</TableCell>
-
-			<TableCell>
-				<Input {...register(`items.${index}.color`)} />
 			</TableCell>
 
 			<TableCell className="text-center">
@@ -93,13 +97,6 @@ export const OrderItemCard = ({
 						hasMeasurement={hasMeasurement}
 					/>
 				</Provider>
-				{/*hasMeasurement && (
-					<div className="flex items-center justify-center gap-1 text-green-600 text-xs mt-1">
-						<CheckCircle2Icon className="w-3 h-3" />
-						<span>Saved</span>
-					</div>
-				)
-				*/}
 			</TableCell>
 
 			<TableCell>
@@ -125,13 +122,22 @@ export const OrderItemCard = ({
 			</TableCell>
 
 			<TableCell>
-				<Button
-					type="button"
-					onClick={onRemove}
-					className="aspect-square h-auto w-auto p-2 bg-transparent border border-red-400 hover:bg-transparent bg-red-100"
-				>
-					<TrashIcon className="text-red-400" />
-				</Button>
+				<div className="flex gap-2">
+					<Button
+						type="button"
+						onClick={onCopy}
+						className="aspect-square h-auto w-auto p-2 bg-transparent border border-blue-400 hover:bg-transparent bg-blue-100"
+					>
+						<CopyIcon className="text-blue-400 w-4 h-4" />
+					</Button>
+					<Button
+						type="button"
+						onClick={onRemove}
+						className="aspect-square h-auto w-auto p-2 bg-transparent border border-red-400 hover:bg-transparent bg-red-100"
+					>
+						<TrashIcon className="text-red-400 w-4 h-4" />
+					</Button>
+				</div>
 			</TableCell>
 		</TableRow>
 	);

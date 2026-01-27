@@ -1,7 +1,12 @@
 "use client";
+import { ArrowRight, Plus, Search, Users } from "lucide-react";
+import Link from "next/link";
+import { useTranslations } from "next-intl";
+import React, { useEffect, useState } from "react";
 import { SearchInput } from "@/components/forms/search-input";
 import { CreateCustomer } from "@/components/shared/create-customer";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
 	Table,
 	TableBody,
@@ -10,12 +15,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useCustomers } from "@/hooks/customers";
-import { useTranslations } from "next-intl";
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import { Users, Plus, Search, ArrowRight } from "lucide-react";
 
 export default function OrdersCreate() {
 	const t = useTranslations("orders");
@@ -28,7 +28,7 @@ export default function OrdersCreate() {
 	}, [openCreateCustomer]);
 
 	return (
-		<div className="space-y-6 p-6" dir="rtl">
+		<div className="space-y-6 p-6">
 			<CreateCustomer
 				open={openCreateCustomer}
 				setOpen={setOpenCreateCustomer}

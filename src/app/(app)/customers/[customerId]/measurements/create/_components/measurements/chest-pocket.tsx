@@ -1,7 +1,10 @@
+import { useAtom } from "jotai";
+import { useTranslations } from "next-intl";
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { CreateMeasurementSectionContainer } from "../layout/section-container";
-import { InputsGrid } from "../layout/inputs-grid";
+import z from "zod";
+import { Field, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 import { InputWrapper } from "@/components/ui/input-wrapper";
 import { Label } from "@/components/ui/label";
 import {
@@ -12,13 +15,10 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { measurementSchema } from "./schema";
-import { useTranslations } from "next-intl";
-import z from "zod";
-import { useAtom } from "jotai";
 import { chestPocketInfoAtom } from "@/lib/atoms";
-import { Field, FieldLabel } from "@/components/ui/field";
+import { InputsGrid } from "../layout/inputs-grid";
+import { CreateMeasurementSectionContainer } from "../layout/section-container";
+import { measurementSchema } from "./schema";
 
 export const ChestPocketMeasurementInfo = () => {
 	const { watch, register, control } = useFormContext();

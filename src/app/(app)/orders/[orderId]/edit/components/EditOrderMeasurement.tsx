@@ -1,32 +1,24 @@
-import { useCustomer } from "@/hooks/customer";
-import { useMeasurements } from "@/hooks/measurements";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useAtom } from "jotai";
+import { CircleAlertIcon, SaveIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import React, { SetStateAction } from "react";
-import { Loading } from "@/components/layout/loading";
-import { Separator } from "@/components/ui/separator";
-
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import z from "zod";
 import {
 	Controller,
 	FormProvider,
+	UseFormSetValue,
 	useForm,
 	useFormContext,
-	UseFormSetValue,
 } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import z from "zod";
+import { MeasurementSelector } from "@/app/(app)/customers/[customerId]/measurements/create/_components/MeasurementSelector";
+import { orderRequest } from "@/app/(app)/orders/create/customer/[customerId]/page";
+import { Loading } from "@/components/layout/loading";
 
 import { Button } from "@/components/ui/button";
-import { CircleAlertIcon, SaveIcon } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Field, FieldLabel } from "@/components/ui/field";
-import axios from "@/lib/axios";
-import { useAuth } from "@/hooks/auth";
-import { orderRequest } from "@/app/(app)/orders/create/customer/[customerId]/page";
-import { useListMeasurements } from "@/hooks/measurements/listMeasurements";
-
-import { useAtom } from "jotai";
-
+import { Input } from "@/components/ui/input";
 import {
 	Select,
 	SelectContent,
@@ -34,15 +26,20 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { MeasurementSelector } from "@/app/(app)/customers/[customerId]/measurements/create/_components/MeasurementSelector";
-import { EditGeneralMeasurementInfo } from "./EditGeneralInfo";
-import { EditNeckMeasurementInfo } from "./EditNeckInfo";
+import { Separator } from "@/components/ui/separator";
+import { useAuth } from "@/hooks/auth";
+import { useCustomer } from "@/hooks/customer";
+import { useMeasurements } from "@/hooks/measurements";
+import { useListMeasurements } from "@/hooks/measurements/listMeasurements";
+import axios from "@/lib/axios";
+import { editMeasurementSchema, editOrderSchema } from "../page";
 import { EditChestPocketMeasurementInfo } from "./EditChestPocket";
+import { EditGeneralMeasurementInfo } from "./EditGeneralInfo";
 import { EditJabzoorMeasurementInfo } from "./EditJabzoor";
+import { EditNeckMeasurementInfo } from "./EditNeckInfo";
 import { EditSidePocketsMeasurementsInfo } from "./EditSidePockets";
 import { EditThobeImage } from "./EditThobeImage";
 import { EditWristInfo } from "./EditWristInfo";
-import { editMeasurementSchema, editOrderSchema } from "../page";
 
 export const EditOrderMeasurementDialog = ({
 	orderItemIndexNumber,

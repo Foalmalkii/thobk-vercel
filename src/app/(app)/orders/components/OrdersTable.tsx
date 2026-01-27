@@ -1,3 +1,5 @@
+import { useTranslations } from "next-intl";
+import React from "react";
 import { Button } from "@/components/ui/button";
 import {
 	Table,
@@ -7,12 +9,10 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { listOrderResponse } from "@/hooks/orders/listOrders";
-import React from "react";
-import { OrderStatusDropdown } from "./OrderStatusDropdown";
-import { OrderOperationsDropdown } from "./OrderOperationsDropdown";
 import { useGetBranch } from "@/hooks/branches/getBranch";
-import { useTranslations } from "next-intl";
+import type { listOrderResponse } from "@/hooks/orders/listOrders";
+import { OrderOperationsDropdown } from "./OrderOperationsDropdown";
+import { OrderStatusDropdown } from "./OrderStatusDropdown";
 
 export const OrdersTable = ({
 	orders,

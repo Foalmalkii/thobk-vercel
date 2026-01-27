@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 
 import "../globals.css";
 
+import { DirectionProvider } from "@radix-ui/react-direction";
 import { IBM_Plex_Sans_Arabic } from "next/font/google";
 import { NextIntlClientProvider, useLocale } from "next-intl";
-import { getDirection } from "@/lib/types";
-import { useAuth } from "@/hooks/auth";
-import { DirectionProvider } from "@radix-ui/react-direction";
 import { DirectionLayout } from "@/components/layout/DirectionLayout";
+import { useAuth } from "@/hooks/auth";
+import { getDirection } from "@/lib/types";
 
 const ibmPlex = IBM_Plex_Sans_Arabic({
 	subsets: ["arabic"],

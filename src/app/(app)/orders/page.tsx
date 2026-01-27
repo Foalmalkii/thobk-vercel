@@ -1,4 +1,7 @@
 "use client";
+import Link from "next/link";
+import { useTranslations } from "next-intl";
+import React from "react";
 import { SearchInput } from "@/components/forms/search-input";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,12 +12,9 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { useListOrders } from "@/hooks/orders/listOrders";
-import { useTranslations } from "next-intl";
-import Link from "next/link";
-import React from "react";
-import { OrdersTable } from "./components/OrdersTable";
 import { useAuth } from "@/hooks/auth";
+import { useListOrders } from "@/hooks/orders/listOrders";
+import { OrdersTable } from "./components/OrdersTable";
 
 export default function OrdersPage() {
 	const t = useTranslations("orders");

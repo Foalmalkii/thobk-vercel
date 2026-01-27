@@ -1,43 +1,22 @@
-import { useCustomer } from "@/hooks/customer";
-import { useMeasurements } from "@/hooks/measurements";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useAtom } from "jotai";
+import { CircleAlertIcon, SaveIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import React, { SetStateAction } from "react";
-import { Loading } from "@/components/layout/loading";
-import { Separator } from "@/components/ui/separator";
-
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import z from "zod";
 import {
 	Controller,
 	FormProvider,
+	UseFormSetValue,
 	useForm,
 	useFormContext,
-	UseFormSetValue,
 } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ThobeImage } from "./measurements/thobe-image";
-import { GeneralMeasurementInfo } from "./measurements/general-info";
-import { NeckMeasurementInfo } from "./measurements/neck-info";
-import { WristInfro } from "./measurements/wrist-info";
-import { measurementSchema } from "./measurements/schema";
-import { ChestPocketMeasurementInfo } from "./measurements/chest-pocket";
-import { SidePocketsMeasurementsInfo } from "./measurements/side-pockets";
-import { JabzoorMeasurementInfo } from "./measurements/jabzoor";
-import { Button } from "@/components/ui/button";
-import { CircleAlertIcon, SaveIcon } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Field, FieldLabel } from "@/components/ui/field";
-import axios from "@/lib/axios";
-import { useAuth } from "@/hooks/auth";
+import type z from "zod";
 import { orderRequest } from "@/app/(app)/orders/create/customer/[customerId]/page";
-import { useListMeasurements } from "@/hooks/measurements/listMeasurements";
-import { MeasurementSelector } from "./MeasurementSelector";
-import { useAtom } from "jotai";
-import {
-	openCreateMeasurement,
-	openCreateMeasurementAtom,
-	selectedMeasurementProfileId,
-} from "@/lib/atoms";
+import { Loading } from "@/components/layout/loading";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Field, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 import {
 	Select,
 	SelectContent,
@@ -45,6 +24,26 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
+import { useAuth } from "@/hooks/auth";
+import { useCustomer } from "@/hooks/customer";
+import { useMeasurements } from "@/hooks/measurements";
+import { useListMeasurements } from "@/hooks/measurements/listMeasurements";
+import {
+	openCreateMeasurement,
+	openCreateMeasurementAtom,
+	selectedMeasurementProfileId,
+} from "@/lib/atoms";
+import axios from "@/lib/axios";
+import { MeasurementSelector } from "./MeasurementSelector";
+import { ChestPocketMeasurementInfo } from "./measurements/chest-pocket";
+import { GeneralMeasurementInfo } from "./measurements/general-info";
+import { JabzoorMeasurementInfo } from "./measurements/jabzoor";
+import { NeckMeasurementInfo } from "./measurements/neck-info";
+import { measurementSchema } from "./measurements/schema";
+import { SidePocketsMeasurementsInfo } from "./measurements/side-pockets";
+import { ThobeImage } from "./measurements/thobe-image";
+import { WristInfro } from "./measurements/wrist-info";
 
 export const CreateMeasurementDialog = ({
 	customerId,

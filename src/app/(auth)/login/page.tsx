@@ -1,10 +1,10 @@
 "use client";
 import { useTranslations } from "next-intl";
 import React from "react";
-import { LoginForm } from "./_components/login-form";
-import { useAuth } from "@/hooks/auth";
-import { Spinner } from "@/components/ui/spinner";
 import { Loading } from "@/components/layout/loading";
+import { Spinner } from "@/components/ui/spinner";
+import { useAuth } from "@/hooks/auth";
+import { LoginForm } from "./_components/login-form";
 
 export default function Login() {
 	const t = useTranslations("auth");

@@ -1,19 +1,18 @@
 import type { Metadata } from "next";
 
 import "../globals.css";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-sidebar";
-
+import { DirectionProvider } from "@radix-ui/react-direction";
 import { IBM_Plex_Sans_Arabic } from "next/font/google";
 import { NextIntlClientProvider, useLocale } from "next-intl";
-import { getDirection } from "@/lib/types";
-import { AuthLayout } from "@/components/layout/auth-layout";
-import { Navbar } from "@/components/layout/navbar/navbar";
-import { BranchLayout } from "@/components/layout/branch-layout";
-import { JotaiLayout } from "@/components/layout/jotai-layout";
-import { DirectionProvider } from "@radix-ui/react-direction";
-import { DirectionLayout } from "@/components/layout/DirectionLayout";
 import { Toaster } from "sonner";
+import { AppSidebar } from "@/components/app-sidebar";
+import { AuthLayout } from "@/components/layout/auth-layout";
+import { BranchLayout } from "@/components/layout/branch-layout";
+import { DirectionLayout } from "@/components/layout/DirectionLayout";
+import { JotaiLayout } from "@/components/layout/jotai-layout";
+import { Navbar } from "@/components/layout/navbar/navbar";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { getDirection } from "@/lib/types";
 
 const ibmPlex = IBM_Plex_Sans_Arabic({
 	subsets: ["arabic"],
@@ -46,10 +45,9 @@ export default function RootLayout({
 										<Navbar />
 										<BranchLayout>
 											<div className="p-8 ">{children}</div>
-												<Toaster/>
+											<Toaster />
 										</BranchLayout>
 									</main>
-								
 								</SidebarProvider>
 							</DirectionLayout>
 						</NextIntlClientProvider>

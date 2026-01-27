@@ -1,3 +1,10 @@
+import { useAtom } from "jotai";
+import { useTranslations } from "next-intl";
+import React from "react";
+import { Controller, useFormContext } from "react-hook-form";
+import z from "zod";
+import { Field, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 import { InputWrapper } from "@/components/ui/input-wrapper";
 import { Label } from "@/components/ui/label";
 import {
@@ -8,17 +15,9 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import React from "react";
-import { Controller, useFormContext } from "react-hook-form";
-
-import z from "zod";
-import { useTranslations } from "next-intl";
-import { Input } from "@/components/ui/input";
-import { measurementSchema } from "./EditMeasurementSchema";
-import { useAtom } from "jotai";
 import { wristInfoAtom } from "@/lib/atoms";
-import { Field, FieldLabel } from "@/components/ui/field";
 import { editMeasurementSchema } from "../page";
+import { measurementSchema } from "./EditMeasurementSchema";
 
 export const EditWristInfo = ({
 	orderItemIndexNumber,

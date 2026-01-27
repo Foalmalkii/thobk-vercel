@@ -1,3 +1,11 @@
+import { useAtom } from "jotai";
+import { useTranslations } from "next-intl";
+import React from "react";
+import { Controller, useFormContext } from "react-hook-form";
+import z from "zod";
+import { measurementSchema } from "@/app/(app)/customers/[customerId]/measurements/create/_components/measurements/schema";
+import { Field, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 import {
 	Select,
 	SelectContent,
@@ -6,15 +14,8 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import React from "react";
-import { Controller, useFormContext } from "react-hook-form";
-import z from "zod";
-import { useTranslations } from "next-intl";
-import { Input } from "@/components/ui/input";
-import { useAtom } from "jotai";
+import { Textarea } from "@/components/ui/textarea";
 import { wristInfoAtom } from "@/lib/atoms";
-import { Field, FieldLabel } from "@/components/ui/field";
-import { measurementSchema } from "@/app/(app)/customers/[customerId]/measurements/create/_components/measurements/schema";
 
 export const WristInfro = ({ orderItemIndex }: { orderItemIndex: number }) => {
 	const { watch, register, control } = useFormContext();
@@ -24,7 +25,7 @@ export const WristInfro = ({ orderItemIndex }: { orderItemIndex: number }) => {
 
 	return (
 		<div className="flex flex-col gap-4">
-			<h1 className="text-xl font-bold">تفاصيل المعصم</h1>
+			<h1 className="text-xl font-bold">{t("wrist")}</h1>
 			<div className="grid grid-cols-4 gap-4 w-full">
 				<Controller
 					control={control}
@@ -80,6 +81,9 @@ export const WristInfro = ({ orderItemIndex }: { orderItemIndex: number }) => {
 					}}
 				/>
 				{Object.keys(wristValues ?? {}).map((key) => {
+					// Skip wristNotes here as it will be rendered separately
+					if (key === "wristNotes") return null;
+
 					const fieldZod =
 						measurementSchema.shape.wrist.shape[
 							key as keyof typeof measurementSchema.shape.wrist.shape
@@ -163,6 +167,32 @@ export const WristInfro = ({ orderItemIndex }: { orderItemIndex: number }) => {
 					);
 				})}
 			</div>
+
+			{/* Render wristNotes as textarea outside the grid */}
+			{wristValues?.hasOwnProperty("wristNotes") && (
+				<Controller
+					control={control}
+					name={`items.${orderItemIndex}.wrist.wristNotes`}
+					render={({ field, fieldState }) => {
+						const value = watch(`items.${orderItemIndex}.wrist.wristNotes`);
+						return (
+							<Field>
+								<FieldLabel>{t("wrist_wristNotes")}</FieldLabel>
+								<Textarea
+									placeholder={`${t("wrist_wristNotes")}...`}
+									{...field}
+									value={field.value || ""}
+									className={
+										value &&
+										"border-blue-700 bg-blue-100 focus:outline-0 focus-visible:ring-0"
+									}
+									rows={4}
+								/>
+							</Field>
+						);
+					}}
+				/>
+			)}
 		</div>
 	);
 };

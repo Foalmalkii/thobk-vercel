@@ -1,26 +1,25 @@
 "use client";
-import { CreateMeasurementDialog } from "@/app/(app)/customers/[customerId]/measurements/create/_components/create-measurement";
-import { SearchInput } from "@/components/forms/search-input";
-import { Loading } from "@/components/layout/loading";
-
-import { useCustomer } from "@/hooks/customer";
-
-import { useTranslations } from "next-intl";
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import useSWR from "swr";
-import { OrderItem } from "./_components/sections/order-items";
-import z from "zod";
-import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAtom } from "jotai";
-import { activeOrderCustomerIdAtom } from "@/lib/atoms";
-import { InvoiceCard } from "./_components/InvoiceCard";
-import { GeneralInfo } from "./_components/GeneralInfo";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/hooks/auth";
-import axios from "@/lib/axios";
+
+import { useTranslations } from "next-intl";
+import React, { useEffect, useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import useSWR from "swr";
+import z from "zod";
+import { CreateMeasurementDialog } from "@/app/(app)/customers/[customerId]/measurements/create/_components/create-measurement";
 import { measurementSchema } from "@/app/(app)/customers/[customerId]/measurements/create/_components/measurements/schema";
+import { SearchInput } from "@/components/forms/search-input";
+import { Loading } from "@/components/layout/loading";
+import { useAuth } from "@/hooks/auth";
+import { useCustomer } from "@/hooks/customer";
+import { activeOrderCustomerIdAtom } from "@/lib/atoms";
+import axios from "@/lib/axios";
+import { GeneralInfo } from "./_components/GeneralInfo";
+import { InvoiceCard } from "./_components/InvoiceCard";
+import { OrderItem } from "./_components/sections/order-items";
 
 export const orderSchema = z.object({
 	customerId: z.number(),
@@ -31,10 +30,8 @@ export const orderSchema = z.object({
 		.array(
 			z
 				.object({
-					fabricType: z.string(),
-					color: z.string(),
+					fabricId: z.number().nullable(),
 					unitPrice: z.number(),
-					measurementId: z.number(),
 					quantity: z.number(),
 				})
 				.merge(measurementSchema),
@@ -69,8 +66,31 @@ export default function OrderNewCustomerPage({
 	if (isLoadingCustomer || !isAtomInitialized) return <Loading />;
 
 	const onSubmit = async (data: orderRequest) => {
+		// Transform items to flatten nested objects
+		const transformedData = {
+			...data,
+			items: data.items.map((item) => ({
+				fabricId: item.fabricId,
+				unitPrice: item.unitPrice,
+				quantity: item.quantity,
+				name: item.name,
+				thobeType: item.thobeType,
+				chestPocketImg: item.chestPocketImg,
+				jabzoorImg: item.jabzoorImg,
+				neckImg: item.neckImg,
+				wristImg: item.wristImg,
+				// Spread all nested objects
+				...item.general,
+				...item.neck,
+				...item.wrist,
+				...item.chestPocket,
+				...item.sidePockets,
+				...item.jabzoor,
+			})),
+		};
+		console.log(transformedData);
 		await axios
-			.post(`/api/v1/branch/${isInBranch}/order`, data)
+			.post(`/api/v1/branch/${isInBranch}/order`, transformedData)
 			.then((res) => console.log(res))
 			.catch((e) => console.error(e));
 		router.push("/orders");
@@ -81,23 +101,33 @@ export default function OrderNewCustomerPage({
 			<form onSubmit={form.handleSubmit(onSubmit)}>
 				<div className="flex justify-between max-w-full overflow-hidden gap-4">
 					<div className=" flex flex-1 min-w-0 flex-col gap-4">
-						<div className="flex items-center gap-4 bg-zinc-100 rounded-xl p-5">
-							<div className="bg-white rounded-xl p-2 aspect-square w-auto flex flex-col items-center text-center gap-1">
-								<span>الكود</span>
-								<span>
-									#{customer?.id < 10 ? "00" : customer?.id < 100 && "0"}
+						<div className="flex items-center gap-4 bg-white rounded-2xl p-5 border">
+							<div className="bg-gray-900 rounded-xl p-4 aspect-square w-20 flex flex-col items-center justify-center text-center gap-0.5">
+								<span className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest">
+									{t("code")}
+								</span>
+								<span className="text-xl font-black text-white">
+									#{customer?.id < 10 ? "00" : customer?.id < 100 ? "0" : ""}
 									{customer?.id}
 								</span>
 							</div>
-							<div className="h-full flex flex-col justify-between gap-1  w-full">
-								<p className="bg-white p-1 rounded-lg flex justify-between px-4">
-									<span>{t("customer_name")}:</span>{" "}
-									<span>{customer?.name}</span>
-								</p>
-								<p className="bg-white p-1 rounded-lg flex justify-between px-4">
-									<span>{t("customer_phone")}:</span>{" "}
-									<span>{customer?.phone}</span>
-								</p>
+							<div className="flex-1 flex flex-col gap-3">
+								<div className="flex justify-between items-center pb-2 border-b-2 border-gray-100">
+									<span className="text-xs font-bold text-gray-500 uppercase tracking-wide">
+										{t("customer_name")}
+									</span>
+									<span className="text-base font-bold text-gray-900">
+										{customer?.name}
+									</span>
+								</div>
+								<div className="flex justify-between items-center pb-2 border-b-2 border-gray-100">
+									<span className="text-xs font-bold text-gray-500 uppercase tracking-wide">
+										{t("customer_phone")}
+									</span>
+									<span className="text-base font-bold text-gray-900 direction-ltr">
+										{customer?.phone}
+									</span>
+								</div>
 							</div>
 						</div>
 						<OrderItem />

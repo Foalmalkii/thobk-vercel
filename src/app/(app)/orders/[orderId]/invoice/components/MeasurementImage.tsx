@@ -1,6 +1,6 @@
-import { OrderItem } from "@/lib/types";
 import { Image, Text, View } from "@react-pdf/renderer";
 import React, { useState } from "react";
+import type { OrderItem } from "@/lib/types";
 import { pdfStyles } from "../page";
 import {
 	chestPocketMessages,
@@ -45,7 +45,7 @@ export const MeasurementImage = ({
 		jabzoorPushMaterial: orderItem?.jabzoorPushMaterial,
 	};
 
-	console.log(neckInfo);
+	console.log(orderItem);
 	return (
 		<View
 			style={{
@@ -65,16 +65,6 @@ export const MeasurementImage = ({
 				style={{
 					position: "absolute",
 					width: "9.5%",
-					right: "20.5%",
-
-					transformOrigin: "translateX(50%)",
-				}}
-			/>
-			<Image
-				src={`/images/measurements/NECK_${orderItem?.neckImg}.png`}
-				style={{
-					position: "absolute",
-					width: "9.5%",
 					right: "86.5%",
 					top: "5%",
 					transformOrigin: "translateX(50%)",
@@ -85,32 +75,9 @@ export const MeasurementImage = ({
 				src={`/images/measurements/CUFF_${orderItem?.wristImg}.png`}
 				style={{
 					position: "absolute",
-					width: "10.5%",
-					right: "28.7%",
-					top: "27%",
-					transformOrigin: "translateX(50%)",
-				}}
-			/>
-			<Image
-				src={`/images/measurements/CUFF_${orderItem?.wristImg}.png`}
-				style={{
-					position: "absolute",
 					width: "9.5%",
 					right: "87.4%",
 					top: "24%",
-					transformOrigin: "translateX(50%)",
-				}}
-			/>
-
-			<Image
-				src={`/images/measurements/CHEST_POCKET_${orderItem?.chestPocketImg}.png`}
-				style={{
-					position: "absolute",
-					width: "7%",
-					top: "17.5%",
-					right: "17.7%",
-					opacity: "0.8",
-
 					transformOrigin: "translateX(50%)",
 				}}
 			/>
@@ -130,19 +97,6 @@ export const MeasurementImage = ({
 				src={`/images/measurements/ZIPPER_${orderItem?.jabzoorImg}.png`}
 				style={{
 					position: "absolute",
-					width: "15%",
-					top: "7.2%",
-					right: "17.7%",
-					opacity: "0.8",
-
-					transformOrigin: "translateX(50%)",
-				}}
-			/>
-
-			<Image
-				src={`/images/measurements/ZIPPER_${orderItem?.jabzoorImg}.png`}
-				style={{
-					position: "absolute",
 					width: "10%",
 					right: "86%",
 					top: "66.5%",
@@ -150,154 +104,162 @@ export const MeasurementImage = ({
 				}}
 			/>
 
+			{/* FRONT LENGTH */}
 			<Text
 				style={{
 					position: "absolute",
-					top: "49.7%",
-					right: "2%",
+					top: "48.8%", // 51.3% + 2.2%
+					right: "20.7%", // 3.7% - 17.4%
 					fontSize: "9px",
 				}}
 			>
 				{orderItem?.generalThobeLength}
 			</Text>
+
+			{/* SLEEVE LENGTH */}
 			<Text
 				style={{
 					position: "absolute",
-					top: "27.5%",
-					right: "7%",
+					top: "31.2%", // 29% + 2.2%
+					right: "-8.5%", // 8.9% - 17.4%
 					fontSize: "9px",
 				}}
 			>
 				{orderItem?.generalSleeveLength}
 			</Text>
+
+			{/* UPPER SLEEVE WIDTH */}
 			<Text
 				style={{
 					position: "absolute",
-					top: "21.6%",
-					right: "12.4%",
+					top: "25.2%", // 23% + 2.2%
+					right: "-3.1%", // 14.3% - 17.4%
 					fontSize: "9px",
 				}}
 			>
 				{orderItem?.generalUpperSleeveWidth}
 			</Text>
+
+			{/* BACK LENGTH */}
 			<Text
 				style={{
 					position: "absolute",
-					top: "49.8%",
-					right: "45.5%",
+					top: "48.8%", // 51.3% + 2.2%
+					right: "64.5%", // 47.3% - 17.4%
 					fontSize: "9px",
 					textAlign: "center",
 				}}
 			>
 				{orderItem?.generalThobeBackLength}
 			</Text>
+
+			{/* SHOULDER WIDTH */}
 			<Text
 				style={{
 					position: "absolute",
-					top: "9.9%",
-					right: "61%",
+					top: "14%", // 11.3% + 2.2%
+					right: "46%", // 62.9% - 17.4%
 					fontSize: "9px",
-					textAlign: "center",
+					transform: "translateX(50%) translateY(-50%)",
 				}}
 			>
 				{orderItem?.generalShoulderWidth}
 			</Text>
+
+			{/* MIDDLE SLEEVE WIDTH */}
 			<Text
 				style={{
 					position: "absolute",
-					top: "7.4%",
-					right: "32.5%",
-					fontSize: "9px",
-				}}
-			>
-				{orderItem?.generalShoulderRotation}
-			</Text>
-			<Text
-				style={{
-					position: "absolute",
-					top: "21.9%",
-					right: "38.9%",
+					top: "25.5%", // 23.3% + 2.2%
+					right: "23.4%", // 40.8% - 17.4%
 					fontSize: "9px",
 				}}
 			>
 				{orderItem?.generalMiddleSleeveWidth}
 			</Text>
+
+			{/* WRIST WIDTH */}
 			<Text
 				style={{
 					position: "absolute",
-					top: "38.4%",
-					right: "11.6%",
+					top: "42%", // 39.8% + 2.2%
+					right: "-3.9%", // 13.5% - 17.4%
 					fontSize: "9px",
 				}}
 			>
 				{orderItem?.generalWristWidth}
 			</Text>
+
+			{/* CHEST FRONT */}
 			<Text
 				style={{
 					position: "absolute",
-					top: "14.4%",
-					right: "27.6%",
+					top: "20%", // 15.8% + 2.2%
+					right: "48.5%", // 29.5% - 17.4%
 					fontSize: "9px",
 				}}
 			>
 				{orderItem?.generalChestFront}
 			</Text>
+
+			{/* CHEST FULL */}
 			<Text
 				style={{
 					position: "absolute",
-					top: "14.4%",
-					right: "61%",
-					fontSize: "9px",
-				}}
-			>
-				{orderItem?.generalChestBack}
-			</Text>
-			<Text
-				style={{
-					position: "absolute",
-					top: "19.1%",
-					right: "27.5%",
+					top: "13%", // 20.5% + 2.2%
+					right: "49.4%", // 29.4% - 17.4%
 					fontSize: "9px",
 				}}
 			>
 				{orderItem?.generalChestFull}
 			</Text>
+
+			{/* BOTTOM WIDTH */}
 			<Text
 				style={{
 					position: "absolute",
-					top: "92.9%",
-					right: "24%",
+					top: "97.2%", // 95% + 2.2%
+					right: "8.6%", // 26% - 17.4%
 					fontSize: "9px",
 				}}
 			>
 				{orderItem?.generalBottomWidth}
 			</Text>
+
+			{/* CUFF BOTTOM WIDTH */}
 			<Text
 				style={{
 					position: "absolute",
-					top: "87.2%",
-					right: "38%",
+					top: "91.2%", // 89% + 2.2%
+					right: "22.5%", // 39.9% - 17.4%
 					fontSize: "9px",
 				}}
 			>
 				{orderItem?.generalCuffBottomWidth}
 			</Text>
+
+			{/* WAIST WIDTH */}
 			<Text
 				style={{
 					position: "absolute",
-					top: "33.3%",
-					right: "23.5%",
+					top: "37.2%", // 35% + 2.2%
+					right: "53%", // 25.4% - 17.4%
 					fontSize: "9px",
+					transform: "translateX(50%) translateY(-50%)",
 				}}
 			>
 				{orderItem?.generalWaistWidth}
 			</Text>
+
+			{/* HIP WIDTH */}
 			<Text
 				style={{
 					position: "absolute",
-					top: "52.6%",
-					right: "23.5%",
+					top: "64.5%", // 54.3% + 2.2%
+					right: "53%", // 25.4% - 17.4%
 					fontSize: "9px",
+					transform: "translateX(50%) translateY(-50%)",
+					textAlign: "center",
 				}}
 			>
 				{orderItem?.generalHipWidth}

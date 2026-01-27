@@ -1,18 +1,18 @@
 "use client";
 
-import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-	Package,
-	TrendingUp,
-	Star,
-	Sparkles,
 	Calendar,
-	ShoppingBag,
 	DollarSign,
+	Package,
+	ShoppingBag,
+	Sparkles,
+	Star,
+	TrendingUp,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import React from "react";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function Page() {
 	const t = useTranslations("storage");

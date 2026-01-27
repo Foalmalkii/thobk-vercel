@@ -1,5 +1,24 @@
 "use client";
+import {
+	CogIcon,
+	FileIcon,
+	FilePlusIcon,
+	HomeIcon,
+	ListOrderedIcon,
+	PencilRulerIcon,
+	UserRoundPlusIcon,
+	Users2Icon,
+	UsersIcon,
+	WarehouseIcon,
+} from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
 import React from "react";
+import { useAuth } from "@/hooks/auth";
+import { getDirection } from "@/lib/types";
+import { CreditBadgeCard } from "./layout/CreditBadgeCard";
+import { ArrowLeftIcon, ArrowRightIcon, DigipLogo } from "./ui/icons";
 import {
 	Sidebar,
 	SidebarContent,
@@ -14,25 +33,6 @@ import {
 	SidebarSeparator,
 	useSidebar,
 } from "./ui/sidebar";
-import { ArrowLeftIcon, ArrowRightIcon, DigipLogo } from "./ui/icons";
-import Link from "next/link";
-import {
-	CogIcon,
-	FileIcon,
-	FilePlusIcon,
-	HomeIcon,
-	ListOrderedIcon,
-	PencilRulerIcon,
-	UserRoundPlusIcon,
-	Users2Icon,
-	UsersIcon,
-	WarehouseIcon,
-} from "lucide-react";
-import { usePathname } from "next/navigation";
-import { getDirection } from "@/lib/types";
-import { useLocale, useTranslations } from "next-intl";
-import { useAuth } from "@/hooks/auth";
-import { CreditBadgeCard } from "./layout/CreditBadgeCard";
 
 export const AppSidebar = () => {
 	const { open, setOpen, isMobile, setOpenMobile, openMobile } = useSidebar();

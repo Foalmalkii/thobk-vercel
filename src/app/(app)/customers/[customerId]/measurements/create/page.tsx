@@ -1,24 +1,23 @@
 "use client";
-import axios from "@/lib/axios";
-import { customer } from "@/lib/types";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
 import React, { useState } from "react";
-import useSWR from "swr";
-import { measurementSchema } from "./_schemas/measurementSchema";
-import z from "zod";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Separator } from "@/components/ui/separator";
+import useSWR from "swr";
+import type z from "zod";
 import { Loading } from "@/components/layout/loading";
-import { useCustomer } from "@/hooks/customer";
-import { useMeasurements } from "@/hooks/measurements";
-import Image from "next/image";
+import { Input } from "@/components/ui/input";
 import { InputWrapper } from "@/components/ui/input-wrapper";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
+import { useCustomer } from "@/hooks/customer";
+import { useMeasurements } from "@/hooks/measurements";
+import axios from "@/lib/axios";
+import { customer } from "@/lib/types";
 
 export default function CreateCustomerMeasurement({
 	params,

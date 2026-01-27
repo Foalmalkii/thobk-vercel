@@ -1,11 +1,11 @@
+import { useTranslations } from "next-intl";
 import React from "react";
 import { useFormContext } from "react-hook-form";
-import { InputWrapper } from "@/components/ui/input-wrapper";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { useTranslations } from "next-intl";
 import { InputsGrid } from "@/app/(app)/customers/[customerId]/measurements/create/_components/layout/inputs-grid";
 import { CreateMeasurementSectionContainer } from "@/app/(app)/customers/[customerId]/measurements/create/_components/layout/section-container";
+import { Input } from "@/components/ui/input";
+import { InputWrapper } from "@/components/ui/input-wrapper";
+import { Label } from "@/components/ui/label";
 
 export const EditSidePocketsMeasurementsInfo = ({
 	orderItemIndexNumber,
@@ -19,7 +19,7 @@ export const EditSidePocketsMeasurementsInfo = ({
 	const t = useTranslations("measurements");
 	return (
 		<CreateMeasurementSectionContainer>
-			<h1 className="text-xl font-bold">تفاصيل جيوب الثوب</h1>
+			<h1 className="text-xl font-bold">{t("sidePockets")}</h1>
 
 			<InputsGrid>
 				{Object.keys(sidePocketsValues ?? {}).map((key) => {

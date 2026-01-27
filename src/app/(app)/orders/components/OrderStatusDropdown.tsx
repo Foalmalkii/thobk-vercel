@@ -1,4 +1,13 @@
 import {
+	BoxIcon,
+	CheckCircleIcon,
+	PackageCheckIcon,
+	ScissorsIcon,
+	XCircleIcon,
+} from "lucide-react";
+import { useTranslations } from "next-intl";
+import React, { useState } from "react";
+import {
 	Select,
 	SelectContent,
 	SelectItem,
@@ -6,15 +15,6 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { ORDER_STATUS } from "@/lib/enums";
-import {
-	BoxIcon,
-	ScissorsIcon,
-	CheckCircleIcon,
-	PackageCheckIcon,
-	XCircleIcon,
-} from "lucide-react";
-import { useTranslations } from "next-intl";
-import React, { useState } from "react";
 
 const STATUS_CONFIG = {
 	received: {

@@ -12,12 +12,30 @@
 		"enabled": true,
 		"indentStyle": "tab"
 	},
+	"css": {
+		"parser": {
+			"tailwindDirectives": true
+		}
+	},
 	"linter": {
 		"enabled": true,
 		"rules": {
 			"recommended": true,
 			"performance": {
 				"noImgElement": "warn"
+			},
+			"suspicious": {
+				"noArrayIndexKey": "warn",
+				"noUnknownAtRules": "warn"
+			},
+			"correctness": {
+				"useJsxKeyInIterable": "warn",
+				"useExhaustiveDependencies": "warn"
+			},
+			"a11y": {
+				"useAltText": "warn",
+				"noSvgWithoutTitle": "warn",
+				"useSemanticElements": "warn"
 			}
 		}
 	},

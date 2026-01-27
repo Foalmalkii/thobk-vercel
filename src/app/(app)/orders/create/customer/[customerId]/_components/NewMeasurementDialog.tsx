@@ -1,16 +1,13 @@
-import { useCustomer } from "@/hooks/customer";
+import { CircleAlertIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import React from "react";
-import { Loading } from "@/components/layout/loading";
-import { Separator } from "@/components/ui/separator";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Controller, useFormContext } from "react-hook-form";
-
+import { measurementSchema } from "@/app/(app)/customers/[customerId]/measurements/create/_components/measurements/schema";
+import { Loading } from "@/components/layout/loading";
 import { Button } from "@/components/ui/button";
-import { CircleAlertIcon, XIcon } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Field, FieldLabel } from "@/components/ui/field";
-import { useAuth } from "@/hooks/auth";
+import { Input } from "@/components/ui/input";
 import {
 	Select,
 	SelectContent,
@@ -18,14 +15,16 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { ThobeImage } from "./thobe-image";
-import { GeneralMeasurementInfo } from "./general-info";
-import { NeckMeasurementInfo } from "./neck-info";
-import { WristInfro } from "./wrist-info";
+import { Separator } from "@/components/ui/separator";
+import { useAuth } from "@/hooks/auth";
+import { useCustomer } from "@/hooks/customer";
 import { ChestPocketMeasurementInfo } from "./chest-pocket";
+import { GeneralMeasurementInfo } from "./general-info";
 import { JabzoorMeasurementInfo } from "./jabzoor";
+import { NeckMeasurementInfo } from "./neck-info";
 import { SidePocketsMeasurementsInfo } from "./side-pockets";
-import { measurementSchema } from "@/app/(app)/customers/[customerId]/measurements/create/_components/measurements/schema";
+import { ThobeImage } from "./thobe-image";
+import { WristInfro } from "./wrist-info";
 
 export const NewMeasurementDialog = ({
 	customerId,

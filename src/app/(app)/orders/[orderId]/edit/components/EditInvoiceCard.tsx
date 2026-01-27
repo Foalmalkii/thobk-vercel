@@ -1,13 +1,13 @@
+import { CoinsIcon, CreditCardIcon } from "lucide-react";
 import React from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
-import { orderRequest } from "../page";
+import { Button } from "@/components/ui/button";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { RiyalIcon } from "@/components/ui/icons";
 import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/hooks/auth";
 import { useCustomer } from "@/hooks/customer";
-import { CoinsIcon, CreditCardIcon } from "lucide-react";
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
-import { Button } from "@/components/ui/button";
+import type { orderRequest } from "../page";
 
 export const EditInvoiceCard = () => {
 	const orderForm = useFormContext();
