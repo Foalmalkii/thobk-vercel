@@ -65,6 +65,10 @@ export const measurementSchema = z.object({
 		generalThobeLength: z.coerce.number().nonnegative().nullable(),
 		generalThobeBackLength: z.coerce.number().nonnegative().nullable(),
 		generalShoulderWidth: z.coerce.number().nonnegative().nullable(),
+
+		generalShoulderRight: z.coerce.number().nonnegative().nullable(),
+		generalShoulderLeft: z.coerce.number().nonnegative().nullable(),
+
 		generalShoulderRotation: z.coerce.number().nonnegative().nullable(),
 		generalSleeveLength: z.coerce.number().nonnegative().nullable(),
 		generalUpperSleeveWidth: z.coerce.number().nonnegative().nullable(),
@@ -79,51 +83,30 @@ export const measurementSchema = z.object({
 		generalSidePocket: z.coerce.number().nonnegative().nullable(),
 		generalWaistWidth: z.coerce.number().nonnegative().nullable(),
 		generalHipWidth: z.coerce.number().nonnegative().nullable(),
+		generalTakaleesLength: z.coerce.number().nonnegative().nullable(),
+		generalTakaleesWidth: z.coerce.number().nonnegative().nullable(),
 	}),
 
 	neck: z.object({
 		neckLength: z.coerce.number().nonnegative().nullable(),
 		neckBackLength: z.coerce.number().nonnegative().nullable(),
 		neckWidth: z.coerce.number().nonnegative().nullable(),
-		neckButtonCount: z.coerce.number().nonnegative().nullable(),
-
-		neckDesign: z
-			.enum(["plain", "v-neck", "french", "chinese", "royal"])
-			.nullable(),
-
-		neckShape: z.enum(["square", "rounded"]).nullable(),
-		neckFill: z.enum(["1", "2"]).nullable(),
-		neckButtonType: z.enum(["normal", "opposite"]).nullable(),
-		neckButtonholeType: z.enum(["normal", "arawi"]).nullable(),
-		neckButtonMaterial: z.enum(["plastic", "steel"]).nullable(),
-		neckButtonVisibility: z.enum(["visible", "invisibile"]).nullable(),
+		neckFill: z.coerce.number().nonnegative().nullable(),
+		neckNotes: z.string().nullable(),
 	}),
 
 	wrist: z.object({
 		wristCuffType: z.enum(["normal", "cufflinks"]).nullable(),
 		wristCuffLength: z.coerce.number().nonnegative().nullable(),
 		wristCuffWidth: z.coerce.number().nonnegative().nullable(),
-
-		wristDesign: z
-			.enum(["plain", "on", "minced", "rounded", "square", "french", "double"])
-			.nullable(),
-
-		wristButtonNumber: z.coerce.number().nonnegative().nullable(),
-		wristMaterialLayers: z.enum(["1", "2"]).nullable(),
-		wristSleeveCrumbNumber: z.enum(["0", "1", "2"]).nullable(),
+		wristNotes: z.string().nullable(),
 	}),
 
 	chestPocket: z.object({
 		chestPocketLength: z.coerce.number().nonnegative().nullable(),
 		chestPocketWidth: z.coerce.number().nonnegative().nullable(),
 		betweenChestPocketShoulder: z.coerce.number().nonnegative().nullable(),
-
-		chestPocketPenType: z.enum(["no", "halfLength", "fullLength"]).nullable(),
-
-		chestPocketDesign: z.enum(["official", "kuwaiti", "model"]).nullable(),
-
-		chestPocketShape: z.enum(["rounded", "square"]).nullable(),
-		chestPocketVisibility: z.enum(["visible", "invisible"]).nullable(),
+		chestPocketNotes: z.string().nullable(),
 	}),
 
 	sidePockets: z.object({
@@ -134,17 +117,10 @@ export const measurementSchema = z.object({
 	}),
 
 	jabzoor: z.object({
-		jabzoorHoleType: z.enum(["push", "buttons", "zip"]).nullable(),
 		jabzoorLength: z.coerce.number().nonnegative().nullable(),
 		jabzoorWidth: z.coerce.number().nonnegative().nullable(),
 
-		jabzoorDesign: z
-			.enum(["normal", "combination", "supportedStitch", "fill", "fullPush"])
-			.nullable(),
-
-		jabzoorVisibility: z.enum(["visible", "invisible"]).nullable(),
-		jabzoorShape: z.enum(["square", "rounded", "minced"]).nullable(),
-		jabzoorPushMaterial: z.enum(["plastic", "steel"]).nullable(),
+		jabzoorNotes: z.string().nullable(),
 	}),
 });
 export const defaultValues = {

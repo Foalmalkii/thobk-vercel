@@ -20,26 +20,77 @@ export const OrderItem = () => {
 	const items = watch("items") ?? [];
 	const isEmpty = fields.length === 0;
 
+	const handleAddItem = () => {
+		append({
+			fabricType: "",
+			color: "",
+			unitPrice: 0,
+			quantity: 1,
+			// Default measurement values
+			name: null,
+			thobeType: null,
+			neckImg: null,
+			chestPocketImg: null,
+			jabzoorImg: null,
+			wristImg: null,
+			general: {
+				generalThobeLength: null,
+				generalThobeBackLength: null,
+				generalShoulderWidth: null,
+				generalShoulderRight: null,
+				generalShoulderLeft: null,
+				generalSleeveLength: null,
+				generalUpperSleeveWidth: null,
+				generalMiddleSleeveWidth: null,
+				generalWristWidth: null,
+				generalChestFront: null,
+				generalChestFull: null,
+				generalBottomWidth: null,
+				generalCuffBottomWidth: null,
+				generalWaistWidth: null,
+				generalHipWidth: null,
+			},
+			neck: {
+				neckLength: null,
+				neckBackLength: null,
+				neckWidth: null,
+				neckFill: null,
+				neckNotes: null,
+			},
+			wrist: {
+				wristCuffType: null,
+				wristCuffLength: null,
+				wristCuffWidth: null,
+			},
+			chestPocket: {
+				chestPocketLength: null,
+				chestPocketWidth: null,
+				betweenChestPocketShoulder: null,
+				chestPocketPenType: null,
+			},
+			sidePockets: {
+				sidePhonePocketLength: null,
+				sidePhonePocketWidth: null,
+				sideWalletPocketLength: null,
+				sideWalletPocketWidth: null,
+			},
+			jabzoor: {
+				jabzoorLength: null,
+				jabzoorWidth: null,
+				jabzoorNotes: null,
+			},
+		});
+	};
+
 	return (
 		<div className="rounded-xl border p-6">
 			<div className="flex justify-between">
 				<h1 className="text-xl font-medium">{t("order_items")}</h1>
-				<Button
-					type="button"
-					onClick={() =>
-						append({
-							fabricType: "",
-							color: "",
-							unitPrice: 0,
-							measurementId: undefined,
-							quantity: 1,
-						})
-					}
-				>
+				<Button type="button" onClick={handleAddItem}>
 					{t("new_order_item")}
 				</Button>
 			</div>
-			<div className=" mt-4">
+			<div className="mt-4">
 				<Table className="">
 					<TableHeader>
 						<TableRow className="text-center">

@@ -20,6 +20,7 @@ import { GeneralInfo } from "./_components/GeneralInfo";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/auth";
 import axios from "@/lib/axios";
+import { measurementSchema } from "@/app/(app)/customers/[customerId]/measurements/create/_components/measurements/schema";
 
 export const orderSchema = z.object({
 	customerId: z.number(),
@@ -28,13 +29,15 @@ export const orderSchema = z.object({
 	notes: z.string(),
 	items: z
 		.array(
-			z.object({
-				fabricType: z.string(),
-				color: z.string(),
-				unitPrice: z.number(),
-				measurementId: z.number(),
-				quantity: z.number(),
-			}),
+			z
+				.object({
+					fabricType: z.string(),
+					color: z.string(),
+					unitPrice: z.number(),
+					measurementId: z.number(),
+					quantity: z.number(),
+				})
+				.merge(measurementSchema),
 		)
 		.nonempty(),
 });
