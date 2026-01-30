@@ -13,6 +13,7 @@ import {
 import { useAuth } from "@/hooks/auth";
 import { useGetBranch } from "@/hooks/branches/getBranch";
 import { useGetOrder } from "@/hooks/orders/getOrder";
+import { useGetStock } from "@/hooks/stock/getStock";
 import { MeasurementDocument } from "./components/MeasurementDocument";
 
 // Register IBM Plex Sans Arabic font family
@@ -67,6 +68,17 @@ const styles = StyleSheet.create({
 	},
 	cell: {
 		width: "25%",
+	},
+	infoBox: {
+		padding: "8px",
+		border: "1px solid #e0e0e0",
+		borderRadius: "2px",
+	},
+	label: {
+		color: "#666",
+		marginBottom: "3px",
+		textTransform: "uppercase",
+		letterSpacing: "0.5px",
 	},
 });
 

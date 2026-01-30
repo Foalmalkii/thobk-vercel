@@ -12,18 +12,28 @@ import { useAuth } from "@/hooks/auth";
 
 export const LoginForm = () => {
 	const t = useTranslations("auth");
+
 	const loginSchema = z.object({
-		email: z.string().email({ message: t("v_email_email") }),
-		password: z.string().min(5),
+		phone: z
+			.string()
+			.regex(/^05\d{8}$/, {
+				message: t("v_phone_invalid"), // "Phone must start with 05 and be 10 digits"
+			})
+			.length(10, {
+				message: t("v_phone_length"), // "Phone must be exactly 10 digits"
+			}),
+		password: z.string().min(5, {
+			message: t("v_password_min"), // "Password must be at least 5 characters"
+		}),
 	});
 
 	type FormData = z.infer<typeof loginSchema>;
 
 	const {
-		register,
 		handleSubmit,
 		control,
 		formState: { errors, isSubmitting },
+		setError,
 	} = useForm<FormData>({
 		resolver: zodResolver(loginSchema),
 	});
@@ -34,29 +44,72 @@ export const LoginForm = () => {
 	});
 
 	const onSubmit = async (data: FormData) => {
-		await login(data);
+		try {
+			await login(data);
+		} catch (error: any) {
+			// Handle server-side errors
+			if (error.response?.data?.errors) {
+				// Laravel validation errors
+				const serverErrors = error.response.data.errors;
+
+				if (serverErrors.phone) {
+					setError("phone", {
+						type: "server",
+						message: serverErrors.phone[0],
+					});
+				}
+
+				if (serverErrors.password) {
+					setError("password", {
+						type: "server",
+						message: serverErrors.password[0],
+					});
+				}
+			} else if (error.response?.data?.message) {
+				// General error message (e.g., "Invalid credentials")
+				setError("root", {
+					type: "server",
+					message: error.response.data.message,
+				});
+			} else {
+				// Network or unknown errors
+				setError("root", {
+					type: "server",
+					message: t("error_network"), // "An error occurred. Please try again."
+				});
+			}
+		}
 	};
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<div className="grid gap-4">
+				{errors.root && (
+					<div className="rounded-lg bg-red-50 p-3 text-sm text-red-600">
+						{errors.root.message}
+					</div>
+				)}
+
 				<Controller
 					control={control}
-					name="email"
+					name="phone"
 					render={({ field, fieldState }) => (
 						<Field data-invalid={fieldState.invalid}>
-							<FieldLabel htmlFor={field.name}>{t("email")}</FieldLabel>
+							<FieldLabel htmlFor={field.name}>{t("phone")}</FieldLabel>
 							<Input
 								{...field}
 								id={field.name}
 								aria-invalid={fieldState.invalid}
-								type="email"
-								placeholder="faisal@digip.sa"
+								type="tel"
+								placeholder="0512345678"
+								maxLength={10}
+								inputMode="numeric"
 							/>
 							{fieldState.invalid && <FieldError errors={[fieldState.error]} />}
 						</Field>
 					)}
 				/>
+
 				<Controller
 					control={control}
 					name="password"
@@ -80,7 +133,7 @@ export const LoginForm = () => {
 					className="mt-8 rounded-xl w-full"
 					type="submit"
 				>
-					{t("login")}
+					{isSubmitting ? t("logging_in") : t("login")}
 				</Button>
 			</div>
 		</form>

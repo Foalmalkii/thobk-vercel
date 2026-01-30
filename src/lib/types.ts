@@ -1,4 +1,3 @@
-import type { InvoicesResponse } from "@/app/(app)/orders/[orderId]/edit/components/Payments";
 import type { locales } from "@/middleware";
 
 export type User = {
@@ -185,3 +184,51 @@ export type GetBranch = {
 	};
 	invoices: InvoicesResponse;
 };
+
+type Address = {
+	buildingNumber: string;
+	additionalNumber: string;
+	streetAddress: string;
+	postalCode: string;
+	district: string;
+	city: string;
+	country: string;
+};
+
+type Branch = {
+	id: number;
+	name: string;
+	phone: string;
+	email: string;
+	address: Address;
+};
+
+type BranchResponse = {
+	statusCode: number;
+	message: string;
+	data: Branch;
+};
+
+type Batch = {
+	id: number;
+	sku: string;
+	initialLength: number;
+	remainingLength: number;
+	costPerMeter: number;
+	createdAt: string;
+	updatedAt: string;
+	branch: BranchResponse;
+};
+
+export type StockItem = {
+	id: number;
+	name: string;
+	type: string;
+	color: string;
+	colorCode: string | null;
+	supplier: string;
+	batches: Batch[];
+};
+
+// Main response type
+export type GetStockResponse = StockItem;

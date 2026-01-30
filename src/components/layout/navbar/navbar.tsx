@@ -1,6 +1,14 @@
 "use client";
-import { MenuIcon } from "lucide-react";
+import { ArrowRightFromLine, MenuIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import React from "react";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuGroup,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/auth";
 import { SearchInput } from "../../forms/search-input";
 import { Avatar, AvatarFallback } from "../../ui/avatar";
@@ -17,6 +25,8 @@ export const Navbar = () => {
 		middleware: "auth",
 		redirectIfAuthenticated: "",
 	});
+
+	const t = useTranslations("messages");
 
 	return (
 		<nav className="px-8 py-4 border-b w-full ">
@@ -36,25 +46,29 @@ export const Navbar = () => {
 					<BranchDropdown />
 				</div>
 				<div className="flex gap-3">
-					<SearchInput />
-
 					<LocaleDropdown />
-					<Button
-						variant={"outline"}
-						onClick={() => {
-							logout();
-						}}
-						size={"icon"}
-						className=""
-					>
-						<QuestionCircleIcon className="w-5 h-5" />
-					</Button>
 
 					<Separator orientation="vertical" className="h-8" />
 
-					<Avatar>
-						<AvatarFallback>{user?.email?.slice(0, 2)}</AvatarFallback>
-					</Avatar>
+					<DropdownMenu>
+						<DropdownMenuTrigger asChild>
+							<Avatar className="cursor-pointer">
+								<AvatarFallback>{user?.email?.slice(0, 2)}</AvatarFallback>
+							</Avatar>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent>
+							<DropdownMenuGroup>
+								<DropdownMenuItem
+									onClick={() => {
+										logout();
+									}}
+									className="text-red-600"
+								>
+									{t("logout")} <ArrowRightFromLine />
+								</DropdownMenuItem>
+							</DropdownMenuGroup>
+						</DropdownMenuContent>
+					</DropdownMenu>
 				</div>
 			</div>
 		</nav>

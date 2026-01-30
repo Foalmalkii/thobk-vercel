@@ -19,8 +19,7 @@ export const useGetOrder = ({
 	} = useSWR<GetOrder>([`get_order`, branchId, orderId], () =>
 		axios
 			.get(`/api/v1/branch/${branchId}/order/${orderId}`)
-			.then((res) => res.data.data)
-			.catch((e) => console.error(e)),
+			.then((res) => res.data.data),
 	);
 
 	return { order, loadingOrder, validatingOrder, mutateOrder, errorOrder };

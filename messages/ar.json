@@ -33,7 +33,11 @@
 		"additionalNumber": "رقم إضافي",
 		"postalCode": "الرمز البريدي",
 		"storage": "إدارة المخزون",
-		"erp": "إدارة الأعمال"
+		"erp": "إدارة الأعمال",
+		"status_updated_successfully": "تم تحديث الحالة بنجاح",
+		"status_changed_to": "تم تغيير الحالة إلى",
+		"status_update_failed": "فشل تحديث حالة الطلب",
+		"error": "خطأ"
 	},
 	"Navbar": {
 		"choose_locale": "اختر اللغة",
@@ -269,6 +273,53 @@
 		"expected_delivery_date": "تاريخ التسليم المتوقع",
 		"select_date": "تحديد تاريخ"
 	},
+
+	"payments": {
+		"total_invoices": "إجمالي الفواتير",
+		"total_paid": "إجمالي المدفوع",
+		"total_pending": "إجمالي المعلق",
+		"currency": "ر.س",
+		"invoices_list": "قائمة الفواتير",
+		"invoices_description": "عرض وإدارة جميع الفواتير والمدفوعات",
+		"add_invoice": "إضافة فاتورة",
+		"add_new_invoice": "إضافة فاتورة جديدة",
+		"add_invoice_description": "إنشاء فاتورة جديدة لهذا الطلب",
+		"amount": "المبلغ",
+		"invoice_type": "نوع الفاتورة",
+		"type_deposit": "دفعة مقدمة",
+		"type_full": "دفعة كاملة",
+		"adding": "جاري الإضافة...",
+		"add": "إضافة",
+		"cancel": "إلغاء",
+		"no_invoices": "لا توجد فواتير بعد",
+		"no_invoices_description": "ابدأ بإضافة أول فاتورة لهذا الطلب",
+		"add_first_invoice": "إضافة أول فاتورة",
+		"document_type": "نوع المستند",
+		"subtotal": "المجموع الفرعي",
+		"vat": "ضريبة القيمة المضافة (15%)",
+		"total": "المجموع الكلي",
+		"items": "البنود",
+		"print": "طباعة",
+		"status_paid": "مدفوع",
+		"status_pending": "قيد الانتظار",
+		"status_cancelled": "ملغي",
+		"document_type_invoice_deposit": "فاتورة دفعة مقدمة",
+		"document_type_invoice_full": "فاتورة كاملة",
+		"document_type_invoice": "فاتورة",
+		"invoice_added_successfully": "تمت إضافة الفاتورة بنجاح",
+		"invoice_number": "رقم الفاتورة",
+		"invoice_add_failed": "فشل في إضافة الفاتورة",
+		"error": "خطأ",
+		"invalid_amount": "الرجاء إدخال مبلغ صحيح",
+		"no_file_available": "لا يوجد ملف متاح لهذه الفاتورة"
+	},
+	"order_status": {
+		"received": "جديد",
+		"in_progress": "خياطة",
+		"ready": "جاهز",
+		"delivered": "مكتمل",
+		"canceled": "ملغى"
+	},
 	"customers": {
 		"title": "إدارة العملاء الذكية",
 		"description": "نظام متطور لإدارة بيانات العملاء، تتبع طلباتهم، وإرسال حملات تسويقية مستهدفة. تواصل مع عملائك بفعالية وزد من ولائهم لعلامتك التجارية.",
@@ -499,7 +550,13 @@
 		"jabzoor_select_jabzoorDesign": "تصميم الجبزور",
 		"jabzoor_select_jabzoorVisibility": "ظهور الجبزور",
 		"jabzoor_select_jabzoorShape": "شكل الجبزور",
-		"jabzoor_select_jabzoorPushMaterial": "مادة الكبّاس"
+		"jabzoor_select_jabzoorPushMaterial": "مادة الكبّاس",
+		"new_customer_profile": "ملف عميل جديد",
+		"no_previous_measurements": "هذا العميل ليس لديه قياسات سابقة. يرجى إدخال القياسات يدوياً.",
+		"load_previous_measurement": "تحميل قياس سابق",
+		"select_measurement_description": "اختر قياساً من طلب سابق لملء جميع الحقول تلقائياً.",
+		"select_measurement": "اختر قياساً...",
+		"load": "تحميل"
 	},
 	"noBranch": {
 		"title": "لا يوجد فرع نشط",

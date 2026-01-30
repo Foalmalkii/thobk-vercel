@@ -23,7 +23,7 @@ export const useListMeasurements = ({
 			.catch((e) => console.error(e)),
 	);
 
-	const emptyMeasurements = measurements?.length === 0;
+	const emptyMeasurements = (measurements?.length ?? 0) === 0;
 	return {
 		measurements,
 		loadingMeasurements,

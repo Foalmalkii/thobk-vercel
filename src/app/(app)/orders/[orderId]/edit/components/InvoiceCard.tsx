@@ -1,15 +1,15 @@
-import { CoinsIcon, CreditCardIcon } from "lucide-react";
+import { CoinsIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import React from "react";
-import { useFieldArray, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { RiyalIcon } from "@/components/ui/icons";
 import { Separator } from "@/components/ui/separator";
-import { useAuth } from "@/hooks/auth";
 import { useCustomer } from "@/hooks/customer";
-import type { orderRequest } from "../page";
+import type { orderRequest } from "../../../create/customer/[customerId]/page";
 
-export const EditInvoiceCard = () => {
+export const InvoiceCard = ({ customerId }: { customerId: number }) => {
 	const orderForm = useFormContext();
 	const items: orderRequest["items"] = orderForm.watch("items");
 
@@ -17,110 +17,122 @@ export const EditInvoiceCard = () => {
 		(sum, item) => sum + item.quantity * item.unitPrice,
 		0,
 	);
-	const customer = orderForm.getValues("customer");
+
+	const t = useTranslations("order");
+	const { customer } = useCustomer({ id: customerId });
 	const dueDate = orderForm.watch("dueDate");
-	console.log(orderForm.watch());
+
 	return (
-		<div className="w-full p-6 border rounded-lg h-full shadow flex flex-col justify-between max-h-[730px]">
+		<div className="w-full p-6 border rounded-lg h-full shadow flex flex-col justify-between">
 			<div>
 				<div className="flex flex-col gap-1.5">
-					<h1 className="text-lg font-bold">تفاصيل الطلب</h1>
+					<h1 className="text-lg font-bold">{t("order_details")}</h1>
 					<p className="text-sm text-muted-foreground">
-						تاريخ الطلب: {new Date().toLocaleDateString()}
+						{t("order_date")}: {new Date().toLocaleDateString()}
 					</p>
 					<p className="text-sm text-muted-foreground">
-						تاريخ الاستلام: {dueDate}
+						{t("delivery_date")}: {dueDate}
 					</p>
 				</div>
+
 				<div className="flex flex-col gap-4">
 					<div className="mt-4 flex flex-col gap-2">
-						<h2 className="font-semibold">تفاصيل الطلب</h2>
+						<h2 className="font-semibold">{t("order_items")}</h2>
+
 						{items?.map((item, index) => (
-							<div className="flex justify-between w-full " key={index}>
+							<div className="flex justify-between w-full" key={index}>
 								<p className="text-muted-foreground">
-									x{item.quantity} ثوب {item.fabricType}{" "}
-									{item.color && `- ${item.color}`}
+									x{item.quantity} {t("thobe")} {item.fabricType}
+									{item.color && ` - ${item.color}`}
 								</p>
 
 								<p className="flex gap-2 items-center">
-									{(item.unitPrice / 100) * item.quantity}{" "}
+									{item.unitPrice * item.quantity}
 									<RiyalIcon className="w-3.5 h-3.5" />
 								</p>
 							</div>
 						))}
 					</div>
-					<Separator orientation="horizontal" />
+
+					<Separator />
+
 					<div className="flex flex-col gap-1">
 						<div className="flex w-full justify-between">
-							<p className="text-muted-foreground">الإجمالي الفرعي</p>
+							<p className="text-muted-foreground">{t("subtotal")}</p>
 							<p className="flex gap-2 items-center">
-								<span>{totalPrice / 100}</span>
+								<span>{totalPrice}</span>
 								<RiyalIcon className="w-3.5 h-3.5" />
 							</p>
 						</div>
+
 						<div className="flex w-full justify-between">
-							<p className="text-muted-foreground">الخصم</p>
+							<p className="text-muted-foreground">{t("discount")}</p>
 							<p className="flex gap-2 items-center">
 								<span>0</span>
 								<RiyalIcon className="w-3.5 h-3.5" />
 							</p>
 						</div>
+
 						<div className="flex w-full justify-between">
-							<p className="text-muted-foreground">الإجمالي بعد الخصم</p>
+							<p className="text-muted-foreground">
+								{t("total_after_discount")}
+							</p>
 							<p className="flex gap-2 items-center">
-								<span>{totalPrice / 100}</span>
+								<span>{totalPrice}</span>
 								<RiyalIcon className="w-3.5 h-3.5" />
 							</p>
 						</div>
 					</div>
 
-					<Separator orientation="horizontal" />
+					<Separator />
+
 					<div className="flex flex-col gap-2">
-						<h2 className="font-semibold">معلومات العميل</h2>
+						<h2 className="font-semibold">{t("customer_info")}</h2>
+
 						<div className="flex w-full justify-between">
-							<p className="text-muted-foreground">العميل</p>
-							<p className="flex gap-2 items-center">
-								<span>{customer?.name}</span>
-							</p>
+							<p className="text-muted-foreground">{t("customer")}</p>
+							<span>{customer?.name}</span>
 						</div>
+
 						<div className="flex w-full justify-between">
-							<p className="text-muted-foreground">الهاتف</p>
-							<p className="flex gap-2 items-center">
-								<span>{customer?.phone}</span>
-							</p>
+							<p className="text-muted-foreground">{t("phone")}</p>
+							<span>{customer?.phone}</span>
 						</div>
 					</div>
 
-					<Separator orientation="horizontal" />
+					<Separator />
 
 					<div className="flex flex-col gap-2">
-						<h2 className="font-semibold">معلومات الدفع</h2>
+						<h2 className="font-semibold">{t("payment_info")}</h2>
 
 						<div className="flex w-full justify-between">
 							<p className="text-muted-foreground flex gap-2 items-center">
 								<CoinsIcon className="w-4 h-4" />
-								<span>نقدي</span>
+								<span>{t("cash")}</span>
 							</p>
+
 							<p className="flex gap-2 items-center">
-								<span>{totalPrice / 100}</span>
+								<span>{totalPrice}</span>
 								<RiyalIcon className="w-3.5 h-3.5" />
 							</p>
 						</div>
-						<Separator orientation="horizontal" />
+
+						<Separator />
 					</div>
 				</div>
 			</div>
+
 			<div className="mt-4">
 				<FieldGroup>
 					<Field>
-						<FieldLabel>إخطار العميل</FieldLabel>
+						<FieldLabel>{t("notify_customer")}</FieldLabel>
 					</Field>
 
 					<Button
 						onClick={() => console.log(orderForm.formState.errors)}
 						type="submit"
 					>
-						تحديث الطلب
+						{t("update_order")}
 					</Button>
 				</FieldGroup>
 			</div>

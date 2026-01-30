@@ -108,8 +108,8 @@ export const MeasurementImage = ({
 			<Text
 				style={{
 					position: "absolute",
-					top: "48.8%", // 51.3% + 2.2%
-					right: "20.7%", // 3.7% - 17.4%
+					top: "50.4%", // 51.3% + 2.2%
+					right: "22.8%", // 3.7% - 17.4%
 					fontSize: "9px",
 				}}
 			>
@@ -120,8 +120,8 @@ export const MeasurementImage = ({
 			<Text
 				style={{
 					position: "absolute",
-					top: "31.2%", // 29% + 2.2%
-					right: "-8.5%", // 8.9% - 17.4%
+					top: "28.6%", // 29% + 2.2%
+					right: "27.8%", // 8.9% - 17.4%
 					fontSize: "9px",
 				}}
 			>
@@ -132,8 +132,8 @@ export const MeasurementImage = ({
 			<Text
 				style={{
 					position: "absolute",
-					top: "25.2%", // 23% + 2.2%
-					right: "-3.1%", // 14.3% - 17.4%
+					top: "22.6%", // 23% + 2.2%
+					right: "33.2%", // 14.3% - 17.4%
 					fontSize: "9px",
 				}}
 			>
@@ -144,14 +144,59 @@ export const MeasurementImage = ({
 			<Text
 				style={{
 					position: "absolute",
-					top: "48.8%", // 51.3% + 2.2%
-					right: "64.5%", // 47.3% - 17.4%
+					top: "50.4%", // 51.3% + 2.2%
+					right: "66.5%", // 47.3% - 17.4%
 					fontSize: "9px",
 					textAlign: "center",
 				}}
 			>
 				{orderItem?.generalThobeBackLength}
 			</Text>
+
+			<View
+				style={{
+					position: "absolute",
+					top: "50%",
+					right: "63.5%",
+					transform: "translateX(50%) translateY(-50%) ",
+					width: "24.5%",
+					fontSize: "9px",
+				}}
+			>
+				<Text style={[{ textAlign: "center" }, pdfStyles.light]}>
+					Takalees Length {orderItem?.generalTakaleesLength}
+				</Text>
+			</View>
+
+			<View
+				style={{
+					position: "absolute",
+					top: "53%",
+					right: "63.5%",
+					transform: "translateX(50%) translateY(-50%) ",
+					width: "24.5%",
+					fontSize: "9px",
+				}}
+			>
+				<Text style={[{ textAlign: "center" }, pdfStyles.light]}>
+					Takalees Width {orderItem?.generalTakaleesWidth}
+				</Text>
+			</View>
+
+			<View
+				style={{
+					position: "absolute",
+					top: "93%",
+					right: "15.5%",
+					transform: "translateX(50%) translateY(-50%) ",
+					width: "24.5%",
+					fontSize: "9px",
+				}}
+			>
+				<Text style={[{ textAlign: "center" }, pdfStyles.light]}>
+					Notes: {orderItem?.notes}
+				</Text>
+			</View>
 
 			{/* SHOULDER WIDTH */}
 			<Text
@@ -165,13 +210,37 @@ export const MeasurementImage = ({
 			>
 				{orderItem?.generalShoulderWidth}
 			</Text>
+			{/* SHOULDER WIDTH */}
+			<Text
+				style={{
+					position: "absolute",
+					top: "18.6%", // 11.3% + 2.2%
+					right: "39.2%", // 62.9% - 17.4%
+					fontSize: "9px",
+					transform: "translateX(50%) translateY(-50%)",
+				}}
+			>
+				{orderItem?.generalShoulderLeft}
+			</Text>
+			{/* SHOULDER WIDTH */}
+			<Text
+				style={{
+					position: "absolute",
+					top: "17.4%", // 11.3% + 2.2%
+					right: "67.2%", // 62.9% - 17.4%
+					fontSize: "9px",
+					transform: "translateX(50%) translateY(-50%)",
+				}}
+			>
+				{orderItem?.generalShoulderRight}
+			</Text>
 
 			{/* MIDDLE SLEEVE WIDTH */}
 			<Text
 				style={{
 					position: "absolute",
-					top: "25.5%", // 23.3% + 2.2%
-					right: "23.4%", // 40.8% - 17.4%
+					top: "22.6%", // 23.3% + 2.2%
+					right: "60%", // 40.8% - 17.4%
 					fontSize: "9px",
 				}}
 			>
@@ -182,8 +251,8 @@ export const MeasurementImage = ({
 			<Text
 				style={{
 					position: "absolute",
-					top: "42%", // 39.8% + 2.2%
-					right: "-3.9%", // 13.5% - 17.4%
+					top: "39.2%", // 39.8% + 2.2%
+					right: "32.6%", // 13.5% - 17.4%
 					fontSize: "9px",
 				}}
 			>
@@ -218,8 +287,8 @@ export const MeasurementImage = ({
 			<Text
 				style={{
 					position: "absolute",
-					top: "97.2%", // 95% + 2.2%
-					right: "8.6%", // 26% - 17.4%
+					top: "94%", // 95% + 2.2%
+					right: "44.6%", // 26% - 17.4%
 					fontSize: "9px",
 				}}
 			>
@@ -230,8 +299,8 @@ export const MeasurementImage = ({
 			<Text
 				style={{
 					position: "absolute",
-					top: "91.2%", // 89% + 2.2%
-					right: "22.5%", // 39.9% - 17.4%
+					top: "87.7%", // 89% + 2.2%
+					right: "59%", // 39.9% - 17.4%
 					fontSize: "9px",
 				}}
 			>
@@ -242,7 +311,7 @@ export const MeasurementImage = ({
 			<Text
 				style={{
 					position: "absolute",
-					top: "37.2%", // 35% + 2.2%
+					top: "45.4%", // 35% + 2.2%
 					right: "53%", // 25.4% - 17.4%
 					fontSize: "9px",
 					transform: "translateX(50%) translateY(-50%)",
@@ -337,11 +406,12 @@ export const MeasurementImage = ({
 			<Text
 				style={{
 					position: "absolute",
-					top: "10%",
-					right: "19.5%",
+					top: "44.5%",
+					right: "74.5%",
 					fontSize: "9px",
 				}}
 			>
+				{orderItem?.betweenChestPocketShoulder && "Pocket Down"}{" "}
 				{orderItem?.betweenChestPocketShoulder}
 			</Text>
 			<Text
@@ -417,12 +487,37 @@ export const MeasurementImage = ({
 				}}
 			>
 				<Text style={[{ textAlign: "center" }, pdfStyles.light]}>
-					{Object.entries(neckInfo).map(([key, value], index) => (
-						<>
-							{value && neckInfoMessages[`neck_${key}_${value}`]}
-							{index !== Object.entries(neckInfo).length - 1 && value && " | "}
-						</>
-					))}
+					{orderItem?.neckNotes}
+				</Text>
+			</View>
+
+			<View
+				style={{
+					position: "absolute",
+					top: "14%",
+					right: "74.7%",
+					transform: "translateX(50%) translateY(-50%) ",
+					width: "24.5%",
+					fontSize: "9px",
+				}}
+			>
+				<Text style={[{ textAlign: "center" }, pdfStyles.light]}>
+					{orderItem?.neckFill && "Collar Hashwa"} {orderItem?.neckFill}
+				</Text>
+			</View>
+
+			<View
+				style={{
+					position: "absolute",
+					top: "16.5%",
+					right: "76%",
+					transform: "translateX(50%) translateY(-50%) ",
+					width: "24.5%",
+					fontSize: "9px",
+				}}
+			>
+				<Text style={[{ textAlign: "center" }, pdfStyles.light]}>
+					{orderItem?.neckBackLength && "Neck Back"} {orderItem?.neckBackLength}
 				</Text>
 			</View>
 
@@ -437,12 +532,7 @@ export const MeasurementImage = ({
 				}}
 			>
 				<Text style={[{ textAlign: "center" }, pdfStyles.light]}>
-					{Object.entries(wristInfo).map(([key, value], index) => (
-						<>
-							{value && wristInfoMessages[`wrist_${key}_${value}`]}
-							{index !== Object.entries(wristInfo).length - 1 && value && " | "}
-						</>
-					))}
+					{orderItem?.wristNotes}
 				</Text>
 			</View>
 
@@ -457,14 +547,7 @@ export const MeasurementImage = ({
 				}}
 			>
 				<Text style={[{ textAlign: "center" }, pdfStyles.light]}>
-					{Object.entries(chestPocketInfo).map(([key, value], index) => (
-						<>
-							{value && chestPocketMessages[`chestPocket_${key}_${value}`]}
-							{index !== Object.entries(chestPocketInfo).length - 1 &&
-								value &&
-								" | "}
-						</>
-					))}
+					{orderItem?.chestPocketNotes}
 				</Text>
 			</View>
 
@@ -479,14 +562,7 @@ export const MeasurementImage = ({
 				}}
 			>
 				<Text style={[{ textAlign: "center" }, pdfStyles.light]}>
-					{Object.entries(jabzoorInfo).map(([key, value], index) => (
-						<>
-							{value && jabzoorMessages[`jabzoor_${key}_${value}`]}
-							{index !== Object.entries(jabzoorInfo).length - 1 &&
-								value &&
-								" | "}
-						</>
-					))}
+					{orderItem?.jabzoorNotes}
 				</Text>
 			</View>
 		</View>

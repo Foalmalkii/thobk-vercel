@@ -1,12 +1,14 @@
 import {
 	BoxIcon,
 	CheckCircleIcon,
+	Loader2Icon,
 	PackageCheckIcon,
 	ScissorsIcon,
 	XCircleIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import React, { useState } from "react";
+import { toast } from "sonner";
 import {
 	Select,
 	SelectContent,
@@ -14,7 +16,8 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { ORDER_STATUS } from "@/lib/enums";
+import { useAuth } from "@/hooks/auth";
+import axios from "@/lib/axios";
 
 const STATUS_CONFIG = {
 	received: {
@@ -49,41 +52,97 @@ const STATUS_CONFIG = {
 	},
 };
 
+type OrderStatus = keyof typeof STATUS_CONFIG;
+
+interface OrderStatusDropdownProps {
+	defaultValue: OrderStatus;
+	orderId: number;
+	onStatusChange?: (newStatus: OrderStatus) => void;
+}
+
 export const OrderStatusDropdown = ({
 	defaultValue,
-}: {
-	defaultValue: string;
-}) => {
-	const t = useTranslations("messages");
-	const [value, setValue] = useState(defaultValue);
+	orderId,
+	onStatusChange,
+}: OrderStatusDropdownProps) => {
+	const t = useTranslations("order_status");
+	const tMessages = useTranslations("messages");
+	const { isInBranch } = useAuth({ middleware: "auth" });
+	const [value, setValue] = useState<OrderStatus>(defaultValue);
+	const [isUpdating, setIsUpdating] = useState(false);
 
-	const currentStatus = STATUS_CONFIG[value as keyof typeof STATUS_CONFIG];
+	const currentStatus = STATUS_CONFIG[value];
 	const StatusIcon = currentStatus?.icon;
+
+	const handleStatusChange = async (newStatus: string) => {
+		const previousStatus = value;
+		const newStatusTyped = newStatus as OrderStatus;
+
+		// Optimistic update
+		setValue(newStatusTyped);
+
+		setIsUpdating(true);
+
+		try {
+			await axios.patch(`/api/v1/branch/${isInBranch}/order/${orderId}`, {
+				status: newStatus,
+			});
+
+			// Success toast
+			toast.success(tMessages("status_updated_successfully"), {
+				description: `${tMessages("status_changed_to")} ${t(newStatus)}`,
+				position: "top-center",
+			});
+
+			// Call optional callback
+			onStatusChange?.(newStatusTyped);
+		} catch (error: any) {
+			// Revert to previous status on error
+			setValue(previousStatus);
+
+			// Error toast
+			const errorMessage =
+				error?.response?.data?.message || tMessages("status_update_failed");
+
+			toast.error(tMessages("error"), {
+				description: errorMessage,
+				position: "top-center",
+			});
+
+			console.error("Failed to update order status:", error);
+		} finally {
+			setIsUpdating(false);
+		}
+	};
 
 	return (
 		<Select
-			onValueChange={(value) => setValue(value)}
+			onValueChange={handleStatusChange}
 			value={value}
-			defaultValue={defaultValue}
+			disabled={isUpdating}
 		>
 			<SelectTrigger
 				className={`${currentStatus?.bgClass} ${currentStatus?.borderClass} ${currentStatus?.textClass} gap-2 font-medium`}
 			>
 				<div className="flex gap-2 items-center">
+					{isUpdating ? (
+						<Loader2Icon className="w-4 h-4 animate-spin" />
+					) : (
+						StatusIcon && <StatusIcon className="w-4 h-4" />
+					)}
 					<SelectValue />
 				</div>
 			</SelectTrigger>
 
 			<SelectContent>
-				{Object.entries(ORDER_STATUS).map(([key, label]) => {
-					const config = STATUS_CONFIG[key as keyof typeof STATUS_CONFIG];
+				{Object.keys(STATUS_CONFIG).map((key) => {
+					const config = STATUS_CONFIG[key as OrderStatus];
 					const Icon = config?.icon;
 
 					return (
 						<SelectItem key={key} value={key}>
 							<div className="flex items-center gap-2">
-								{Icon && <Icon className={`w-4 h-4 ${config.textClass}`} />}
-								<span>{label}</span>
+								<span>{t(key)}</span>
 							</div>
 						</SelectItem>
 					);

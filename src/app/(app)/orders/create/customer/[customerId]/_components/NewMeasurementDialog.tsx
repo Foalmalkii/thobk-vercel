@@ -21,6 +21,7 @@ import { useCustomer } from "@/hooks/customer";
 import { ChestPocketMeasurementInfo } from "./chest-pocket";
 import { GeneralMeasurementInfo } from "./general-info";
 import { JabzoorMeasurementInfo } from "./jabzoor";
+import { MeasurementSelector } from "./MeasurementSelector";
 import { NeckMeasurementInfo } from "./neck-info";
 import { SidePocketsMeasurementsInfo } from "./side-pockets";
 import { ThobeImage } from "./thobe-image";
@@ -79,7 +80,10 @@ export const NewMeasurementDialog = ({
 								<p className="text-slate-500">
 									{t("create_measurement_description")}
 								</p>
-
+								<MeasurementSelector
+									customerId={customerId}
+									orderItemIndex={orderItemIndexNumber}
+								/>
 								<Button type="button" onClick={() => setOpen(false)}>
 									{t("close")} <XIcon />
 								</Button>

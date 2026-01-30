@@ -1,411 +1,243 @@
 "use client";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAtom } from "jotai";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-
 import { useTranslations } from "next-intl";
 import React, { useEffect, useState } from "react";
-import { FormProvider, useFieldArray, useForm } from "react-hook-form";
-import useSWR from "swr";
+import { FormProvider, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import z from "zod";
-import { CreateMeasurementDialog } from "@/app/(app)/customers/[customerId]/measurements/create/_components/create-measurement";
-import { SearchInput } from "@/components/forms/search-input";
+import { measurementSchema } from "@/app/(app)/customers/[customerId]/measurements/create/_components/measurements/schema";
 import { Loading } from "@/components/layout/loading";
 import { useAuth } from "@/hooks/auth";
-import { useCustomer } from "@/hooks/customer";
 import { useGetOrder } from "@/hooks/orders/getOrder";
 import { activeOrderCustomerIdAtom } from "@/lib/atoms";
 import axios from "@/lib/axios";
-import { GeneralInfo } from "../../create/customer/[customerId]/_components/GeneralInfo";
-import { InvoiceCard } from "../../create/customer/[customerId]/_components/InvoiceCard";
-import { OrderItem } from "../../create/customer/[customerId]/_components/sections/order-items";
-import { EditInvoiceCard } from "./components/EditInvoiceCard";
-import { EditOrderItems } from "./components/EditOrderItems";
+import { GeneralInfo } from "./components/GeneralInfo";
+import { InvoiceCard } from "./components/InvoiceCard";
+import { OrderItem } from "./components/OrderItem";
 import { Payments } from "./components/Payments";
-
-export const editOrderSchema = z.object({
-	customerId: z.number(),
-	dueDate: z.string(),
-	status: z.string(),
-	notes: z.string(),
-	items: z
-		.array(
-			z.object({
-				fabricType: z.string(),
-				color: z.string(),
-				unitPrice: z.number(),
-				quantity: z.number(),
-				measurement: z.object({
-					name: z.string().nullable(),
-					thobeType: z
-						.enum(["saudi", "kuwaiti", "qatari", "emirati"])
-						.nullable(),
-					chestPocketImg: z
-						.enum([
-							"1",
-							"2",
-							"3",
-							"4",
-							"5",
-							"6",
-							"7",
-							"8",
-							"9",
-							"10",
-							"11",
-							"12",
-						])
-						.nullable(),
-					jabzoorImg: z
-						.enum(["1", "2", "3", "4", "5", "6", "7", "8"])
-						.nullable(),
-					neckImg: z
-						.enum([
-							"1",
-							"2",
-							"3",
-							"4",
-							"5",
-							"6",
-							"7",
-							"8",
-							"9",
-							"10",
-							"11",
-							"12",
-							"13",
-							"14",
-							"15",
-							"16",
-							"17",
-							"18",
-							"19",
-							"20",
-						])
-						.nullable(),
-
-					wristImg: z
-						.enum([
-							"1",
-							"2",
-							"3",
-							"4",
-							"5",
-							"6",
-							"7",
-							"8",
-							"9",
-							"10",
-							"11",
-							"12",
-							"13",
-							"14",
-							"15",
-							"16",
-							"17",
-							"18",
-							"19",
-							"20",
-							"21",
-							"22",
-							"23",
-							"24",
-						])
-						.nullable(),
-
-					general: z.object({
-						generalThobeLength: z.coerce.number().nonnegative().nullable(),
-						generalThobeBackLength: z.coerce.number().nonnegative().nullable(),
-						generalShoulderWidth: z.coerce.number().nonnegative().nullable(),
-						generalShoulderRotation: z.coerce.number().nonnegative().nullable(),
-						generalSleeveLength: z.coerce.number().nonnegative().nullable(),
-						generalUpperSleeveWidth: z.coerce.number().nonnegative().nullable(),
-						generalMiddleSleeveWidth: z.coerce
-							.number()
-							.nonnegative()
-							.nullable(),
-						generalWristWidth: z.coerce.number().nonnegative().nullable(),
-						generalChestFront: z.coerce.number().nonnegative().nullable(),
-						generalChestBack: z.coerce.number().nonnegative().nullable(),
-						generalChestFull: z.coerce.number().nonnegative().nullable(),
-						generalBottomWidth: z.coerce.number().nonnegative().nullable(),
-						generalCuffBottomWidth: z.coerce.number().nonnegative().nullable(),
-						generalAddedInfo: z.coerce.number().nonnegative().nullable(),
-						generalSidePocket: z.coerce.number().nonnegative().nullable(),
-						generalWaistWidth: z.coerce.number().nonnegative().nullable(),
-						generalHipWidth: z.coerce.number().nonnegative().nullable(),
-					}),
-
-					neck: z.object({
-						neckLength: z.coerce.number().nonnegative().nullable(),
-						neckBackLength: z.coerce.number().nonnegative().nullable(),
-						neckWidth: z.coerce.number().nonnegative().nullable(),
-						neckButtonCount: z.coerce.number().nonnegative().nullable(),
-
-						neckDesign: z
-							.enum(["plain", "v-neck", "french", "chinese", "royal"])
-							.nullable(),
-
-						neckShape: z.enum(["square", "rounded"]).nullable(),
-						neckFill: z.enum(["1", "2"]).nullable(),
-						neckButtonType: z.enum(["normal", "opposite"]).nullable(),
-						neckButtonholeType: z.enum(["normal", "arawi"]).nullable(),
-						neckButtonMaterial: z.enum(["plastic", "steel"]).nullable(),
-						neckButtonVisibility: z.enum(["visible", "invisibile"]).nullable(),
-					}),
-
-					wrist: z.object({
-						wristCuffType: z.enum(["normal", "cufflinks"]).nullable(),
-						wristCuffLength: z.coerce.number().nonnegative().nullable(),
-						wristCuffWidth: z.coerce.number().nonnegative().nullable(),
-
-						wristDesign: z
-							.enum([
-								"plain",
-								"on",
-								"minced",
-								"rounded",
-								"square",
-								"french",
-								"double",
-							])
-							.nullable(),
-
-						wristButtonNumber: z.coerce.number().nonnegative().nullable(),
-						wristMaterialLayers: z.enum(["1", "2"]).nullable(),
-						wristSleeveCrumbNumber: z.enum(["0", "1", "2"]).nullable(),
-					}),
-
-					chestPocket: z.object({
-						chestPocketLength: z.coerce.number().nonnegative().nullable(),
-						chestPocketWidth: z.coerce.number().nonnegative().nullable(),
-						betweenChestPocketShoulder: z.coerce
-							.number()
-							.nonnegative()
-							.nullable(),
-
-						chestPocketPenType: z
-							.enum(["no", "halfLength", "fullLength"])
-							.nullable(),
-
-						chestPocketDesign: z
-							.enum(["official", "kuwaiti", "model"])
-							.nullable(),
-
-						chestPocketShape: z.enum(["rounded", "square"]).nullable(),
-						chestPocketVisibility: z.enum(["visible", "invisible"]).nullable(),
-					}),
-
-					sidePockets: z.object({
-						sidePhonePocketLength: z.coerce.number().nonnegative().nullable(),
-						sidePhonePocketWidth: z.coerce.number().nonnegative().nullable(),
-						sideWalletPocketLength: z.coerce.number().nonnegative().nullable(),
-						sideWalletPocketWidth: z.coerce.number().nonnegative().nullable(),
-					}),
-
-					jabzoor: z.object({
-						jabzoorHoleType: z.enum(["push", "buttons", "zip"]).nullable(),
-						jabzoorLength: z.coerce.number().nonnegative().nullable(),
-						jabzoorWidth: z.coerce.number().nonnegative().nullable(),
-
-						jabzoorDesign: z
-							.enum([
-								"normal",
-								"combination",
-								"supportedStitch",
-								"fill",
-								"fullPush",
-							])
-							.nullable(),
-
-						jabzoorVisibility: z.enum(["visible", "invisible"]).nullable(),
-						jabzoorShape: z.enum(["square", "rounded", "minced"]).nullable(),
-						jabzoorPushMaterial: z.enum(["plastic", "steel"]).nullable(),
-					}),
-				}),
-			}),
-		)
-		.nonempty(),
-});
-
-export const editMeasurementSchema =
-	editOrderSchema.shape.items.element.shape.measurement.shape;
-export type editOrderRequest = z.infer<typeof editOrderSchema>;
 
 export default function EditOrderPage({
 	params,
 }: {
 	params: { orderId: string };
 }) {
+	// In your schema definition
+	const orderItemSchema = z
+		.object({
+			id: z.number().optional(), // Make ID optional
+			fabricId: z.number().nullable(),
+			unitPrice: z.number(),
+			quantity: z.number(),
+			name: z.string(),
+			// ... rest of your fields
+		})
+		.merge(measurementSchema);
+
+	const orderSchema = z.object({
+		dueDate: z.string(),
+		notes: z.string().optional(),
+		items: z.array(orderItemSchema),
+	});
+
+	type orderRequest = z.infer<typeof orderSchema>;
 	const orderId = Number(params?.orderId);
 	const { isInBranch } = useAuth({ middleware: "auth" });
+	const [_, setCustomerIdState] = useAtom(activeOrderCustomerIdAtom);
+	const [isFormInitialized, setIsFormInitialized] = useState(false);
+	const t = useTranslations("messages");
+	const form = useForm<orderRequest>({ resolver: zodResolver(orderSchema) });
+	const router = useRouter();
 
-	const { order, loadingOrder } = useGetOrder({
+	const { order, loadingOrder, errorOrder, mutateOrder } = useGetOrder({
 		orderId: orderId,
 		branchId: isInBranch,
 	});
 
 	const customer = order?.customer;
-	const [isAtomInitialized, setIsAtomInitialized] = useState(false);
-	const t = useTranslations("messages");
-	const form = useForm<editOrderRequest>({
-		resolver: zodResolver(editOrderSchema),
-		defaultValues: { items: [] },
-	});
 
-	const items = useFieldArray({ control: form.control, name: "items" });
-	const router = useRouter();
-
-	// Set atom before allowing interaction
+	// Initialize form with order data
 	useEffect(() => {
-		setIsAtomInitialized(true);
-		console.log(order);
-		if (order && customer) {
+		if (order && customer && !isFormInitialized) {
+			// Set customer ID in atom
+			setCustomerIdState(customer.id);
+
+			// Transform order items back to form structure
+			const transformedItems = order.items.map((item: any) => ({
+				id: item.id,
+				fabricId: item.fabricId,
+				unitPrice: item.price,
+				quantity: item.quantity,
+				name: item.name,
+				thobeType: item.thobeType,
+				chestPocketImg: item.chestPocketImg,
+				jabzoorImg: item.jabzoorImg,
+				neckImg: item.neckImg,
+				wristImg: item.wristImg,
+				general: {
+					generalThobeLength: item.generalThobeLength,
+					generalThobeBackLength: item.generalThobeBackLength,
+					generalShoulderWidth: item.generalShoulderWidth,
+					generalShoulderRight: item.generalShoulderRight,
+					generalShoulderLeft: item.generalShoulderLeft,
+					generalSleeveLength: item.generalSleeveLength,
+					generalUpperSleeveWidth: item.generalUpperSleeveWidth,
+					generalMiddleSleeveWidth: item.generalMiddleSleeveWidth,
+					generalWristWidth: item.generalWristWidth,
+					generalChestFront: item.generalChestFront,
+					generalChestFull: item.generalChestFull,
+					generalTakaleesLength: item.generalTakaleesLength,
+					generalTakaleesWidth: item.generalTakaleesWidth,
+					generalBottomWidth: item.generalBottomWidth,
+					generalCuffBottomWidth: item.generalCuffBottomWidth,
+					generalWaistWidth: item.generalWaistWidth,
+					generalHipWidth: item.generalHipWidth,
+					generalShoulderRotation: item.generalShoulderRotation,
+				},
+				neck: {
+					neckLength: item.neckLength,
+					neckBackLength: item.neckBackLength,
+					neckWidth: item.neckWidth,
+					neckFill: item.neckFill,
+					neckNotes: item.neckNotes,
+				},
+				wrist: {
+					wristCuffType: item.wristCuffType,
+					wristCuffLength: item.wristCuffLength,
+					wristCuffWidth: item.wristCuffWidth,
+					wristNotes: item.wristNotes,
+				},
+				chestPocket: {
+					chestPocketLength: item.chestPocketLength,
+					chestPocketWidth: item.chestPocketWidth,
+					betweenChestPocketShoulder: item.betweenChestPocketShoulder,
+					chestPocketPenType: item.chestPocketPenType,
+					chestPocketNotes: item.chestPocketNotes,
+				},
+				sidePockets: {
+					sidePhonePocketLength: item.sidePhonePocketLength,
+					sidePhonePocketWidth: item.sidePhonePocketWidth,
+					sideWalletPocketLength: item.sideWalletPocketLength,
+					sideWalletPocketWidth: item.sideWalletPocketWidth,
+				},
+				jabzoor: {
+					jabzoorLength: item.jabzoorLength,
+					jabzoorWidth: item.jabzoorWidth,
+					jabzoorNotes: item.jabzoorNotes,
+				},
+			}));
+
+			// Set all form values
 			form.reset({
-				customerId: customer.id,
-				status: "received",
-				dueDate: order.dueDate || "",
+				dueDate: order.dueDate,
 				notes: order.notes || "",
-				items: order.items.map((item) => ({
-					fabricType: item.fabricType ?? "",
-					color: item.color ?? "",
-					unitPrice: Number(item.price),
-					measurement: {
-						name: item.name,
-						thobeType: item.thobeType,
-						chestPocketImg: item.chestPocketImg,
-						jabzoorImg: item.jabzoorImg,
-						neckImg: item.neckImg,
-						wristImg: item.wristImg,
-
-						general: {
-							generalThobeLength: item.generalThobeLength,
-							generalThobeBackLength: item.generalThobeBackLength,
-							generalShoulderWidth: item.generalShoulderWidth,
-							generalShoulderRotation: item.generalShoulderRotation,
-							generalSleeveLength: item.generalSleeveLength,
-							generalUpperSleeveWidth: item.generalUpperSleeveWidth,
-							generalMiddleSleeveWidth: item.generalMiddleSleeveWidth,
-							generalWristWidth: item.generalWristWidth,
-							generalChestFront: item.generalChestFront,
-							generalChestBack: item.generalChestBack,
-							generalChestFull: item.generalChestFull,
-							generalBottomWidth: item.generalBottomWidth,
-							generalCuffBottomWidth: item.generalCuffBottomWidth,
-							generalAddedInfo: item.generalAddedInfo,
-							generalSidePocket: item.generalSidePocket,
-							generalWaistWidth: item.generalWaistWidth,
-							generalHipWidth: item.generalHipWidth,
-						},
-
-						neck: {
-							neckLength: item.neckLength,
-							neckBackLength: item.neckBackLength,
-							neckWidth: item.neckWidth,
-							neckButtonCount: item.neckButtonCount,
-							neckDesign: item.neckDesign,
-							neckShape: item.neckShape,
-							neckFill: item.neckFill,
-							neckButtonType: item.neckButtonType,
-							neckButtonholeType: item.neckButtonholeType,
-							neckButtonMaterial: item.neckButtonMaterial,
-							neckButtonVisibility: item.neckButtonVisibility,
-						},
-
-						wrist: {
-							wristCuffType: item.wristCuffType,
-							wristCuffLength: item.wristCuffLength,
-							wristCuffWidth: item.wristCuffWidth,
-							wristDesign: item.wristDesign,
-							wristButtonNumber: item.wristButtonNumber,
-							wristMaterialLayers: item.wristMaterialLayers,
-							wristSleeveCrumbNumber: item.wristSleeveCrumbNumber,
-						},
-
-						chestPocket: {
-							chestPocketLength: item.chestPocketLength,
-							chestPocketWidth: item.chestPocketWidth,
-							betweenChestPocketShoulder: item.betweenChestPocketShoulder,
-							chestPocketPenType: item.chestPocketPenType,
-							chestPocketDesign: item.chestPocketDesign,
-							chestPocketShape: item.chestPocketShape,
-							chestPocketVisibility: item.chestPocketVisibility,
-						},
-
-						sidePockets: {
-							sidePhonePocketLength: item.sidePhonePocketLength,
-							sidePhonePocketWidth: item.sidePhonePocketWidth,
-							sideWalletPocketLength: item.sideWalletPocketLength,
-							sideWalletPocketWidth: item.sideWalletPocketWidth,
-						},
-
-						jabzoor: {
-							jabzoorHoleType: item.jabzoorHoleType,
-							jabzoorLength: item.jabzoorLength,
-							jabzoorWidth: item.jabzoorWidth,
-							jabzoorDesign: item.jabzoorDesign,
-							jabzoorVisibility: item.jabzoorVisibility,
-							jabzoorShape: item.jabzoorShape,
-							jabzoorPushMaterial: item.jabzoorPushMaterial,
-						},
-					},
-					quantity: item.quantity ?? 1,
-				})),
+				items: transformedItems,
 			});
+
+			setIsFormInitialized(true);
 		}
+	}, [order, customer, isFormInitialized, form, setCustomerIdState]);
 
-		console.log(form.watch("items"));
-	}, [order, form]);
+	if (loadingOrder || !isFormInitialized) return <Loading />;
 
-	if (!isAtomInitialized || loadingOrder) return <Loading />;
-	if (!customer) return router.push("/orders");
+	if (errorOrder) {
+		return <div className="p-4 text-red-500">{t("error_loading_order")}</div>;
+	}
 
-	const onSubmit = async (data: editOrderRequest) => {
-		await axios
-			.post(`/api/v1/branch/${isInBranch}/order`, data)
-			.then((res) => console.log(res))
-			.catch((e) => console.error(e));
-		router.push("/orders");
+	const onSubmit = async (data: orderRequest) => {
+		// Transform items to flatten nested objects
+		const transformedData = {
+			...data,
+			items: data.items.map((item) => ({
+				id: item.id,
+				fabricId: item.fabricId,
+				unitPrice: item.unitPrice,
+				quantity: item.quantity,
+				name: item.name,
+				thobeType: item.thobeType,
+				chestPocketImg: item.chestPocketImg,
+				jabzoorImg: item.jabzoorImg,
+				neckImg: item.neckImg,
+				wristImg: item.wristImg,
+				// Spread all nested objects
+				...item.general,
+				...item.neck,
+				...item.wrist,
+				...item.chestPocket,
+				...item.sidePockets,
+				...item.jabzoor,
+			})),
+		};
+
+		console.log("Transformed Data", transformedData);
+
+		try {
+			await axios.put(
+				`/api/v1/branch/${isInBranch}/order/${orderId}`,
+				transformedData,
+			);
+
+			mutateOrder();
+			toast.success("Updated Order", { position: "top-center" });
+		} catch (e) {
+			console.error(e);
+		}
 	};
 
+	console.log(order);
+
 	return (
-		<FormProvider {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)}>
-				<div className="flex justify-between max-w-full overflow-hidden gap-4">
-					<div className=" flex flex-1 min-w-0 flex-col gap-4">
-						<div className="flex items-center gap-4 bg-zinc-100 rounded-xl p-5">
-							<div className="bg-white rounded-xl p-2 aspect-square w-auto flex flex-col items-center text-center gap-1">
-								<span>الكود</span>
-								<span>
-									{customer && (
-										<>
-											#{customer.id < 10 ? "00" : customer.id < 100 ? "0" : ""}
-											{customer.id}
-										</>
-									)}
-								</span>
+		<>
+			<FormProvider {...form}>
+				<form onSubmit={form.handleSubmit(onSubmit)}>
+					<div className="flex justify-between max-w-full overflow-hidden gap-4">
+						<div className="flex flex-1 min-w-0 flex-col gap-4">
+							{/* Customer Info Card */}
+							<div className="flex items-center gap-4 bg-white rounded-2xl p-5 border">
+								<div className="bg-gray-900 rounded-xl p-4 aspect-square w-20 flex flex-col items-center justify-center text-center gap-0.5">
+									<span className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest">
+										{t("code")}
+									</span>
+									<span className="text-xl font-black text-white">
+										#{customer?.id < 10 ? "00" : customer?.id < 100 ? "0" : ""}
+										{customer?.id}
+									</span>
+								</div>
+								<div className="flex-1 flex flex-col gap-3">
+									<div className="flex justify-between items-center pb-2 border-b-2 border-gray-100">
+										<span className="text-xs font-bold text-gray-500 uppercase tracking-wide">
+											{t("customer_name")}
+										</span>
+										<span className="text-base font-bold text-gray-900">
+											{customer?.name}
+										</span>
+									</div>
+									<div className="flex justify-between items-center pb-2 border-b-2 border-gray-100">
+										<span className="text-xs font-bold text-gray-500 uppercase tracking-wide">
+											{t("customer_phone")}
+										</span>
+										<span className="text-base font-bold text-gray-900 direction-ltr">
+											{customer?.phone}
+										</span>
+									</div>
+								</div>
 							</div>
-							<div className="h-full flex flex-col justify-between gap-1  w-full">
-								<p className="bg-white p-1 rounded-lg flex justify-between px-4">
-									<span>{t("customer_name")}:</span>{" "}
-									<span>{customer?.name}</span>
-								</p>
-								<p className="bg-white p-1 rounded-lg flex justify-between px-4">
-									<span>{t("customer_phone")}:</span>{" "}
-									<span>{customer?.phone}</span>
-								</p>
-							</div>
+
+							<OrderItem />
+							<GeneralInfo />
 						</div>
-						<EditOrderItems />
-						<GeneralInfo />
-						<Payments invoices={order.invoices} />
+
+						<div className="w-[350px]">
+							<InvoiceCard customerId={customer?.id || 0} />
+						</div>
 					</div>
-					<div className=" w-[350px]">
-						<EditInvoiceCard />
-					</div>
-				</div>
-			</form>
-		</FormProvider>
+				</form>
+			</FormProvider>
+			<div className="mt-4">
+				<Payments orderId={order?.id} invoices={order?.invoices} />
+			</div>
+		</>
 	);
 }

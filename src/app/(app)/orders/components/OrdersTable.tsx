@@ -33,6 +33,7 @@ export const OrdersTable = ({
 						<TableHead className="text-black">{t("customer")}</TableHead>
 						<TableHead className="text-black">{t("order_status")}</TableHead>
 						<TableHead className="text-black">{t("order_date")}</TableHead>
+						<TableHead className="text-black">{t("due_date")}</TableHead>
 						<TableHead className="text-black">{t("actions")}</TableHead>
 					</TableRow>
 				</TableHeader>
@@ -53,12 +54,20 @@ export const OrdersTable = ({
 
 							<TableCell>
 								<div className="max-w-[200px] mx-auto">
-									<OrderStatusDropdown defaultValue={order.status} />
+									<OrderStatusDropdown
+										orderId={order.id}
+										defaultValue={order.status}
+									/>
 								</div>
 							</TableCell>
 
 							<TableCell>
-								<span className="text-muted-foreground">{order.dueDate}</span>
+								<span className="text-muted-foreground">
+									{order.createdAt.slice(0, 10)}
+								</span>
+							</TableCell>
+							<TableCell>
+								<span className="text-muted-foreground">{order.dueDate} </span>
 							</TableCell>
 
 							<TableCell>
