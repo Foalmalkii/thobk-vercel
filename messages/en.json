@@ -95,7 +95,8 @@
 		"invoice_added_successfully": "Invoice Added Successfully",
 		"invoice_number": "Invoice Number",
 		"invoice_add_failed": "Failed to add invoice",
-		"remaining_amount": "Remaining amount"
+		"remaining_amount": "Remaining amount",
+		"document_type_invoice": "Invoice (Fatoorah)"
 	},
 	"fabric": {
 		"add_new_fabric": "Add New Fabric",
@@ -208,7 +209,8 @@
 		"status_in_progress": "In Progress",
 		"status_ready": "Ready",
 		"status_delivered": "Completed",
-		"status_canceled": "Canceled"
+		"status_canceled": "Canceled",
+		"due_date": "Due Date"
 	},
 	"auth": {
 		"v_email_email": "Please enter a valid email address",

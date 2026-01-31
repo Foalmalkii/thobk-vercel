@@ -95,7 +95,8 @@
 		"invoice_added_successfully": "تمت إضافة الفاتورة بنجاح",
 		"invoice_number": "رقم الفاتورة",
 		"invoice_add_failed": "فشل في إضافة الفاتورة",
-		"remaining_amount": "المبلغ المتبقي"
+		"remaining_amount": "المبلغ المتبقي",
+		"document_type_invoice": "فاتورة"
 	},
 	"fabric": {
 		"add_new_fabric": "إضافة قماش جديد",
@@ -206,7 +207,8 @@
 		"status_in_progress": "قيد التنفيذ",
 		"status_ready": "جاهز",
 		"status_delivered": "تم التسليم",
-		"status_canceled": "ملغي"
+		"status_canceled": "ملغي",
+		"due_date": "تاريخ التسليم"
 	},
 	"auth": {
 		"v_email_email": "يجب كتابة بريد الكتروني صحيح",
