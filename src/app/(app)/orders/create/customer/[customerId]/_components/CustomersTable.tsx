@@ -58,13 +58,13 @@ export const CustomersTable = ({ customers }: CustomersTableProps) => {
 						key={customer.id}
 						className="hover:bg-slate-50 transition-colors"
 					>
-						<TableCell className="font-medium text-slate-600">
+						<TableCell className="font-medium text-slate-600 text-center">
 							{customer.id}
 						</TableCell>
-						<TableCell className="font-medium text-slate-900">
+						<TableCell className="font-medium text-slate-900 text-center">
 							{customer.name}
 						</TableCell>
-						<TableCell className="text-slate-700 font-mono">
+						<TableCell className="text-slate-700 font-mono text-center">
 							{customer.phone}
 						</TableCell>
 						<TableCell className="text-center">

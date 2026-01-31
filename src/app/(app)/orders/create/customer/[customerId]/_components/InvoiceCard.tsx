@@ -23,7 +23,7 @@ export const InvoiceCard = ({ customerId }: { customerId: number }) => {
 	const dueDate = orderForm.watch("dueDate");
 
 	return (
-		<div className="w-full p-6 border rounded-lg h-full shadow flex flex-col justify-between">
+		<div className="w-full p-6 border rounded-lg h-full flex flex-col justify-between bg-white">
 			<div>
 				<div className="flex flex-col gap-1.5">
 					<h1 className="text-lg font-bold">{t("order_details")}</h1>

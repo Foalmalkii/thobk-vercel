@@ -7,8 +7,9 @@ import {
 	ChevronsRightIcon,
 } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import { getDirection } from "@/lib/types";
 
 interface PaginationProps {
 	currentPage: number;
@@ -43,6 +44,9 @@ export const Pagination = ({
 	/*if (totalItems < itemsPerPage && currentPage === 1) {
 		return null;
 	}*/
+
+	const locale = useLocale();
+	const dir = getDirection(locale);
 
 	return (
 		<div className="flex items-center justify-between px-2 py-4">

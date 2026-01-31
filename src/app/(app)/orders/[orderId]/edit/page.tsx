@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useAtom } from "jotai";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
@@ -57,6 +57,28 @@ export default function EditOrderPage({
 	});
 
 	const customer = order?.customer;
+
+	// Calculate pending payment
+	const pendingPayment = useMemo(() => {
+		if (!order) return 0;
+
+		// Calculate total order amount from items
+		const orderTotal = order.items.reduce((total: number, item: any) => {
+			return total + item.quantity * item.price;
+		}, 0);
+
+		// Calculate total paid amount from invoices
+		const paidAmount = order.invoices.reduce((total: number, invoice: any) => {
+			// Only count paid invoices
+			if (invoice.status === "paid") {
+				return total + invoice.total;
+			}
+			return total;
+		}, 0);
+
+		// Calculate pending payment (difference)
+		return orderTotal - paidAmount;
+	}, [order]);
 
 	// Initialize form with order data
 	useEffect(() => {
@@ -236,7 +258,11 @@ export default function EditOrderPage({
 				</form>
 			</FormProvider>
 			<div className="mt-4">
-				<Payments orderId={order?.id} invoices={order?.invoices} />
+				<Payments
+					orderId={order?.id}
+					invoices={order?.invoices}
+					pendingPayment={pendingPayment}
+				/>
 			</div>
 		</>
 	);

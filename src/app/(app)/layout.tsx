@@ -41,7 +41,7 @@ export default function RootLayout({
 								<SidebarProvider defaultOpen={true}>
 									<AppSidebar />
 
-									<main className="flex-1 min-w-0 ">
+									<main className="flex-1 min-w-0 bg-zinc-100">
 										<Navbar />
 										<BranchLayout>
 											<div className="p-8 ">{children}</div>

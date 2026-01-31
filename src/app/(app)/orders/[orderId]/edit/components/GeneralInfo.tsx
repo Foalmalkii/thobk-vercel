@@ -11,7 +11,7 @@ export const GeneralInfo = () => {
 	const notes = orderForm.watch("notes");
 
 	return (
-		<div className="rounded-xl p-6 border">
+		<div className="rounded-xl p-6 border bg-white">
 			<div className="flex justify-between w-full">
 				<div className="flex flex-col gap-1">
 					<h1 className="font-bold text-lg">{t("general_notes_title")}</h1>

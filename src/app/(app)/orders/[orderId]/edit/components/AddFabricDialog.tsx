@@ -15,28 +15,20 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-	Field,
-	FieldDescription,
-	FieldError,
-	FieldLabel,
-} from "@/components/ui/field";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
 import { useAuth } from "@/hooks/auth";
 import axios from "@/lib/axios";
 
 interface AddFabricDialogProps {
 	onFabricCreated?: (fabricId: number) => void;
+	action?: React.ReactNode;
 }
 
-export const AddFabricDialog = ({ onFabricCreated }: AddFabricDialogProps) => {
+export const AddFabricDialog = ({
+	onFabricCreated,
+	action,
+}: AddFabricDialogProps) => {
 	const [open, setOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const { isInBranch } = useAuth({ middleware: "auth" });
@@ -52,7 +44,7 @@ export const AddFabricDialog = ({ onFabricCreated }: AddFabricDialogProps) => {
 	const fabricSchema = z.object({
 		name: z.string().min(1, t("name_required")),
 		supplier: z.string().min(1, t("supplier_required")),
-		type: z.string().min(1, t("type_required")),
+		type: z.string().default("fabric"), // Always fabric
 		color: z.string().min(1, t("color_required")),
 		batches: z.array(batchSchema).min(1, t("batches_required")),
 	});
@@ -64,7 +56,7 @@ export const AddFabricDialog = ({ onFabricCreated }: AddFabricDialogProps) => {
 		defaultValues: {
 			name: "",
 			supplier: "",
-			type: "fabric",
+			type: "fabric", // Default to fabric
 			color: "",
 			batches: [
 				{
@@ -114,9 +106,13 @@ export const AddFabricDialog = ({ onFabricCreated }: AddFabricDialogProps) => {
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
-				<Button size={"icon"} variant={"outline"} type="button">
-					<PlusIcon />
-				</Button>
+				{action ? (
+					action
+				) : (
+					<Button size={"icon"} variant={"outline"} type="button">
+						<PlusIcon />
+					</Button>
+				)}
 			</DialogTrigger>
 			<DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
 				<DialogHeader>
@@ -168,39 +164,6 @@ export const AddFabricDialog = ({ onFabricCreated }: AddFabricDialogProps) => {
 						/>
 
 						<Controller
-							name="type"
-							control={form.control}
-							render={({ field, fieldState }) => (
-								<Field data-invalid={fieldState.invalid}>
-									<FieldLabel htmlFor={field.name}>
-										{t("product_type")}
-									</FieldLabel>
-									<Select
-										onValueChange={field.onChange}
-										defaultValue={field.value}
-									>
-										<SelectTrigger
-											id={field.name}
-											aria-invalid={fieldState.invalid}
-										>
-											<SelectValue placeholder={t("select_type")} />
-										</SelectTrigger>
-										<SelectContent>
-											<SelectItem value="fabric">{t("type_fabric")}</SelectItem>
-											<SelectItem value="accessory">
-												{t("type_accessory")}
-											</SelectItem>
-											<SelectItem value="button">{t("type_button")}</SelectItem>
-										</SelectContent>
-									</Select>
-									{fieldState.invalid && (
-										<FieldError errors={[fieldState.error]} />
-									)}
-								</Field>
-							)}
-						/>
-
-						<Controller
 							name="color"
 							control={form.control}
 							render={({ field, fieldState }) => (
@@ -237,7 +200,7 @@ export const AddFabricDialog = ({ onFabricCreated }: AddFabricDialogProps) => {
 									})
 								}
 							>
-								<PlusIcon className="w-4 h-4 ml-2" />
+								<PlusIcon className="w-4 h-4 mr-2" />
 								{t("add_batch")}
 							</Button>
 						</div>

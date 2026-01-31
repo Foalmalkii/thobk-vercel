@@ -61,6 +61,7 @@ export default function OrderNewCustomerPage({
 		setIsAtomInitialized(true);
 		form.setValue("customerId", customerId);
 		form.setValue("status", "received");
+		form.setValue("notes", "");
 	}, [customerId, setCustomerIdState]);
 
 	if (isLoadingCustomer || !isAtomInitialized) return <Loading />;

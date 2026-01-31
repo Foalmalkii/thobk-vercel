@@ -46,13 +46,8 @@ export const AppSidebar = () => {
 			items: [
 				{ name: t("messages.general"), href: "/", icon: HomeIcon },
 				{ name: t("messages.orders"), href: "/orders", icon: UsersIcon },
-				{
-					name: t("messages.customers"),
-					href: "/customers",
-					icon: UserRoundPlusIcon,
-				},
+
 				{ name: t("messages.storage"), href: "/storage", icon: WarehouseIcon },
-				{ name: t("messages.erp"), href: "/erp", icon: Users2Icon },
 			],
 		},
 	};
@@ -149,13 +144,13 @@ export const AppSidebar = () => {
 					<SidebarMenuItem>
 						<CreditBadgeCard user={user} />
 					</SidebarMenuItem>
-					<SidebarMenuItem className={`${!open && "mx-auto"}`}>
+					{/*<SidebarMenuItem className={`${!open && "mx-auto"}`}>
 						<SidebarMenuButton asChild>
 							<Link href={"/settings"}>
 								<CogIcon /> الإعدادات
 							</Link>
 						</SidebarMenuButton>
-					</SidebarMenuItem>
+					</SidebarMenuItem>*/}
 				</SidebarMenu>
 			</SidebarFooter>
 		</Sidebar>

@@ -66,6 +66,7 @@ interface Invoice {
 interface PaymentsProps {
 	invoices: Invoice[];
 	orderId: number;
+	pendingPayment: number; // Added prop
 }
 
 const STATUS_CONFIG = {
@@ -89,7 +90,11 @@ const STATUS_CONFIG = {
 	},
 };
 
-export const Payments = ({ invoices, orderId }: PaymentsProps) => {
+export const Payments = ({
+	invoices,
+	orderId,
+	pendingPayment,
+}: PaymentsProps) => {
 	const t = useTranslations("payments");
 	const { isInBranch } = useAuth({ middleware: "auth" });
 	const [open, setOpen] = useState(false);
@@ -180,10 +185,13 @@ export const Payments = ({ invoices, orderId }: PaymentsProps) => {
 		.filter((inv) => inv.status === "pending")
 		.reduce((sum, inv) => sum + inv.total, 0);
 
+	// Check if order is fully paid
+	const isFullyPaid = pendingPayment <= 0;
+
 	return (
 		<div className="space-y-6">
 			{/* Summary Cards */}
-			<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+			<div className="grid grid-cols-1 md:grid-cols-4 gap-4">
 				<Card>
 					<CardContent className="p-6">
 						<div className="flex items-center justify-between">
@@ -235,6 +243,41 @@ export const Payments = ({ invoices, orderId }: PaymentsProps) => {
 						</div>
 					</CardContent>
 				</Card>
+
+				{/* New Pending Payment Card */}
+				<Card
+					className={isFullyPaid ? "border-green-500" : "border-orange-500"}
+				>
+					<CardContent className="p-6">
+						<div className="flex items-center justify-between">
+							<div>
+								<p className="text-sm font-medium text-muted-foreground">
+									{t("pending_payment")}
+								</p>
+								{isFullyPaid ? (
+									<p className="text-2xl font-bold mt-1 text-green-600">
+										{t("fully_paid")}
+									</p>
+								) : (
+									<p className="text-2xl font-bold mt-1 text-orange-600">
+										{pendingPayment.toFixed(2)} {t("currency")}
+									</p>
+								)}
+							</div>
+							<div
+								className={`h-12 w-12 rounded-full flex items-center justify-center ${
+									isFullyPaid ? "bg-green-100" : "bg-orange-100"
+								}`}
+							>
+								{isFullyPaid ? (
+									<CheckCircleIcon className="h-6 w-6 text-green-600" />
+								) : (
+									<ClockIcon className="h-6 w-6 text-orange-600" />
+								)}
+							</div>
+						</div>
+					</CardContent>
+				</Card>
 			</div>
 
 			{/* Invoices List */}
@@ -246,7 +289,7 @@ export const Payments = ({ invoices, orderId }: PaymentsProps) => {
 					</div>
 					<Dialog open={open} onOpenChange={setOpen}>
 						<DialogTrigger asChild>
-							<Button>
+							<Button disabled={isFullyPaid}>
 								<PlusIcon className="w-4 h-4" />
 								{t("add_invoice")}
 							</Button>
@@ -268,11 +311,16 @@ export const Payments = ({ invoices, orderId }: PaymentsProps) => {
 										type="number"
 										step="0.01"
 										min="0"
+										max={pendingPayment}
 										value={amount}
 										onChange={(e) => setAmount(e.target.value)}
-										placeholder="60.00"
+										placeholder={pendingPayment.toFixed(2)}
 										disabled={isLoading}
 									/>
+									<p className="text-xs text-muted-foreground">
+										{t("remaining_amount")}: {pendingPayment.toFixed(2)}{" "}
+										{t("currency")}
+									</p>
 								</div>
 								<div className="space-y-2">
 									<Label htmlFor="type">{t("invoice_type")}</Label>
@@ -288,7 +336,7 @@ export const Payments = ({ invoices, orderId }: PaymentsProps) => {
 											<SelectItem value="deposit">
 												{t("type_deposit")}
 											</SelectItem>
-											<SelectItem value="full">{t("type_full")}</SelectItem>
+											<SelectItem value="final">{t("type_full")}</SelectItem>
 										</SelectContent>
 									</Select>
 								</div>
@@ -417,15 +465,28 @@ export const Payments = ({ invoices, orderId }: PaymentsProps) => {
 											</div>
 
 											{/* Print Button */}
-											<Button
-												variant="outline"
-												onClick={() => handlePrint(invoice.file)}
-												type="button"
-												className="shrink-0"
+											<a
+												href={invoice.file}
+												target="_blank"
+												rel="noopener noreferrer"
+												onClick={(e) => {
+													if (!invoice.file) {
+														e.preventDefault();
+														toast.error(t("error"), {
+															description: t("no_file_available"),
+														});
+													}
+												}}
 											>
-												<PrinterIcon className="w-4 h-4" />
-												{t("print")}
-											</Button>
+												<Button
+													variant="outline"
+													type="button"
+													className="shrink-0"
+												>
+													<PrinterIcon className="w-4 h-4" />
+													{t("print")}
+												</Button>
+											</a>
 										</div>
 									</CardContent>
 								</Card>

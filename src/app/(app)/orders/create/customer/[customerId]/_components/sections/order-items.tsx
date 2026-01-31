@@ -103,7 +103,7 @@ export const OrderItem = () => {
 	};
 
 	return (
-		<div className="rounded-xl border p-6">
+		<div className="rounded-xl border p-6 bg-white">
 			<div className="flex justify-between">
 				<h1 className="text-xl font-medium">{t("order_items")}</h1>
 				<Button type="button" onClick={handleAddItem}>

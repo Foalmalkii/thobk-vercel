@@ -29,7 +29,7 @@ export const Navbar = () => {
 	const t = useTranslations("messages");
 
 	return (
-		<nav className="px-8 py-4 border-b w-full ">
+		<nav className="px-8 py-4 border-b w-full bg-white ">
 			<div className="flex max-md:justify-between justify-between w-full h-full items-center">
 				<div className="flex gap-3 items-center">
 					<div className="md:hidden">

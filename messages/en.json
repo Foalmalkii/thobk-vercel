@@ -46,46 +46,55 @@
 		"status_updated_successfully": "Status Updated Successfully",
 		"status_changed_to": "Status changed to",
 		"status_update_failed": "Failed to update order status",
-		"error": "Error"
+		"error": "Error",
+		"code": "Code",
+		"customer_name": "Customer Name",
+		"customer_phone": "Customer Phone",
+		"measurement_name": "Name",
+		"measurement_type": "Thobe Type",
+		"close": "Close",
+		"logout": "Logout"
 	},
 	"payments": {
 		"total_invoices": "Total Invoices",
 		"total_paid": "Total Paid",
-		"total_pending": "Total Pending",
+		"total_pending": "Invoices Pending",
+		"pending_payment": "Pending Payment",
+		"fully_paid": "Fully Paid",
 		"currency": "SAR",
 		"invoices_list": "Invoices List",
-		"invoices_description": "View and manage all invoices and payments",
+		"invoices_description": "View and manage all invoices for this order",
 		"add_invoice": "Add Invoice",
 		"add_new_invoice": "Add New Invoice",
 		"add_invoice_description": "Create a new invoice for this order",
 		"amount": "Amount",
 		"invoice_type": "Invoice Type",
-		"type_deposit": "Deposit Payment",
+		"type_deposit": "Deposit",
 		"type_full": "Full Payment",
+		"add": "Add Invoice",
 		"adding": "Adding...",
-		"add": "Add",
 		"cancel": "Cancel",
 		"no_invoices": "No Invoices Yet",
-		"no_invoices_description": "Start by adding your first invoice for this order",
+		"no_invoices_description": "Start by adding the first invoice for this order",
 		"add_first_invoice": "Add First Invoice",
 		"document_type": "Document Type",
+		"document_type_invoice_deposit": "Deposit Invoice",
+		"document_type_invoice_full": "Full Payment Invoice",
 		"subtotal": "Subtotal",
-		"vat": "VAT (15%)",
+		"vat": "VAT",
 		"total": "Total",
 		"items": "Items",
 		"print": "Print",
 		"status_paid": "Paid",
 		"status_pending": "Pending",
 		"status_cancelled": "Cancelled",
-		"document_type_invoice_deposit": "Deposit Invoice",
-		"document_type_invoice_full": "Full Invoice",
-		"document_type_invoice": "Invoice",
+		"error": "Error",
+		"no_file_available": "No file available for this invoice",
+		"invalid_amount": "Please enter a valid amount",
 		"invoice_added_successfully": "Invoice Added Successfully",
 		"invoice_number": "Invoice Number",
 		"invoice_add_failed": "Failed to add invoice",
-		"error": "Error",
-		"invalid_amount": "Please enter a valid amount",
-		"no_file_available": "No file available for this invoice"
+		"remaining_amount": "Remaining amount"
 	},
 	"fabric": {
 		"add_new_fabric": "Add New Fabric",
@@ -128,7 +137,14 @@
 		"outside_fabric_description": "Fabric from outside the store",
 		"error_loading_fabrics": "Error loading fabrics",
 		"no_fabrics_available": "No fabrics available",
-		"meters_remaining": "m remaining"
+		"meters_remaining": "m remaining",
+		"add_batches": "Add Batches",
+		"add_batches_to": "Add Batches to",
+		"existing_batches": "Existing Batches",
+		"new_batches": "New Batches",
+		"batches_added_successfully": "Batches added successfully",
+		"error_adding_batches": "Error adding batches",
+		"loading": "Loading..."
 	},
 	"Navbar": {
 		"choose_locale": "Choose Language",
@@ -137,6 +153,17 @@
 		"locale_hi": "हिन्दी",
 		"locale_bn": "বাংলা"
 	},
+
+	"home": {
+		"welcome": "Welcome",
+		"select_action": "Select an action to begin",
+		"new_order": "New Order",
+		"new_order_description": "Create a new tailoring order for a customer",
+		"stock_management": "Stock Management",
+		"stock_management_description": "View and manage fabrics and materials",
+		"get_started": "Get Started"
+	},
+
 	"orders": {
 		"orders": "Orders",
 		"page_description": "The orders page in the dashboard allows you to manage all orders easily. You can view current orders with details such as order number, execution status, and order value, as well as create a new order and enter all its data. The page also provides a comprehensive view of each order's information for organized and accurate tracking.",
@@ -239,31 +266,21 @@
 		"v_name_name": "Name is required"
 	},
 	"storage": {
-		"title": "Smart Inventory Management",
-		"description": "A comprehensive system for managing fabrics and materials with accurate inventory tracking, sales analytics, and detailed reports. Soon you'll be able to manage your inventory with higher efficiency.",
-		"launch_date": "Expected Launch: February 2026",
-		"feature_1": "Automatic Inventory Tracking",
-		"feature_2": "Advanced Analytics",
-		"feature_3": "Order Management",
-		"sneak_peek": "Sneak Peek",
-		"sneak_peek_subtitle": "Most ordered fabrics this season",
-		"most_ordered": "Most Ordered",
-		"sku": "SKU",
-		"orders": "Orders",
-		"revenue": "Revenue",
-		"winter": "Winter",
-		"summer": "Summer",
-		"footer_message": "More features coming soon! Stay tuned for updates.",
-		"fabric_1": {
-			"name": "Premium Satin Fabric"
-		},
-		"fabric_2": {
-			"name": "Lightweight Linen Fabric"
-		},
-		"fabric_3": {
-			"name": "Classic Gray Fabric"
-		}
+		"stock_management": "Stock Management",
+		"stock_management_subtitle": "Manage your fabrics, accessories, and materials",
+		"stock_list": "Stock List",
+		"no_stock": "No stock items found",
+		"add_first_stock": "Add your first stock item to get started",
+		"name": "Name",
+		"type": "Type",
+		"color": "Color",
+		"supplier": "Supplier",
+		"remaining_meters": "Remaining (m)",
+		"type_fabric": "Fabric",
+		"type_accessory": "Accessory",
+		"type_button": "Button"
 	},
+
 	"erp": {
 		"title": "Integrated Business Management System",
 		"description": "A comprehensive platform for business owners to manage branches, tailors, and customers. Track activities, review logs, and manage permissions easily from a single dashboard.",
@@ -322,7 +339,8 @@
 		"general_notes_description": "Enter any general notes about the order here.",
 		"general_notes_placeholder": "Enter general notes",
 		"expected_delivery_date": "Expected Delivery Date",
-		"select_date": "Select Date"
+		"select_date": "Select Date",
+		"update_order": "Update Order"
 	},
 	"customers": {
 		"title": "Smart Customer Management",
@@ -417,6 +435,7 @@
 		"neck_neckDesign_royal": "Royal Collar",
 		"neck_neckShape_square": "Square",
 		"neck_neckShape_rounded": "Rounded",
+		"neck_neckNotes": "Neck Notes",
 		"neck_neckFill_1": "Fill 1",
 		"neck_neckFill_2": "Fill 2",
 		"neck_neckButtonType_normal": "Normal",
@@ -453,6 +472,7 @@
 		"wrist_wristDesign_french": "French",
 		"wrist_wristDesign_double": "Double",
 		"wrist": "Wrist",
+		"wrist_wristNotes": "Wrist Notes",
 		"wrist_wristMaterialLayers_1": "One Layer",
 		"wrist_wristMaterialLayers_2": "Two Layers",
 		"wrist_wristSleeveCrumbNumber_0": "No Pleats",
@@ -497,6 +517,7 @@
 		"jabzoor_jabzoorVisibility": "Jabzoor Visibility",
 		"jabzoor_jabzoorShape": "Jabzoor Shape",
 		"jabzoor_jabzoorPushMaterial": "Snap Material",
+		"jabzoor_jabzoorNotes": "Jabzoor Notes",
 		"jabzoor_jabzoorHoleType_push": "Snap",
 		"jabzoor_jabzoorHoleType_buttons": "Buttons",
 		"jabzoor_jabzoorHoleType_zip": "Zipper",
@@ -507,6 +528,7 @@
 		"jabzoor_jabzoorDesign_fullPush": "Full Snap",
 		"jabzoor_jabzoorVisibility_visible": "Visible",
 		"jabzoor_jabzoorVisibility_invisible": "Hidden",
+		"sidePockets": "Side Pockets",
 		"jabzoor_jabzoorShape_square": "Square",
 		"jabzoor_jabzoorShape_rounded": "Rounded",
 		"jabzoor_jabzoorShape_minced": "Minced",
