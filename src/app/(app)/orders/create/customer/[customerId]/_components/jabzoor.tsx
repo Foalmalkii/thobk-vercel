@@ -57,7 +57,7 @@ export const JabzoorMeasurementInfo = ({
 											"border-blue-700 bg-blue-100 text-blue-700 focus:ring-blue-700"
 										}
 									>
-										<SelectValue placeholder="choose">
+										<SelectValue placeholder={t("jabzoor_select_jabzoorImg")}>
 											{field.value ? (
 												<div className="flex items-center gap-2">
 													<img

@@ -26,6 +26,9 @@ export const Pagination = ({
 	const router = useRouter();
 	const pathname = usePathname();
 	const searchParams = useSearchParams();
+	const locale = useLocale();
+	const dir = getDirection(locale);
+	const isRTL = dir === "rtl";
 
 	const hasNextPage = totalItems === itemsPerPage;
 	const hasPrevPage = currentPage > 1;
@@ -45,11 +48,14 @@ export const Pagination = ({
 		return null;
 	}*/
 
-	const locale = useLocale();
-	const dir = getDirection(locale);
+	// Icons based on direction
+	const FirstPageIcon = isRTL ? ChevronsRightIcon : ChevronsLeftIcon;
+	const PrevPageIcon = isRTL ? ChevronRightIcon : ChevronLeftIcon;
+	const NextPageIcon = isRTL ? ChevronLeftIcon : ChevronRightIcon;
+	const LastPageIcon = isRTL ? ChevronsLeftIcon : ChevronsRightIcon;
 
 	return (
-		<div className="flex items-center justify-between px-2 py-4">
+		<div className="flex items-center justify-between px-2 py-4" dir={dir}>
 			<div className="flex items-center gap-2 text-sm text-muted-foreground">
 				<span>
 					{t("page")} {currentPage}
@@ -67,8 +73,9 @@ export const Pagination = ({
 					size="icon"
 					onClick={() => handlePageChange(1)}
 					disabled={!hasPrevPage}
+					aria-label={t("firstPage")}
 				>
-					<ChevronsLeftIcon className="h-4 w-4" />
+					<FirstPageIcon className="h-4 w-4" />
 				</Button>
 
 				{/* Previous Page */}
@@ -77,8 +84,9 @@ export const Pagination = ({
 					size="icon"
 					onClick={() => handlePageChange(currentPage - 1)}
 					disabled={!hasPrevPage}
+					aria-label={t("previousPage")}
 				>
-					<ChevronLeftIcon className="h-4 w-4" />
+					<PrevPageIcon className="h-4 w-4" />
 				</Button>
 
 				{/* Current Page Display */}
@@ -88,12 +96,13 @@ export const Pagination = ({
 							variant="outline"
 							size="sm"
 							onClick={() => handlePageChange(currentPage - 1)}
+							aria-label={`${t("goToPage")} ${currentPage - 1}`}
 						>
 							{currentPage - 1}
 						</Button>
 					)}
 
-					<Button variant="default" size="sm" disabled>
+					<Button variant="default" size="sm" disabled aria-current="page">
 						{currentPage}
 					</Button>
 
@@ -102,6 +111,7 @@ export const Pagination = ({
 							variant="outline"
 							size="sm"
 							onClick={() => handlePageChange(currentPage + 1)}
+							aria-label={`${t("goToPage")} ${currentPage + 1}`}
 						>
 							{currentPage + 1}
 						</Button>
@@ -114,13 +124,19 @@ export const Pagination = ({
 					size="icon"
 					onClick={() => handlePageChange(currentPage + 1)}
 					disabled={!hasNextPage}
+					aria-label={t("nextPage")}
 				>
-					<ChevronRightIcon className="h-4 w-4" />
+					<NextPageIcon className="h-4 w-4" />
 				</Button>
 
 				{/* Last Page - Disabled since we don't know total */}
-				<Button variant="outline" size="icon" disabled>
-					<ChevronsRightIcon className="h-4 w-4" />
+				<Button
+					variant="outline"
+					size="icon"
+					disabled
+					aria-label={t("lastPage")}
+				>
+					<LastPageIcon className="h-4 w-4" />
 				</Button>
 			</div>
 		</div>

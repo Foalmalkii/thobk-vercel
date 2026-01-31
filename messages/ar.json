@@ -53,7 +53,8 @@
 		"measurement_name": "الاسم",
 		"measurement_type": "نوع الثوب",
 		"close": "إغلاق",
-		"logout": "تسجيل خروج"
+		"logout": "تسجيل خروج",
+		"thobe_type": "نوع الثوب"
 	},
 	"payments": {
 		"total_invoices": "إجمالي الفواتير",
@@ -145,6 +146,15 @@
 		"batches_added_successfully": "تم إضافة الدفعات بنجاح",
 		"error_adding_batches": "خطأ في إضافة الدفعات",
 		"loading": "جاري التحميل..."
+	},
+	"pagination": {
+		"page": "صفحة",
+		"items": "عناصر",
+		"firstPage": "الصفحة الأولى",
+		"previousPage": "الصفحة السابقة",
+		"nextPage": "الصفحة التالية",
+		"lastPage": "الصفحة الأخيرة",
+		"goToPage": "الانتقال إلى صفحة"
 	},
 	"Navbar": {
 		"choose_locale": "اختر اللغة",
@@ -279,6 +289,7 @@
 		"winter": "شتوي",
 		"summer": "صيفي",
 		"footer_message": "المزيد من الميزات قادمة قريباً! ترقبوا التحديثات.",
+		"add_item": "إضافة عنصر",
 		"fabric_1": {
 			"name": "قماش ستان فاخر"
 		},
@@ -296,6 +307,7 @@
 		"name": "الاسم",
 		"type": "النوع",
 		"color": "اللون",
+		"actions": "الإجراءات",
 		"supplier": "المورد",
 		"remaining_meters": "المتبقي (م)",
 		"type_fabric": "قماش",
@@ -526,6 +538,7 @@
 		"chestPocket_select_chestPocketDesign": "تصميم جيب الصدر",
 		"chestPocket_select_chestPocketShape": "شكل جيب الصدر",
 		"chestPocket_select_chestPocketVisibility": "ظهور جيب الصدر",
+		"chestPocket_chestPocketNotes": "ملاحظات جيب الصدر",
 		"sidePockets": "الجيوب الجانبية",
 		"sidePockets_sidePhonePocketLength": "ارتفاع جيب الجوال",
 		"sidePockets_sidePhonePocketWidth": "عرض جيب الجوال",
@@ -561,6 +574,7 @@
 		"jabzoor_select_jabzoorVisibility": "ظهور الجبزور",
 		"jabzoor_select_jabzoorShape": "شكل الجبزور",
 		"jabzoor_select_jabzoorPushMaterial": "مادة الكبّاس",
+		"thobe_type": "نوع الثوب",
 		"new_customer_profile": "ملف عميل جديد",
 		"no_previous_measurements": "هذا العميل ليس لديه قياسات سابقة. يرجى إدخال القياسات يدوياً.",
 		"load_previous_measurement": "تحميل قياس سابق",

@@ -51,7 +51,9 @@ export const ChestPocketMeasurementInfo = ({
 									onValueChange={field.onChange}
 								>
 									<SelectTrigger>
-										<SelectValue placeholder="choose">
+										<SelectValue
+											placeholder={t("chestPocket_select_chestPocketImg")}
+										>
 											{field.value ? (
 												<div className="flex items-center gap-2">
 													<img

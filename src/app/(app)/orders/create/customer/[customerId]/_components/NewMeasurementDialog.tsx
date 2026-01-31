@@ -170,7 +170,7 @@ const MeasurementTypeField = ({
 						onValueChange={field.onChange}
 					>
 						<SelectTrigger>
-							<SelectValue placeholder="thobe type" />
+							<SelectValue placeholder={t("thobe_type")} />
 						</SelectTrigger>
 						<SelectContent>
 							{thobeTypes.map((type) => (

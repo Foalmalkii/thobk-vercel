@@ -43,7 +43,7 @@ export const WristInfro = ({ orderItemIndex }: { orderItemIndex: number }) => {
 									onValueChange={field.onChange}
 								>
 									<SelectTrigger>
-										<SelectValue placeholder="choose">
+										<SelectValue placeholder={t("wrist_select_wristImg")}>
 											{field.value ? (
 												<div className="flex items-center gap-2">
 													<img

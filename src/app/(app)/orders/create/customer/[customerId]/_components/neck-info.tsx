@@ -52,7 +52,7 @@ export const NeckMeasurementInfo = ({
 									onValueChange={field.onChange}
 								>
 									<SelectTrigger>
-										<SelectValue placeholder="choose">
+										<SelectValue placeholder={t("neck_select_neckImg")}>
 											{field.value ? (
 												<div className="flex items-center gap-2">
 													<img

@@ -51,7 +51,7 @@ export default function StoragePage() {
 							}}
 							action={
 								<Button>
-									Add Item <PlusCircleIcon />
+									{t("add_item")} <PlusCircleIcon />
 								</Button>
 							}
 						/>

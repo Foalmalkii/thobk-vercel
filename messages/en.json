@@ -53,7 +53,8 @@
 		"measurement_name": "Name",
 		"measurement_type": "Thobe Type",
 		"close": "Close",
-		"logout": "Logout"
+		"logout": "Logout",
+		"thobe_type": "Thobe Type"
 	},
 	"payments": {
 		"total_invoices": "Total Invoices",
@@ -162,6 +163,15 @@
 		"stock_management": "Stock Management",
 		"stock_management_description": "View and manage fabrics and materials",
 		"get_started": "Get Started"
+	},
+	"pagination": {
+		"page": "Page",
+		"items": "items",
+		"firstPage": "First page",
+		"previousPage": "Previous page",
+		"nextPage": "Next page",
+		"lastPage": "Last page",
+		"goToPage": "Go to page"
 	},
 
 	"orders": {
@@ -274,6 +284,8 @@
 		"name": "Name",
 		"type": "Type",
 		"color": "Color",
+		"add_item": "Add Item",
+		"actions": "Actions",
 		"supplier": "Supplier",
 		"remaining_meters": "Remaining (m)",
 		"type_fabric": "Fabric",
@@ -546,7 +558,8 @@
 		"load_previous_measurement": "Load Previous Measurement",
 		"select_measurement_description": "Select a measurement from a previous order to auto-fill all fields.",
 		"select_measurement": "Select a measurement...",
-		"load": "Load"
+		"load": "Load",
+		"thobe_type": "Thobe Type"
 	},
 	"noBranch": {
 		"title": "No Active Branch",

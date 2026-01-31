@@ -90,11 +90,11 @@ export default function OrderNewCustomerPage({
 			})),
 		};
 		console.log(transformedData);
-		await axios
+		const id = await axios
 			.post(`/api/v1/branch/${isInBranch}/order`, transformedData)
-			.then((res) => console.log(res))
+			.then((res) => res.data.data.id)
 			.catch((e) => console.error(e));
-		router.push("/orders");
+		router.push(`/orders/${id}/edit`);
 	};
 
 	return (
