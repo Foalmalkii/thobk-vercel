@@ -42,8 +42,8 @@ export default function EditOrderPage({
 		.object({
 			id: z.number().optional(), // Make ID optional
 			fabricId: z.number().nullable(),
-			unitPrice: z.number(),
-			quantity: z.number(),
+			unitPrice: z.number().min(0.1),
+			quantity: z.number().min(1),
 			name: z.string(),
 			// ... rest of your fields
 		})

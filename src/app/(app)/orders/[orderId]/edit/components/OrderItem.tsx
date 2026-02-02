@@ -33,6 +33,7 @@ export const OrderItem = () => {
 			thobeType: null,
 			neckImg: null,
 			chestPocketImg: null,
+			notes: null,
 			jabzoorImg: null,
 			wristImg: null,
 			name: name,
@@ -85,6 +86,7 @@ export const OrderItem = () => {
 				jabzoorLength: null,
 				jabzoorWidth: null,
 				jabzoorNotes: null,
+				jabzoorHoleType: null,
 			},
 		});
 	};
