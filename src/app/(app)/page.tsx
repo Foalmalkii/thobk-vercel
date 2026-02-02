@@ -1,6 +1,6 @@
 "use client";
 
-import { Package, PlusCircle, ArrowRight } from "lucide-react";
+import { Package, PlusCircle, ArrowRight, Boxes } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import React from "react";
@@ -14,13 +14,20 @@ export default function Home() {
 			title: t("new_order"),
 			description: t("new_order_description"),
 			icon: PlusCircle,
-			href: "/orders",
+			href: "/orders/create",
 			gradient: "from-slate-900 to-slate-700",
+		},
+		{
+			title: t("previous_orders"),
+			description: t("previous_orders_description"),
+			icon: Package,
+			href: "/orders",
+			gradient: "from-slate-800 to-slate-600",
 		},
 		{
 			title: t("stock_management"),
 			description: t("stock_management_description"),
-			icon: Package,
+			icon: Boxes,
 			href: "/storage",
 			gradient: "from-slate-800 to-slate-600",
 		},

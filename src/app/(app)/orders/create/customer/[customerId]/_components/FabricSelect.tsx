@@ -29,12 +29,14 @@ interface FabricSelectProps {
 	value?: number | null;
 	onValueChange: (value: number | null) => void;
 	disabled?: boolean;
+	hasError?: boolean;
 }
 
 export const FabricSelect = ({
 	value,
 	onValueChange,
 	disabled,
+	hasError = false,
 }: FabricSelectProps) => {
 	const { isInBranch } = useAuth({ middleware: "auth" });
 	const t = useTranslations("fabric");
@@ -68,6 +70,17 @@ export const FabricSelect = ({
 
 	const selectedFabric = fabrics.find((f) => f.id === value);
 
+	// Determine the className for the SelectTrigger
+	const getTriggerClassName = () => {
+		if (hasError) {
+			return "border-orange-600 focus:ring-orange-600";
+		}
+		if (value) {
+			return "border-blue-700 bg-blue-100 focus:ring-blue-700";
+		}
+		return "";
+	};
+
 	return (
 		<Select
 			value={value === null ? "outside" : value?.toString()}
@@ -80,9 +93,7 @@ export const FabricSelect = ({
 			}}
 			disabled={disabled}
 		>
-			<SelectTrigger
-				className={value && "border-blue-700 bg-blue-100 focus:ring-blue-700"}
-			>
+			<SelectTrigger className={getTriggerClassName()}>
 				<SelectValue placeholder={t("select_fabric")}>
 					{value === null ? (
 						<span>{t("outside_fabric")}</span>

@@ -19,7 +19,13 @@ export const OrderItemCard = ({
 	onRemove: () => void;
 	onCopy: () => void;
 }) => {
-	const { register, watch, control, setValue } = useFormContext();
+	const {
+		register,
+		watch,
+		control,
+		setValue,
+		formState: { errors },
+	} = useFormContext();
 	const [customerId] = useAtom(activeOrderCustomerIdAtom);
 	const qty = watch(`items.${index}.quantity`);
 	const price = watch(`items.${index}.unitPrice`);
@@ -69,6 +75,11 @@ export const OrderItemCard = ({
 		setValue(`items.${index}.fabricId`, fabricId);
 	};
 
+	// Check for validation errors
+	const quantityError = errors?.items?.[index]?.quantity;
+	const priceError = errors?.items?.[index]?.unitPrice;
+	const fabricError = errors?.items?.[index]?.fabricId;
+
 	return (
 		<TableRow>
 			<TableCell>
@@ -80,6 +91,7 @@ export const OrderItemCard = ({
 							<FabricSelect
 								value={field.value}
 								onValueChange={field.onChange}
+								hasError={!!fabricError}
 							/>
 						)}
 					/>
@@ -105,6 +117,11 @@ export const OrderItemCard = ({
 					{...register(`items.${index}.quantity`, {
 						valueAsNumber: true,
 					})}
+					className={
+						quantityError
+							? "border-orange-600 focus-visible:ring-orange-600"
+							: ""
+					}
 				/>
 			</TableCell>
 
@@ -114,6 +131,9 @@ export const OrderItemCard = ({
 					{...register(`items.${index}.unitPrice`, {
 						valueAsNumber: true,
 					})}
+					className={
+						priceError ? "border-orange-600 focus-visible:ring-orange-600" : ""
+					}
 				/>
 			</TableCell>
 

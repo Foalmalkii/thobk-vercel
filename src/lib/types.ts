@@ -85,6 +85,8 @@ export interface OrderItem {
 	generalChestFront: string | null;
 	generalChestBack: string | null;
 	generalChestFull: string | null;
+	generalTakaleesLength: string | null;
+	generalTakaleesWidth: string | null;
 	generalBottomWidth: string | null;
 	generalCuffBottomWidth: string | null;
 	generalAddedInfo: string | null;

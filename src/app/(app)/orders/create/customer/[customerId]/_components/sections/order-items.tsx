@@ -32,6 +32,7 @@ export const OrderItem = () => {
 			fabricId: undefined,
 			thobeType: null,
 			neckImg: null,
+			notes: null,
 			chestPocketImg: null,
 			jabzoorImg: null,
 			wristImg: null,
@@ -85,6 +86,7 @@ export const OrderItem = () => {
 				jabzoorLength: null,
 				jabzoorWidth: null,
 				jabzoorNotes: null,
+				jabzoorHoleType: null,
 			},
 		});
 	};

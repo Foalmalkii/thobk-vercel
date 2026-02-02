@@ -31,8 +31,9 @@ export const orderSchema = z.object({
 			z
 				.object({
 					fabricId: z.number().nullable(),
-					unitPrice: z.number(),
-					quantity: z.number(),
+					unitPrice: z.number().min(0.01, "Price must be greater than 0"),
+					quantity: z.number().min(1, "Quantity must be at least 1"),
+					notes: z.string().nullable(),
 				})
 				.merge(measurementSchema),
 		)
@@ -75,6 +76,7 @@ export default function OrderNewCustomerPage({
 				unitPrice: item.unitPrice,
 				quantity: item.quantity,
 				name: item.name,
+				notes: item.notes,
 				thobeType: item.thobeType,
 				chestPocketImg: item.chestPocketImg,
 				jabzoorImg: item.jabzoorImg,

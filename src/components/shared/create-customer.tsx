@@ -112,7 +112,7 @@ export const CreateCustomer = ({
 							</div>
 						</div>
 						<div className="w-full mt-8 flex justify-end">
-							<Button>{t("submit")}</Button>
+							<Button disabled={isSubmitting}>{t("submit")}</Button>
 						</div>
 					</form>
 				</div>

@@ -131,6 +131,7 @@ export const InvoiceCard = ({ customerId }: { customerId: number }) => {
 					<Button
 						onClick={() => console.log(orderForm.formState.errors)}
 						type="submit"
+						disabled={orderForm.formState.isSubmitting}
 					>
 						{t("update_order")}
 					</Button>

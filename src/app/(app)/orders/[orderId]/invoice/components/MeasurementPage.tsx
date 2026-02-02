@@ -27,18 +27,25 @@ export const MeasurementPage = ({
 				}}
 			>
 				<View style={{ width: "50%" }}>
-					<Text style={{ fontSize: "14px", fontWeight: "bold" }}>
+					<Text style={[{ fontSize: "14px" }, pdfStyles.bold]}>
 						TAILOR ORDER SHEET
 					</Text>
-					<Text style={{ fontSize: "7px", marginTop: "2px", color: "#666" }}>
+					<Text
+						style={[
+							{ fontSize: "7px", marginTop: "2px", color: "#666" },
+							pdfStyles.light,
+						]}
+					>
 						{branch?.name}
 					</Text>
 				</View>
 				<View style={{ width: "50%", alignItems: "flex-end" }}>
-					<Text style={{ fontSize: "12px", fontWeight: "bold" }}>
+					<Text style={[{ fontSize: "12px" }, pdfStyles.bold]}>
 						Order #{order?.id}
 					</Text>
-					<Text style={{ fontSize: "7px", marginTop: "1px" }}>
+					<Text
+						style={[{ fontSize: "7px", marginTop: "1px" }, pdfStyles.regular]}
+					>
 						Due: {order.dueDate}
 					</Text>
 				</View>
@@ -51,13 +58,15 @@ export const MeasurementPage = ({
 					{/* Order Info */}
 					<View style={{ marginBottom: "6px" }}>
 						<Text
-							style={{
-								fontSize: "9px",
-								fontWeight: "bold",
-								marginBottom: "4px",
-								backgroundColor: "#f0f0f0",
-								padding: "3px",
-							}}
+							style={[
+								{
+									fontSize: "9px",
+									marginBottom: "4px",
+									backgroundColor: "#f0f0f0",
+									padding: "3px",
+								},
+								pdfStyles.bold,
+							]}
 						>
 							ORDER INFO
 						</Text>
@@ -71,8 +80,14 @@ export const MeasurementPage = ({
 									border: "1px solid #e0e0e0",
 								}}
 							>
-								<Text style={{ fontSize: "6px", color: "#666" }}>Order #</Text>
-								<Text style={{ fontSize: "8px" }}>#{order.id}</Text>
+								<Text
+									style={[{ fontSize: "6px", color: "#666" }, pdfStyles.light]}
+								>
+									Order #
+								</Text>
+								<Text style={[{ fontSize: "8px" }, pdfStyles.medium]}>
+									#{order.id}
+								</Text>
 							</View>
 							<View
 								style={{
@@ -81,8 +96,12 @@ export const MeasurementPage = ({
 									border: "1px solid #e0e0e0",
 								}}
 							>
-								<Text style={{ fontSize: "6px", color: "#666" }}>Date</Text>
-								<Text style={{ fontSize: "8px" }}>
+								<Text
+									style={[{ fontSize: "6px", color: "#666" }, pdfStyles.light]}
+								>
+									Date
+								</Text>
+								<Text style={[{ fontSize: "8px" }, pdfStyles.medium]}>
 									{order.createdAt.slice(0, 10)}
 								</Text>
 							</View>
@@ -92,13 +111,15 @@ export const MeasurementPage = ({
 					{/* Customer Info */}
 					<View style={{ marginBottom: "6px" }}>
 						<Text
-							style={{
-								fontSize: "9px",
-								fontWeight: "bold",
-								marginBottom: "4px",
-								backgroundColor: "#f0f0f0",
-								padding: "3px",
-							}}
+							style={[
+								{
+									fontSize: "9px",
+									marginBottom: "4px",
+									backgroundColor: "#f0f0f0",
+									padding: "3px",
+								},
+								pdfStyles.bold,
+							]}
 						>
 							CUSTOMER
 						</Text>
@@ -112,8 +133,14 @@ export const MeasurementPage = ({
 									border: "1px solid #e0e0e0",
 								}}
 							>
-								<Text style={{ fontSize: "6px", color: "#666" }}>Name</Text>
-								<Text style={{ fontSize: "8px" }}>{order.customer.name}</Text>
+								<Text
+									style={[{ fontSize: "6px", color: "#666" }, pdfStyles.light]}
+								>
+									Name
+								</Text>
+								<Text style={[{ fontSize: "8px" }, pdfStyles.medium]}>
+									{order.customer.name}
+								</Text>
 							</View>
 							<View
 								style={{
@@ -122,8 +149,14 @@ export const MeasurementPage = ({
 									border: "1px solid #e0e0e0",
 								}}
 							>
-								<Text style={{ fontSize: "6px", color: "#666" }}>ID</Text>
-								<Text style={{ fontSize: "8px" }}>#{order.customer.id}</Text>
+								<Text
+									style={[{ fontSize: "6px", color: "#666" }, pdfStyles.light]}
+								>
+									ID
+								</Text>
+								<Text style={[{ fontSize: "8px" }, pdfStyles.medium]}>
+									#{order.customer.id}
+								</Text>
 							</View>
 							<View
 								style={{
@@ -132,8 +165,14 @@ export const MeasurementPage = ({
 									border: "1px solid #e0e0e0",
 								}}
 							>
-								<Text style={{ fontSize: "6px", color: "#666" }}>Phone</Text>
-								<Text style={{ fontSize: "8px" }}>{order.customer.phone}</Text>
+								<Text
+									style={[{ fontSize: "6px", color: "#666" }, pdfStyles.light]}
+								>
+									Phone
+								</Text>
+								<Text style={[{ fontSize: "8px" }, pdfStyles.medium]}>
+									{order.customer.phone}
+								</Text>
 							</View>
 						</View>
 					</View>
@@ -144,13 +183,15 @@ export const MeasurementPage = ({
 					{/* Item Details */}
 					<View style={{ marginBottom: "6px" }}>
 						<Text
-							style={{
-								fontSize: "9px",
-								fontWeight: "bold",
-								marginBottom: "4px",
-								backgroundColor: "#f0f0f0",
-								padding: "3px",
-							}}
+							style={[
+								{
+									fontSize: "9px",
+									marginBottom: "4px",
+									backgroundColor: "#f0f0f0",
+									padding: "3px",
+								},
+								pdfStyles.bold,
+							]}
 						>
 							ITEM DETAILS
 						</Text>
@@ -164,10 +205,12 @@ export const MeasurementPage = ({
 									border: "1px solid #e0e0e0",
 								}}
 							>
-								<Text style={{ fontSize: "6px", color: "#666" }}>
+								<Text
+									style={[{ fontSize: "6px", color: "#666" }, pdfStyles.light]}
+								>
 									Thobe Type
 								</Text>
-								<Text style={{ fontSize: "9px", fontWeight: "bold" }}>
+								<Text style={[{ fontSize: "9px" }, pdfStyles.bold]}>
 									{item?.thobeType || "N/A"}
 								</Text>
 							</View>
@@ -178,8 +221,12 @@ export const MeasurementPage = ({
 									border: "1px solid #e0e0e0",
 								}}
 							>
-								<Text style={{ fontSize: "6px", color: "#666" }}>Fabric</Text>
-								<Text style={{ fontSize: "8px" }}>
+								<Text
+									style={[{ fontSize: "6px", color: "#666" }, pdfStyles.light]}
+								>
+									Fabric
+								</Text>
+								<Text style={[{ fontSize: "8px" }, pdfStyles.medium]}>
 									{item?.fabricType || "N/A"}
 								</Text>
 							</View>
@@ -190,8 +237,12 @@ export const MeasurementPage = ({
 									border: "1px solid #e0e0e0",
 								}}
 							>
-								<Text style={{ fontSize: "6px", color: "#666" }}>Color</Text>
-								<Text style={{ fontSize: "8px" }}>
+								<Text
+									style={[{ fontSize: "6px", color: "#666" }, pdfStyles.light]}
+								>
+									Color
+								</Text>
+								<Text style={[{ fontSize: "8px" }, pdfStyles.medium]}>
 									{item?.fabricColor || "White"}
 								</Text>
 							</View>
@@ -202,8 +253,12 @@ export const MeasurementPage = ({
 									border: "1px solid #e0e0e0",
 								}}
 							>
-								<Text style={{ fontSize: "6px", color: "#666" }}>Qty</Text>
-								<Text style={{ fontSize: "8px", fontWeight: "bold" }}>
+								<Text
+									style={[{ fontSize: "6px", color: "#666" }, pdfStyles.light]}
+								>
+									Qty
+								</Text>
+								<Text style={[{ fontSize: "8px" }, pdfStyles.bold]}>
 									{item?.quantity || 1}
 								</Text>
 							</View>
@@ -214,8 +269,14 @@ export const MeasurementPage = ({
 									border: "1px solid #e0e0e0",
 								}}
 							>
-								<Text style={{ fontSize: "6px", color: "#666" }}>Price</Text>
-								<Text style={{ fontSize: "8px" }}>{item?.price || 0}</Text>
+								<Text
+									style={[{ fontSize: "6px", color: "#666" }, pdfStyles.light]}
+								>
+									Price
+								</Text>
+								<Text style={[{ fontSize: "8px" }, pdfStyles.medium]}>
+									{item?.price || 0}
+								</Text>
 							</View>
 							<View
 								style={{
@@ -224,8 +285,12 @@ export const MeasurementPage = ({
 									border: "1px solid #e0e0e0",
 								}}
 							>
-								<Text style={{ fontSize: "6px", color: "#666" }}>Total</Text>
-								<Text style={{ fontSize: "8px", fontWeight: "bold" }}>
+								<Text
+									style={[{ fontSize: "6px", color: "#666" }, pdfStyles.light]}
+								>
+									Total
+								</Text>
+								<Text style={[{ fontSize: "8px" }, pdfStyles.bold]}>
 									{(item?.price || 0) * (item?.quantity || 1)}
 								</Text>
 							</View>
@@ -237,13 +302,15 @@ export const MeasurementPage = ({
 			{/* Measurements Section - Most space */}
 			<View style={{ flex: 1 }}>
 				<Text
-					style={{
-						fontSize: "9px",
-						fontWeight: "bold",
-						marginBottom: "4px",
-						backgroundColor: "#f0f0f0",
-						padding: "3px",
-					}}
+					style={[
+						{
+							fontSize: "9px",
+							marginBottom: "4px",
+							backgroundColor: "#f0f0f0",
+							padding: "3px",
+						},
+						pdfStyles.bold,
+					]}
 				>
 					MEASUREMENTS
 				</Text>
@@ -261,10 +328,14 @@ export const MeasurementPage = ({
 				}}
 			>
 				<View style={{ width: "48%" }}>
-					<Text style={{ fontSize: "7px" }}>Tailor: _______________</Text>
+					<Text style={[{ fontSize: "7px" }, pdfStyles.regular]}>
+						Tailor: _______________
+					</Text>
 				</View>
 				<View style={{ width: "48%" }}>
-					<Text style={{ fontSize: "7px" }}>QC: _______________</Text>
+					<Text style={[{ fontSize: "7px" }, pdfStyles.regular]}>
+						QC: _______________
+					</Text>
 				</View>
 			</View>
 		</Page>

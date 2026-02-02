@@ -7,6 +7,7 @@ export const measurementSchema = z.object({
 		.enum(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"])
 		.nullable(),
 	jabzoorImg: z.enum(["1", "2", "3", "4", "5", "6", "7", "8"]).nullable(),
+	notes: z.string().nullable(),
 	neckImg: z
 		.enum([
 			"1",
@@ -92,7 +93,6 @@ export const measurementSchema = z.object({
 	}),
 
 	wrist: z.object({
-		wristCuffType: z.enum(["normal", "cufflinks"]).nullable(),
 		wristCuffLength: z.string().nullable(),
 		wristCuffWidth: z.string().nullable(),
 		wristNotes: z.string().nullable(),
@@ -115,7 +115,7 @@ export const measurementSchema = z.object({
 	jabzoor: z.object({
 		jabzoorLength: z.string().nullable(),
 		jabzoorWidth: z.string().nullable(),
-
+		jabzoorHoleType: z.enum(["zip", "buttons"]).nullable(),
 		jabzoorNotes: z.string().nullable(),
 	}),
 });
