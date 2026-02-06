@@ -1017,13 +1017,7 @@ export const ThobeImage = ({ orderItemIndex }: { orderItemIndex: number }) => {
 			</div>
 
 			{/* THOBE IMAGE */}
-			<Image
-				alt="thobe"
-				width={987.18}
-				height={1278.5}
-				src="/images/thobe.svg"
-				className="w-full"
-			/>
+			<img alt="thobe" src="/images/thobe.png" className="w-full h-auto" />
 		</div>
 	);
 };

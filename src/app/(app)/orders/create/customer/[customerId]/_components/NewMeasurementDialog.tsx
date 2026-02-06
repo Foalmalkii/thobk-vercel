@@ -63,16 +63,22 @@ export const NewMeasurementDialog = ({
 			<DialogContent className="max-w-full h-screen flex flex-col">
 				<div className="h-full flex flex-col">
 					<div className="flex flex-1 gap-4 h-full">
+						<div className="absolute">
+							<MeasurementSelector
+								customerId={customerId}
+								orderItemIndex={orderItemIndexNumber}
+							/>
+						</div>
 						{/* LEFT: Thobe Image */}
-						<div className="w-1/2 h-full bg-zinc-100">
+						<div className="max-w-screen-xl mx-auto bg-zinc-100">
 							<ThobeImage orderItemIndex={orderItemIndexNumber} />
 						</div>
 
-						<div className="w-px bg-zinc-200 self-stretch" />
+						{/*<div className="w-px bg-zinc-200 self-stretch" />*/}
 
 						{/* RIGHT: Form */}
+						{/*
 						<div className="w-1/2 h-full flex flex-col">
-							{/* Header */}
 							<div className="p-2 flex flex-col gap-4 shrink-0">
 								<h1 className="font-semibold text-2xl">
 									{t("create_measurement_for")} {customer?.name}
@@ -90,7 +96,6 @@ export const NewMeasurementDialog = ({
 								<Separator orientation="horizontal" />
 							</div>
 
-							{/* Scrollable section */}
 							<div className="flex-1 overflow-y-auto overflow-x-hidden flex flex-col gap-4 p-2">
 								<div className="grid grid-cols-2 gap-4">
 									<MeasurementNameField orderItemIndex={orderItemIndexNumber} />
@@ -116,6 +121,7 @@ export const NewMeasurementDialog = ({
 								/>
 							</div>
 						</div>
+*/}
 					</div>
 				</div>
 			</DialogContent>
