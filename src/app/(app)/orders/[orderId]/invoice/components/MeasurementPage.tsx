@@ -216,38 +216,6 @@ export const MeasurementPage = ({
 							</View>
 							<View
 								style={{
-									width: "48%",
-									padding: "4px",
-									border: "1px solid #e0e0e0",
-								}}
-							>
-								<Text
-									style={[{ fontSize: "6px", color: "#666" }, pdfStyles.light]}
-								>
-									Fabric
-								</Text>
-								<Text style={[{ fontSize: "8px" }, pdfStyles.medium]}>
-									{item?.fabricType || "N/A"}
-								</Text>
-							</View>
-							<View
-								style={{
-									width: "48%",
-									padding: "4px",
-									border: "1px solid #e0e0e0",
-								}}
-							>
-								<Text
-									style={[{ fontSize: "6px", color: "#666" }, pdfStyles.light]}
-								>
-									Color
-								</Text>
-								<Text style={[{ fontSize: "8px" }, pdfStyles.medium]}>
-									{item?.fabricColor || "White"}
-								</Text>
-							</View>
-							<View
-								style={{
 									width: "31%",
 									padding: "4px",
 									border: "1px solid #e0e0e0",
@@ -295,6 +263,144 @@ export const MeasurementPage = ({
 								</Text>
 							</View>
 						</View>
+					</View>
+
+					{/* Fabric Details */}
+					<View style={{ marginBottom: "6px" }}>
+						<Text
+							style={[
+								{
+									fontSize: "9px",
+									marginBottom: "4px",
+									backgroundColor: "#f0f0f0",
+									padding: "3px",
+								},
+								pdfStyles.bold,
+							]}
+						>
+							FABRIC
+						</Text>
+						{item?.fabric ? (
+							<View
+								style={{ flexDirection: "row", flexWrap: "wrap", gap: "4px" }}
+							>
+								<View
+									style={{
+										width: "48%",
+										padding: "4px",
+										border: "1px solid #e0e0e0",
+									}}
+								>
+									<Text
+										style={[
+											{ fontSize: "6px", color: "#666" },
+											pdfStyles.light,
+										]}
+									>
+										Name
+									</Text>
+									<Text style={[{ fontSize: "8px" }, pdfStyles.medium]}>
+										{item.fabric.name}
+									</Text>
+								</View>
+								<View
+									style={{
+										width: "48%",
+										padding: "4px",
+										border: "1px solid #e0e0e0",
+									}}
+								>
+									<Text
+										style={[
+											{ fontSize: "6px", color: "#666" },
+											pdfStyles.light,
+										]}
+									>
+										Type
+									</Text>
+									<Text style={[{ fontSize: "8px" }, pdfStyles.medium]}>
+										{item.fabric.type}
+									</Text>
+								</View>
+								<View
+									style={{
+										width: "48%",
+										padding: "4px",
+										border: "1px solid #e0e0e0",
+									}}
+								>
+									<Text
+										style={[
+											{ fontSize: "6px", color: "#666" },
+											pdfStyles.light,
+										]}
+									>
+										Color
+									</Text>
+									<Text style={[{ fontSize: "8px" }, pdfStyles.medium]}>
+										{item.fabric.color}
+									</Text>
+								</View>
+								<View
+									style={{
+										width: "48%",
+										padding: "4px",
+										border: "1px solid #e0e0e0",
+									}}
+								>
+									<Text
+										style={[
+											{ fontSize: "6px", color: "#666" },
+											pdfStyles.light,
+										]}
+									>
+										Supplier
+									</Text>
+									<Text style={[{ fontSize: "8px" }, pdfStyles.medium]}>
+										{item.fabric.supplier}
+									</Text>
+								</View>
+								{item.fabric.batches && item.fabric.batches.length > 0 && (
+									<View
+										style={{
+											width: "100%",
+											padding: "4px",
+											border: "1px solid #e0e0e0",
+										}}
+									>
+										<Text
+											style={[
+												{ fontSize: "6px", color: "#666" },
+												pdfStyles.light,
+											]}
+										>
+											Batch SKU
+										</Text>
+										<Text style={[{ fontSize: "8px" }, pdfStyles.medium]}>
+											{item.fabric.batches[0].sku}
+										</Text>
+									</View>
+								)}
+							</View>
+						) : (
+							<View
+								style={{
+									width: "100%",
+									padding: "8px",
+									border: "1px solid #e0e0e0",
+									backgroundColor: "#fff9e6",
+								}}
+							>
+								<Text
+									style={[
+										{ fontSize: "8px", textAlign: "center" },
+										pdfStyles.bold,
+									]}
+								>
+									Outside Fabric (Customer Provided)
+								</Text>
+							</View>
+						)}
 					</View>
 				</View>
 			</View>

@@ -63,14 +63,14 @@ export const NewMeasurementDialog = ({
 			<DialogContent className="max-w-full h-screen flex flex-col">
 				<div className="h-full flex flex-col">
 					<div className="flex flex-1 gap-4 h-full">
-						<div className="absolute">
+						<div className="absolute right-4 top-[5%] w-[25%] z-10">
 							<MeasurementSelector
 								customerId={customerId}
 								orderItemIndex={orderItemIndexNumber}
 							/>
 						</div>
 						{/* LEFT: Thobe Image */}
-						<div className="max-w-screen-xl mx-auto bg-zinc-100">
+						<div className="max-w-screen-lg 2xl:max-w-screen-xl mx-auto bg-zinc-100">
 							<ThobeImage orderItemIndex={orderItemIndexNumber} />
 						</div>
 

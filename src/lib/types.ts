@@ -63,9 +63,52 @@ const localeDirection: Record<Locale, "ltr" | "rtl"> = {
 export function getDirection(locale: Locale): "ltr" | "rtl" {
 	return localeDirection[locale] ?? "rtl"; // fallback if needed
 }
+export interface FabricBatch {
+	id: number;
+	sku: string;
+	initialLength: number;
+	remainingLength: number;
+	costPerMeter: number;
+	createdAt: string;
+	updatedAt: string;
+	branch: {
+		statusCode: number;
+		message: string;
+		data: {
+			id: number;
+			name: string;
+			phone: string;
+			email: string;
+			address: {
+				buildingNumber: string;
+				additionalNumber: string;
+				streetAddress: string;
+				postalCode: string;
+				district: string;
+				city: string;
+				country: string;
+			};
+		};
+	};
+}
+
+export interface Fabric {
+	id: number;
+	name: string;
+	type: string;
+	color: string;
+	colorCode: string | null;
+	supplier: string;
+	batches: FabricBatch[];
+}
+
 export interface OrderItem {
 	id: number;
 	name: string;
+	quantity: number;
+	price: number; // Changed from string to number based on your JSON
+	fabric: Fabric;
+	notes: string | null;
 
 	thobeType: string | null;
 	neckImg: string | null;
@@ -78,6 +121,8 @@ export interface OrderItem {
 	generalThobeBackLength: string | null;
 	generalShoulderWidth: string | null;
 	generalShoulderRotation: string | null;
+	generalShoulderRight: string | null;
+	generalShoulderLeft: string | null;
 	generalSleeveLength: string | null;
 	generalUpperSleeveWidth: string | null;
 	generalMiddleSleeveWidth: string | null;
@@ -106,6 +151,7 @@ export interface OrderItem {
 	neckButtonholeType: string | null;
 	neckButtonMaterial: string | null;
 	neckButtonVisibility: string | null;
+	neckNotes: string | null;
 
 	// Wrist / cuff
 	wristCuffType: string | null;
@@ -115,6 +161,7 @@ export interface OrderItem {
 	wristButtonNumber: number | null;
 	wristMaterialLayers: number | null;
 	wristSleeveCrumbNumber: number | null;
+	wristNotes: string | null;
 
 	// Chest pocket
 	chestPocketLength: string | null;
@@ -124,6 +171,7 @@ export interface OrderItem {
 	chestPocketDesign: string | null;
 	chestPocketShape: string | null;
 	chestPocketVisibility: string | null;
+	chestPocketNotes: string | null;
 
 	// Side pockets
 	sidePhonePocketLength: string | null;
@@ -132,25 +180,22 @@ export interface OrderItem {
 	sideWalletPocketWidth: string | null;
 
 	// Jabzoor
-	jabzoorHoleType: string | null;
+	jabzoorHoleType: "zip" | "buttons" | string | null;
 	jabzoorLength: string | null;
 	jabzoorWidth: string | null;
 	jabzoorDesign: string | null;
 	jabzoorVisibility: string | null;
 	jabzoorShape: string | null;
 	jabzoorPushMaterial: string | null;
-
-	// Pricing & meta
-	quantity: number;
-	price: string; // "100.00"
-	fabricType: string;
-	color: string;
+	jabzoorNotes: string | null;
 }
+
 export interface CustomerInOrder {
 	id: number;
 	name: string;
 	phone: string;
 }
+
 export interface GetOrder {
 	id: number;
 	customer: CustomerInOrder;

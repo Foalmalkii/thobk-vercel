@@ -117,7 +117,7 @@ export const ThobeImage = ({ orderItemIndex }: { orderItemIndex: number }) => {
 
 			{/* CHEST POCKET IMAGE */}
 
-			<div className="absolute top-[52.3%] -translate-y-1/2 right-[91.4%] font-bold translate-x-1/2 w-[10%] opacity-80">
+			<div className="absolute top-[33%] -translate-y-1/2 right-[91.4%] font-bold translate-x-1/2 w-[10%] opacity-80">
 				<Controller
 					control={control}
 					name={`items.${orderItemIndex}.chestPocketImg`}
@@ -173,7 +173,7 @@ export const ThobeImage = ({ orderItemIndex }: { orderItemIndex: number }) => {
 
 			{/* JABZOOR IMAGE */}
 
-			<div className="absolute top-[73.5%] -translate-y-1/2 right-[91.8%] font-bold translate-x-1/2 w-[10%] h-[10%] opacity-80">
+			<div className="absolute top-[52.3%] -translate-y-1/2 right-[91.8%] font-bold translate-x-1/2 w-[10%] h-[10%] opacity-80">
 				<Controller
 					control={control}
 					name={`items.${orderItemIndex}.jabzoorImg`}
@@ -228,7 +228,7 @@ export const ThobeImage = ({ orderItemIndex }: { orderItemIndex: number }) => {
 				/>
 			</div>
 			{watchItem("jabzoor.jabzoorHoleType") === "zip" && (
-				<div className="absolute top-[73.5%] -translate-y-1/2 right-[94.8%] font-bold translate-x-1/2 w-auto opacity-80">
+				<div className="absolute top-[52.3%] -translate-y-1/2 right-[94.8%] font-bold translate-x-1/2 w-auto opacity-80">
 					<img
 						loading="lazy"
 						src={`/images/measurements/ZIPPER.png`}
@@ -236,56 +236,59 @@ export const ThobeImage = ({ orderItemIndex }: { orderItemIndex: number }) => {
 					/>
 				</div>
 			)}
-			<div className="absolute top-[68.5%] -translate-y-1/2 right-[78%] translate-x-1/2 flex items-center gap-2">
+			{watchItem("jabzoor.jabzoorHoleType") === "buttons" && (
+				<div className="absolute top-[52.3%] -translate-y-1/2 right-[94.8%] font-bold translate-x-1/2 w-auto opacity-80">
+					<img
+						loading="lazy"
+						src={`/images/measurements/BUTTON.png`}
+						className="w-10 h-10"
+					/>
+				</div>
+			)}
+			<div className="absolute top-[47%] -translate-y-1/2 right-[78%] translate-x-1/2 flex flex-col items-start gap-2">
 				<Controller
 					control={control}
 					name={`items.${orderItemIndex}.jabzoor.jabzoorHoleType`}
 					render={({ field }) => (
-						<div className="flex items-center gap-2">
-							<Checkbox
-								id={`jabzoor-zip-${orderItemIndex}`}
-								checked={field.value === "zip"}
-								onCheckedChange={(checked) => {
-									field.onChange(checked ? "zip" : null);
-								}}
-							/>
-							<label
-								htmlFor={`jabzoor-zip-${orderItemIndex}`}
-								className="text-sm font-medium cursor-pointer"
-							>
-								{t("zip")}
-							</label>
-						</div>
-					)}
-				/>
-			</div>
-
-			<div className="absolute top-[88.5%] -translate-y-1/2 right-[18%] translate-x-1/2 flex items-center gap-2">
-				<Controller
-					control={control}
-					name={`items.${orderItemIndex}.notes`}
-					render={({ field, fieldState }) => {
-						const value = watch(`items.${orderItemIndex}.notes`);
-						return (
-							<Field>
-								<FieldLabel>{t("item_notes")}</FieldLabel>
-								<Textarea
-									placeholder={`${t("item_notes")}...`}
-									{...field}
-									value={field.value || ""}
-									className={` resize-none 
-										  `}
-									rows={3}
+						<>
+							<div className="flex items-center gap-2">
+								<Checkbox
+									id={`jabzoor-zip-${orderItemIndex}`}
+									checked={field.value === "zip"}
+									onCheckedChange={(checked) => {
+										field.onChange(checked ? "zip" : null);
+									}}
 								/>
-							</Field>
-						);
-					}}
+								<label
+									htmlFor={`jabzoor-zip-${orderItemIndex}`}
+									className="text-sm font-medium cursor-pointer"
+								>
+									{t("zip")}
+								</label>
+							</div>
+							<div className="flex items-center gap-2">
+								<Checkbox
+									id={`jabzoor-buttons-${orderItemIndex}`}
+									checked={field.value === "buttons"}
+									onCheckedChange={(checked) => {
+										field.onChange(checked ? "buttons" : null);
+									}}
+								/>
+								<label
+									htmlFor={`jabzoor-buttons-${orderItemIndex}`}
+									className="text-sm font-medium cursor-pointer"
+								>
+									{t("buttons")}
+								</label>
+							</div>
+						</>
+					)}
 				/>
 			</div>
 
 			{/* WRIST IMAGE */}
 
-			<div className="absolute top-[31%] -translate-y-1/2 right-[92%] font-bold translate-x-1/2 w-[10.5%] h-[10.5%]">
+			<div className="absolute top-[73.5%] -translate-y-1/2 right-[92%] font-bold translate-x-1/2 w-[10.5%] h-[10.5%]">
 				<Controller
 					control={control}
 					name={`items.${orderItemIndex}.wristImg`}
@@ -323,7 +326,7 @@ export const ThobeImage = ({ orderItemIndex }: { orderItemIndex: number }) => {
 												<div className="flex items-center gap-2">
 													<img
 														loading="lazy"
-														src={`/images/measurements/CUFF_${val}.png`}
+														src={`/images/measurements/CUFF_${field.value}.png`}
 														className="w-12 h-12"
 													/>
 													<span>
@@ -334,6 +337,29 @@ export const ThobeImage = ({ orderItemIndex }: { orderItemIndex: number }) => {
 										))}
 									</SelectContent>
 								</Select>
+							</Field>
+						);
+					}}
+				/>
+			</div>
+
+			<div className="absolute top-[88.5%] -translate-y-1/2 right-[18%] translate-x-1/2 flex items-center gap-2">
+				<Controller
+					control={control}
+					name={`items.${orderItemIndex}.notes`}
+					render={({ field, fieldState }) => {
+						const value = watch(`items.${orderItemIndex}.notes`);
+						return (
+							<Field>
+								<FieldLabel>{t("item_notes")}</FieldLabel>
+								<Textarea
+									placeholder={`${t("item_notes")}...`}
+									{...field}
+									value={field.value || ""}
+									className={` resize-none 
+										  `}
+									rows={3}
+								/>
 							</Field>
 						);
 					}}
@@ -359,7 +385,7 @@ export const ThobeImage = ({ orderItemIndex }: { orderItemIndex: number }) => {
 			</div>
 
 			{/* SLEEVE LENGTH - Input */}
-			<div className="absolute top-[30.4%] -translate-y-1/2 right-[28.2%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center w-[8%]">
+			<div className="absolute top-[25.6%] -translate-y-1/2 right-[68.4%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center w-[8%]">
 				<Controller
 					key={`items.${orderItemIndex}.general.generalSleeveLength`}
 					control={control}
@@ -395,7 +421,7 @@ export const ThobeImage = ({ orderItemIndex }: { orderItemIndex: number }) => {
 			</div>
 
 			{/* BACK LENGTH - Input */}
-			<div className="absolute top-[52.8%] -translate-y-1/2 right-[66.6%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center min-w-[8%]">
+			<div className="absolute top-[62.1%] -translate-y-1/2 right-[23.4%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center min-w-[8%]">
 				<Controller
 					key={`items.${orderItemIndex}.general.generalThobeBackLength`}
 					control={control}
@@ -467,7 +493,7 @@ export const ThobeImage = ({ orderItemIndex }: { orderItemIndex: number }) => {
 			</div>
 
 			{/* TAKALEES LENGTH - Input */}
-			<div className="absolute top-[38.2%] -translate-y-1/2 right-[62.9%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center w-[14%]">
+			<div className="absolute top-[38.2%] -translate-y-1/2 right-[62.9%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center w-[17%]">
 				<Controller
 					key={`items.${orderItemIndex}.general.generalTakaleesLength`}
 					control={control}
@@ -486,7 +512,7 @@ export const ThobeImage = ({ orderItemIndex }: { orderItemIndex: number }) => {
 			</div>
 
 			{/* TAKALEES WIDTH - Input */}
-			<div className="absolute top-[42.4%] -translate-y-1/2 right-[62.4%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center w-[14%]">
+			<div className="absolute top-[43.2%] -translate-y-1/2 right-[62.4%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center w-[17%]">
 				<Controller
 					key={`items.${orderItemIndex}.general.generalTakaleesWidth`}
 					control={control}
@@ -506,7 +532,7 @@ export const ThobeImage = ({ orderItemIndex }: { orderItemIndex: number }) => {
 			</div>
 
 			{/* MIDDLE SLEEVE WIDTH - Input */}
-			<div className="absolute top-[24.8%] -translate-y-1/2 right-[60.2%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center w-[8%]">
+			<div className="absolute top-[30.1%] -translate-y-1/2 right-[28.5%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center w-[8%]">
 				<Controller
 					key={`items.${orderItemIndex}.general.generalMiddleSleeveWidth`}
 					control={control}
@@ -668,7 +694,7 @@ export const ThobeImage = ({ orderItemIndex }: { orderItemIndex: number }) => {
 			</div>
 
 			{/* NECK BACK LENGTH - Input */}
-			<div className="absolute top-[7.2%] -translate-y-1/2 right-[77.3%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center w-[12%]">
+			<div className="absolute top-[6.2%] -translate-y-1/2 right-[75%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center w-[17%]">
 				<Controller
 					key={`items.${orderItemIndex}.neck.neckBackLength`}
 					control={control}
@@ -705,7 +731,7 @@ export const ThobeImage = ({ orderItemIndex }: { orderItemIndex: number }) => {
 			</div>
 
 			{/* NECK FILL - Input */}
-			<div className="absolute top-[3.2%] -translate-y-1/2 right-[78.3%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center w-[14%]">
+			<div className="absolute top-[1.2%] -translate-y-1/2 right-[78.3%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center w-[14%]">
 				<Controller
 					key={`items.${orderItemIndex}.neck.neckFill`}
 					control={control}
@@ -746,32 +772,9 @@ export const ThobeImage = ({ orderItemIndex }: { orderItemIndex: number }) => {
 				/>
 			</div>
 
-			{/* WRIST NOTES - Display */}
-
-			<div className="absolute top-[39.1%] w-[23%] -translate-y-1/2 right-[87%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center whitespace-pre-line ">
-				<Controller
-					control={control}
-					name={`items.${orderItemIndex}.wrist.wristNotes`}
-					render={({ field, fieldState }) => {
-						const value = watch(`items.${orderItemIndex}.wrist.wristNotes`);
-						return (
-							<Field>
-								<Textarea
-									placeholder={`${t("wrist_wristNotes")}...`}
-									{...field}
-									value={field.value || ""}
-									className={`resize-none border-0 shadow-none focus-visible:ring-0 focus:ring-0`}
-									rows={2}
-								/>
-							</Field>
-						);
-					}}
-				/>
-			</div>
-
 			{/* CHEST POCKET NOTES - Display */}
 
-			<div className="absolute top-[60.1%] w-[23%] -translate-y-1/2 right-[87.3%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center whitespace-pre-line">
+			<div className="absolute top-[40.5%] w-[23%] -translate-y-1/2 right-[87%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center whitespace-pre-line">
 				<Controller
 					control={control}
 					name={`items.${orderItemIndex}.chestPocket.chestPocketNotes`}
@@ -796,7 +799,7 @@ export const ThobeImage = ({ orderItemIndex }: { orderItemIndex: number }) => {
 
 			{/* JABZOOR NOTES - Display */}
 
-			<div className="absolute top-[82.1%] w-[23%] -translate-y-1/2 right-[87.3%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center whitespace-pre-line">
+			<div className="absolute top-[63.1%] w-[23%] -translate-y-1/2 right-[87.3%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center whitespace-pre-line">
 				<Controller
 					control={control}
 					name={`items.${orderItemIndex}.jabzoor.jabzoorNotes`}
@@ -817,8 +820,31 @@ export const ThobeImage = ({ orderItemIndex }: { orderItemIndex: number }) => {
 				/>
 			</div>
 
+			{/* WRIST NOTES - Display */}
+
+			<div className="absolute top-[82.4%] w-[23%] -translate-y-1/2 right-[87%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center whitespace-pre-line ">
+				<Controller
+					control={control}
+					name={`items.${orderItemIndex}.wrist.wristNotes`}
+					render={({ field, fieldState }) => {
+						const value = watch(`items.${orderItemIndex}.wrist.wristNotes`);
+						return (
+							<Field>
+								<Textarea
+									placeholder={`${t("wrist_wristNotes")}...`}
+									{...field}
+									value={field.value || ""}
+									className={`resize-none border-0 shadow-none focus-visible:ring-0 focus:ring-0`}
+									rows={2}
+								/>
+							</Field>
+						);
+					}}
+				/>
+			</div>
+
 			{/* CUFF LENGTH - Input */}
-			<div className="absolute top-[24.9%] -translate-y-1/2 right-[86.1%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center w-[8%]">
+			<div className="absolute top-[67.9%] -translate-y-1/2 right-[86.1%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center w-[8%]">
 				<Controller
 					key={`items.${orderItemIndex}.wrist.wristCuffLength`}
 					control={control}
@@ -836,7 +862,7 @@ export const ThobeImage = ({ orderItemIndex }: { orderItemIndex: number }) => {
 			</div>
 
 			{/* CUFF WIDTH - Input */}
-			<div className="absolute top-[33.8%] -translate-y-1/2 right-[85.2%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center w-[8%]">
+			<div className="absolute top-[77%] -translate-y-1/2 right-[85.2%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center w-[8%]">
 				<Controller
 					key={`items.${orderItemIndex}.wrist.wristCuffWidth`}
 					control={control}
@@ -854,7 +880,7 @@ export const ThobeImage = ({ orderItemIndex }: { orderItemIndex: number }) => {
 			</div>
 
 			{/* CHEST POCKET LENGTH - Input */}
-			<div className="absolute top-[52.5%] -translate-y-1/2 right-[84.2%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center w-[8%]">
+			<div className="absolute top-[33%] -translate-y-1/2 right-[84.2%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center w-[8%]">
 				<Controller
 					key={`items.${orderItemIndex}.chestPocket.chestPocketLength`}
 					control={control}
@@ -872,7 +898,7 @@ export const ThobeImage = ({ orderItemIndex }: { orderItemIndex: number }) => {
 			</div>
 
 			{/* CHEST POCKET WIDTH - Input */}
-			<div className="absolute top-[44.2%] -translate-y-1/2 right-[91.4%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center w-[8%]">
+			<div className="absolute top-[25%] -translate-y-1/2 right-[91.4%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center w-[8%]">
 				<Controller
 					key={`items.${orderItemIndex}.chestPocket.chestPocketWidth`}
 					control={control}
@@ -890,7 +916,7 @@ export const ThobeImage = ({ orderItemIndex }: { orderItemIndex: number }) => {
 			</div>
 
 			{/* BETWEEN CHEST POCKET SHOULDER - Input */}
-			<div className="absolute top-[46.5%] -translate-y-1/2 right-[78.9%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center w-[14%]">
+			<div className="absolute top-[27.5%] -translate-y-1/2 right-[78.5%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center w-[14%]">
 				<Controller
 					key={`items.${orderItemIndex}.chestPocket.betweenChestPocketShoulder`}
 					control={control}
@@ -909,7 +935,7 @@ export const ThobeImage = ({ orderItemIndex }: { orderItemIndex: number }) => {
 			</div>
 
 			{/* JABZOOR LENGTH - Input */}
-			<div className="absolute top-[73%] -translate-y-1/2 right-[86.1%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center w-[8%]">
+			<div className="absolute top-[53.5%] -translate-y-1/2 right-[86.1%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center w-[8%]">
 				<Controller
 					key={`items.${orderItemIndex}.jabzoor.jabzoorLength`}
 					control={control}
@@ -927,7 +953,7 @@ export const ThobeImage = ({ orderItemIndex }: { orderItemIndex: number }) => {
 			</div>
 
 			{/* JABZOOR WIDTH - Input */}
-			<div className="absolute top-[65%] -translate-y-1/2 right-[91.4%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center w-[8%]">
+			<div className="absolute top-[45.4%] -translate-y-1/2 right-[91.4%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center w-[8%]">
 				<Controller
 					key={`items.${orderItemIndex}.jabzoor.jabzoorWidth`}
 					control={control}

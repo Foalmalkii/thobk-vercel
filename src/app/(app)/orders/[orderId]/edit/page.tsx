@@ -106,7 +106,7 @@ export default function EditOrderPage({
 			// Transform order items back to form structure
 			const transformedItems = order.items.map((item: any) => ({
 				id: item.id,
-				fabricId: item.fabricId,
+				fabricId: item.fabric?.id ?? null,
 				unitPrice: item.price,
 				quantity: item.quantity,
 				name: item.name,
