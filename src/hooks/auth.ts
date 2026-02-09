@@ -42,11 +42,11 @@ export const useAuth = ({
 	const login = async ({ ...props }) => {
 		await csrf();
 
-		axios
+		return axios
 			.post("/login", props)
 			.then(() => mutateUser(undefined, { revalidate: true }))
 			.catch((error) => {
-				if (error.response.status !== 422) throw error;
+				throw error;
 			});
 	};
 	const logout = async () => {

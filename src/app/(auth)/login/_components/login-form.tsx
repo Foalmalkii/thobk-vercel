@@ -7,7 +7,6 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/auth";
 
 export const LoginForm = () => {
@@ -17,13 +16,13 @@ export const LoginForm = () => {
 		phone: z
 			.string()
 			.regex(/^05\d{8}$/, {
-				message: t("v_phone_invalid"), // "Phone must start with 05 and be 10 digits"
+				message: t("v_phone_invalid"),
 			})
 			.length(10, {
-				message: t("v_phone_length"), // "Phone must be exactly 10 digits"
+				message: t("v_phone_length"),
 			}),
 		password: z.string().min(5, {
-			message: t("v_password_min"), // "Password must be at least 5 characters"
+			message: t("v_password_min"),
 		}),
 	});
 
@@ -48,25 +47,38 @@ export const LoginForm = () => {
 			await login(data);
 		} catch (error: any) {
 			// Handle server-side errors
-			if (error.response?.data?.errors) {
-				// Laravel validation errors
+			if (error.response?.status === 422) {
 				const serverErrors = error.response.data.errors;
+				const message = error.response.data.message;
 
-				if (serverErrors.phone) {
+				// Check if it's an auth.failed error
+				if (
+					message === "auth.failed" ||
+					serverErrors?.phone?.[0] === "auth.failed"
+				) {
+					setError("root", {
+						type: "server",
+						message: t("error_invalid_credentials"),
+					});
+					return;
+				}
+
+				// Handle other validation errors
+				if (serverErrors?.phone) {
 					setError("phone", {
 						type: "server",
 						message: serverErrors.phone[0],
 					});
 				}
 
-				if (serverErrors.password) {
+				if (serverErrors?.password) {
 					setError("password", {
 						type: "server",
 						message: serverErrors.password[0],
 					});
 				}
 			} else if (error.response?.data?.message) {
-				// General error message (e.g., "Invalid credentials")
+				// General error message
 				setError("root", {
 					type: "server",
 					message: error.response.data.message,
@@ -75,7 +87,7 @@ export const LoginForm = () => {
 				// Network or unknown errors
 				setError("root", {
 					type: "server",
-					message: t("error_network"), // "An error occurred. Please try again."
+					message: t("error_network"),
 				});
 			}
 		}

@@ -226,13 +226,18 @@
 		"due_date": "Due Date"
 	},
 	"auth": {
-		"v_email_email": "Please enter a valid email address",
 		"welcome": "Welcome",
-		"enter_credentials": "Please enter your login credentials",
-		"email": "Email",
+		"enter_credentials": "Enter your credentials to proceed in the system.",
+		"phone": "Phone Number",
 		"password": "Password",
-		"enter_password": "Enter password...",
-		"login": "Login to System"
+		"login": "Login",
+		"logging_in": "Logging in...",
+		"enter_password": "Enter your password",
+		"v_phone_invalid": "Phone must start with 05 and be 10 digits",
+		"v_phone_length": "Phone must be exactly 10 digits",
+		"v_password_min": "Password must be at least 5 characters",
+		"error_network": "An error occurred. Please try again.",
+		"error_invalid_credentials": "Invalid phone number or password"
 	},
 	"insights": {
 		"title": "Smart Analytics Dashboard",

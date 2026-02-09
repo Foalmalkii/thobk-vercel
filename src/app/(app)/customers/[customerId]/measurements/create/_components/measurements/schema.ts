@@ -89,6 +89,7 @@ export const measurementSchema = z.object({
 		neckBackLength: z.string().nullable(),
 		neckWidth: z.string().nullable(),
 		neckFill: z.string().nullable(),
+		neckOpen: z.string().nullable(),
 		neckNotes: z.string().nullable(),
 	}),
 

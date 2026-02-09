@@ -401,7 +401,7 @@ export const MeasurementImage = ({
 			<View
 				style={{
 					position: "absolute",
-					top: "12%",
+					top: "10.5%",
 					right: "74.7%",
 					transform: "translateX(50%) translateY(-50%) ",
 					width: "24.5%",
@@ -416,7 +416,7 @@ export const MeasurementImage = ({
 			<View
 				style={{
 					position: "absolute",
-					top: "14.5%",
+					top: "13%",
 					right: "76%",
 					transform: "translateX(50%) translateY(-50%) ",
 					width: "24.5%",
@@ -425,6 +425,21 @@ export const MeasurementImage = ({
 			>
 				<Text style={[{ textAlign: "center" }, pdfStyles.light]}>
 					{orderItem?.neckBackLength && "Neck Back"} {orderItem?.neckBackLength}
+				</Text>
+			</View>
+
+			<View
+				style={{
+					position: "absolute",
+					top: "15.5%",
+					right: "76%",
+					transform: "translateX(50%) translateY(-50%) ",
+					width: "24.5%",
+					fontSize: "9px",
+				}}
+			>
+				<Text style={[{ textAlign: "center" }, pdfStyles.light]}>
+					{orderItem?.neckOpen && "Neck Open"} {orderItem?.neckOpen}
 				</Text>
 			</View>
 

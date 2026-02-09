@@ -326,7 +326,7 @@ export const ThobeImage = ({ orderItemIndex }: { orderItemIndex: number }) => {
 												<div className="flex items-center gap-2">
 													<img
 														loading="lazy"
-														src={`/images/measurements/CUFF_${field.value}.png`}
+														src={`/images/measurements/CUFF_${val}.png`}
 														className="w-12 h-12"
 													/>
 													<span>
@@ -702,6 +702,24 @@ export const ThobeImage = ({ orderItemIndex }: { orderItemIndex: number }) => {
 					render={({ field }) => (
 						<div className="w-full flex items-center gap-2">
 							<span>Neck Back</span>{" "}
+							<Input
+								{...field}
+								value={field.value || ""}
+								className="text-center w-14 p-0"
+							/>
+						</div>
+					)}
+				/>
+			</div>
+
+			<div className="absolute top-[15.1%] -translate-y-1/2 right-[75%] font-bold translate-x-1/2 text-xs 2xl:text-sm text-center w-[17%]">
+				<Controller
+					key={`items.${orderItemIndex}.neck.neckOpen`}
+					control={control}
+					name={`items.${orderItemIndex}.neck.neckOpen`}
+					render={({ field }) => (
+						<div className="w-full flex items-center gap-2">
+							<span>Neck Open</span>{" "}
 							<Input
 								{...field}
 								value={field.value || ""}

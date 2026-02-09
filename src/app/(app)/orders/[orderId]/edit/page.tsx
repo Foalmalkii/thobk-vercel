@@ -141,6 +141,7 @@ export default function EditOrderPage({
 					neckBackLength: item.neckBackLength,
 					neckWidth: item.neckWidth,
 					neckFill: item.neckFill,
+					neckOpen: item.neckOpen,
 					neckNotes: item.neckNotes,
 				},
 				wrist: {

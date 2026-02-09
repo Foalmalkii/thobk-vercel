@@ -61,6 +61,7 @@ export const OrderItem = () => {
 				neckBackLength: null,
 				neckWidth: null,
 				neckFill: null,
+				neckOpen: null,
 				neckNotes: null,
 			},
 			wrist: {
