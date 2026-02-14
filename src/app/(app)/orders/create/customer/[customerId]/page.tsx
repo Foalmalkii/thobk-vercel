@@ -105,7 +105,7 @@ export default function OrderNewCustomerPage({
 				<div className="flex justify-between max-w-full overflow-hidden gap-4">
 					<div className=" flex flex-1 min-w-0 flex-col gap-4">
 						<div className="flex items-center gap-4 bg-white rounded-2xl p-5 border">
-							<div className="bg-gray-900 rounded-xl p-4 aspect-square w-20 flex flex-col items-center justify-center text-center gap-0.5">
+							<div className="bg-gray-500 rounded-xl p-4 aspect-square w-20 flex flex-col items-center justify-center text-center gap-0.5">
 								<span className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest">
 									{t("code")}
 								</span>

@@ -1,6 +1,12 @@
 "use client";
 
-import { Package, PlusCircle, ArrowRight, Boxes } from "lucide-react";
+import {
+	Package,
+	PlusCircle,
+	ArrowRight,
+	ArrowLeft,
+	Boxes,
+} from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import React from "react";
@@ -75,7 +81,8 @@ export default function Home() {
 												<div className="pt-4">
 													<div className="inline-flex items-center gap-2 text-slate-900 font-semibold group-hover:gap-4 transition-all">
 														<span>{t("get_started")}</span>
-														<ArrowRight className="w-5 h-5" />
+														<ArrowRight className="w-5 h-5 rtl:hidden" />
+														<ArrowLeft className="w-5 h-5 hidden rtl:block" />
 													</div>
 												</div>
 											</div>

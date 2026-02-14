@@ -1,7 +1,7 @@
 // app/(app)/orders/create/components/CustomersTable.tsx
 "use client";
 
-import { ArrowRight, Users } from "lucide-react";
+import { ArrowLeft, ArrowRight, Users } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import React from "react";
@@ -75,7 +75,8 @@ export const CustomersTable = ({ customers }: CustomersTableProps) => {
 									className="gap-2 hover:bg-slate-900 hover:text-white border-slate-300"
 								>
 									{t("select")}
-									<ArrowRight className="w-4 h-4" />
+									<ArrowRight className="w-4 h-4 rtl:hidden" />
+									<ArrowLeft className="w-4 h-4 hidden rtl:block" />
 								</Button>
 							</Link>
 						</TableCell>

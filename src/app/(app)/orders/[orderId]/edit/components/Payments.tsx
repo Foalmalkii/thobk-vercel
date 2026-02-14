@@ -9,7 +9,7 @@ import {
 	XCircleIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { mutate } from "swr";
 import { Badge } from "@/components/ui/badge";
@@ -177,9 +177,26 @@ export const Payments = ({
 	};
 
 	// Calculate totals directly from props
-	const totalPaid = invoices
-		.filter((inv) => inv.status === "paid")
-		.reduce((sum, inv) => sum + inv.total, 0);
+	// Calculate totals directly from props
+	const totalPaid = useMemo(() => {
+		// Find all final invoices (documentType: "invoice")
+		const finalInvoices = invoices.filter(
+			(inv) => inv.documentType === "invoice" && inv.status === "paid",
+		);
+
+		// If there are final invoices, use the last one's total
+		if (finalInvoices.length > 0) {
+			return finalInvoices[finalInvoices.length - 1].total;
+		}
+
+		// Otherwise, sum up all deposit invoices
+		return invoices
+			.filter(
+				(inv) =>
+					inv.documentType === "invoice_deposit" && inv.status === "paid",
+			)
+			.reduce((sum, inv) => sum + inv.total, 0);
+	}, [invoices]);
 
 	const totalPending = invoices
 		.filter((inv) => inv.status === "pending")

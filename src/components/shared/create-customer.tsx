@@ -18,6 +18,7 @@ import {
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
+import { useRouter } from "next/navigation";
 
 export const CreateCustomer = ({
 	open,
@@ -28,6 +29,7 @@ export const CreateCustomer = ({
 }) => {
 	const t = useTranslations("createCustomer");
 	const locale = useLocale();
+	const router = useRouter();
 
 	const customerSchema = z.object({
 		name: z.string().nonempty(t("v_name_name")),
@@ -35,7 +37,7 @@ export const CreateCustomer = ({
 			.string()
 			.nonempty()
 			.regex(/^05\d{8}$/, { message: "Invalid phone" }),
-		notes: z.string().nonempty(),
+		notes: z.string().optional(),
 	});
 
 	type customerFormData = z.infer<typeof customerSchema>;
@@ -54,7 +56,8 @@ export const CreateCustomer = ({
 			.post(`/api/v1/branch/${getCurrentBranch()?.id}/customer`, data)
 			.then((res) => {
 				console.log(res);
-				if (res.status === 201) setOpen(false);
+				if (res.status === 201)
+					router.push(`/orders/create/customer/${res.data.data.id}`);
 			})
 			.catch((e) => console.log(e));
 	};

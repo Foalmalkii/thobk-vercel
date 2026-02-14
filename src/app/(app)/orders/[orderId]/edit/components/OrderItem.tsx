@@ -97,6 +97,9 @@ export const OrderItem = () => {
 		// Create a deep copy of the item
 		const copiedItem = JSON.parse(JSON.stringify(itemToCopy));
 
+		// Remove the id field to ensure a new item is created
+		delete copiedItem.id;
+
 		// Update the name with new date and index
 		const currentDate = new Date().toISOString().slice(0, 10);
 		const newIndex = fields.length + 1;

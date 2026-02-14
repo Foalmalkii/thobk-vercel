@@ -84,10 +84,24 @@ export default function EditOrderPage({
 			return total + item.quantity * item.price;
 		}, 0);
 
-		// Calculate total paid amount from invoices
+		// Find all final invoices (documentType: "invoice")
+		const finalInvoices = order.invoices.filter(
+			(invoice: any) =>
+				invoice.documentType === "invoice" && invoice.status === "paid",
+		);
+
+		// If there are final invoices, use the last one's total
+		if (finalInvoices.length > 0) {
+			const lastFinalInvoice = finalInvoices[finalInvoices.length - 1];
+			return orderTotal - lastFinalInvoice.total;
+		}
+
+		// Otherwise, sum up all deposit invoices
 		const paidAmount = order.invoices.reduce((total: number, invoice: any) => {
-			// Only count paid invoices
-			if (invoice.status === "paid") {
+			if (
+				invoice.documentType === "invoice_deposit" &&
+				invoice.status === "paid"
+			) {
 				return total + invoice.total;
 			}
 			return total;
@@ -327,7 +341,7 @@ export default function EditOrderPage({
 						<div className="flex flex-1 min-w-0 flex-col gap-4">
 							{/* Customer Info Card */}
 							<div className="flex items-center gap-4 bg-white rounded-2xl p-5 border">
-								<div className="bg-gray-900 rounded-xl p-4 aspect-square w-20 flex flex-col items-center justify-center text-center gap-0.5">
+								<div className="bg-gray-500 rounded-xl p-4 aspect-square w-20 flex flex-col items-center justify-center text-center gap-0.5">
 									<span className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest">
 										{t("code")}
 									</span>
