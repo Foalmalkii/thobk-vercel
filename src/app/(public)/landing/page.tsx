@@ -1,33 +1,47 @@
 import { Button } from "@/components/ui/button";
 import { DigipLogo } from "@/components/ui/icons";
+import {
+	BadgeCheck,
+	ClipboardCheck,
+	CreditCard,
+	LayoutTemplate,
+	MessageCircle,
+	Package,
+} from "lucide-react";
 
 const features = [
 	{
+		icon: BadgeCheck,
 		title: "قياسات موثوقة",
 		description:
 			"ملف قياسات موحد لكل عميل مع تاريخ تعديلات واضح وتقليل أخطاء التفصيل.",
 	},
 	{
+		icon: ClipboardCheck,
 		title: "إدارة الطلبات",
 		description:
 			"سير عمل واضح من الاستلام حتى التسليم مع حالات متابعة دقيقة.",
 	},
 	{
+		icon: CreditCard,
 		title: "فواتير ودفع",
 		description:
 			"فواتير جاهزة، إشعارات دفع، وتقارير مالية مفهومة بلحظة.",
 	},
 	{
+		icon: LayoutTemplate,
 		title: "قوالب تصميم",
 		description:
 			"قوالب جاهزة للقصّات والياقات والأساور لتسريع الطلبات.",
 	},
 	{
+		icon: Package,
 		title: "مخزون منظم",
 		description:
 			"تتبّع الأقمشة والألوان مع تنبيهات عند انخفاض المخزون.",
 	},
 	{
+		icon: MessageCircle,
 		title: "تواصل احترافي",
 		description:
 			"رسائل واتساب مدمجة وتحديثات حالة الطلب للعملاء.",
@@ -82,7 +96,7 @@ export default function LandingPage() {
 	return (
 		<div className="min-h-screen bg-white">
 			<header className="border-b border-slate-200">
-				<div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6">
+				<div className="mx-auto flex w-full max-w-8xl items-center justify-between px-6 py-6">
 					<div className="flex items-center gap-4">
 						<DigipLogo className="h-10 w-auto" />
 					</div>
@@ -112,7 +126,7 @@ export default function LandingPage() {
 			</header>
 
 			<main>
-				<section className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pb-16 pt-14 lg:flex-row lg:items-center">
+				<section className="mx-auto flex w-full max-w-8xl flex-col gap-10 px-6 pb-16 pt-14 lg:flex-row lg:items-center">
 					<div className="flex-1">
 						<h1 className="mt-6 text-4xl font-semibold leading-tight text-slate-900 md:text-5xl">
 							نظام خياطة ذكي
@@ -149,20 +163,19 @@ export default function LandingPage() {
 					</div>
 				</section>
 
-				<section className="mx-auto w-full max-w-6xl px-6 py-16">
+				<section className="mx-auto w-full max-w-8xl px-6 py-16">
 					<div className="flex items-center justify-center">
-						<div className="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-white px-4 py-2 text-xs font-semibold text-slate-900">
+						<div className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-4 py-2">
 							<span className="flex h-6 w-6 items-center justify-center rounded-full text-[10px] font-bold">
 								<img src="/images/zatca.png" />
 							</span>
-							<span className="text-slate-600">متوافق مع المرحلة الأولى من هيئة الزكاة والضريبة والجمارك</span>
+							<span className="text-slate-600 font-bold text-sm">متوافق مع المرحلة الأولى من هيئة الزكاة والضريبة والجمارك</span>
 						</div>
 					</div>
 				</section>
 
-				<section id="features" className="mx-auto w-full max-w-6xl px-6 py-16">
+				<section id="features" className="mx-auto w-full max-w-8xl px-6 py-16">
 					<div className="flex flex-col gap-4">
-						<p className="text-sm text-slate-500">الميزات</p>
 						<h2 className="text-3xl font-semibold text-slate-900 md:text-4xl">
 							كل الأدوات التي تحتاجها لإدارة ورشتك
 						</h2>
@@ -176,19 +189,24 @@ export default function LandingPage() {
 								key={item.title}
 								className="rounded-3xl border border-slate-200 bg-slate-50 p-6"
 							>
-								<h3 className="text-lg font-semibold text-slate-900">{item.title}</h3>
+								<div className="flex items-center gap-3">
+									<span className="flex h-10 w-10 items-center justify-center rounded-2xl border border-slate-900">
+										<item.icon className="h-5 w-5 text-slate-900" />
+									</span>
+									<h3 className="text-lg font-semibold text-slate-900">{item.title}</h3>
+								</div>
 								<p className="mt-3 text-sm text-slate-600">{item.description}</p>
 							</div>
 						))}
 					</div>
 				</section>
 
-				<section id="pricing" className="mx-auto w-full max-w-6xl px-6 py-16">
+				<section id="pricing" className="bg-slate-700 text-white mx-auto w-full max-w-8xl px-6 py-16">
 					<div className="flex flex-col gap-4">
-						<h2 className="text-3xl font-semibold text-slate-900 md:text-4xl">
+						<h2 className="text-3xl font-semibold md:text-4xl">
 							خطة واضحة باشتراك مرن
 						</h2>
-						<p className="text-base text-slate-600">
+						<p className="text-base text-slate-400">
 							اختر الباقة المناسبة، وحدد نموذج الفوترة الشهري أو السنوي.
 						</p>
 					</div>
@@ -258,10 +276,12 @@ export default function LandingPage() {
 							</div>
 						))}
 					</div>
-					<div className="mt-10 rounded-[32px] border border-slate-200 bg-white p-6">
+
+
+					<div className="mt-10">
 						<div className="flex flex-col gap-2">
-							<p className="text-sm text-slate-500">إضافات اختيارية</p>
-							<h3 className="text-xl font-semibold text-slate-900">
+							<p className="text-sm text-slate-400">إضافات اختيارية</p>
+							<h3 className="text-xl font-semibold">
 								خصّص تجربتك حسب احتياجك
 							</h3>
 						</div>
@@ -284,7 +304,7 @@ export default function LandingPage() {
 					</div>
 				</section>
 
-				<section id="customers" className="mx-auto w-full max-w-6xl px-6 py-16">
+				<section id="customers" className="mx-auto w-full max-w-8xl px-6 py-16">
 					<div className="flex flex-col gap-4">
 						<h2 className="text-3xl font-semibold text-slate-900 md:text-4xl">
 							علامات تثق بثوبك يوميًا
@@ -302,7 +322,7 @@ export default function LandingPage() {
 					</div>
 				</section>
 
-				<section id="contact" className="mx-auto w-full max-w-6xl px-6 py-16">
+				<section id="contact" className="mx-auto w-full max-w-8xl px-6 py-16">
 					<div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
 						<div>
 							<h2 className="mt-3 text-3xl font-semibold text-slate-900 md:text-4xl">
@@ -321,7 +341,7 @@ export default function LandingPage() {
 			</main>
 
 			<footer className="border-t border-slate-200">
-				<div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-6 py-10 md:flex-row md:items-center md:justify-between">
+				<div className="mx-auto flex w-full max-w-8xl flex-col gap-6 px-6 py-10 md:flex-row md:items-center md:justify-between">
 					<div>
 					<DigipLogo className="h-10 w-auto" />
 						<p className="mt-2 text-sm text-slate-500">
