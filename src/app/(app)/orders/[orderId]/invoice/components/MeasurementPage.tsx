@@ -105,6 +105,22 @@ export const MeasurementPage = ({
 									{order.createdAt.slice(0, 10)}
 								</Text>
 							</View>
+							<View
+								style={{
+									width: "48%",
+									padding: "4px",
+									border: "1px solid #e0e0e0",
+								}}
+							>
+								<Text
+									style={[{ fontSize: "6px", color: "#666" }, pdfStyles.light]}
+								>
+									Due Date
+								</Text>
+								<Text style={[{ fontSize: "8px" }, pdfStyles.medium]}>
+									{order.dueDate}
+								</Text>
+							</View>
 						</View>
 					</View>
 
