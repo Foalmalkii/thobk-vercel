@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 
 import "../globals.css";
 
-import { DirectionProvider } from "@radix-ui/react-direction";
 import { IBM_Plex_Sans_Arabic } from "next/font/google";
 import { NextIntlClientProvider, useLocale } from "next-intl";
 import { DirectionLayout } from "@/components/layout/DirectionLayout";
-import { useAuth } from "@/hooks/auth";
+import { PublicFooter } from "@/components/public/public-footer";
+import { PublicNavbar } from "@/components/public/public-navbar";
 import { getDirection } from "@/lib/types";
 
 const ibmPlex = IBM_Plex_Sans_Arabic({
@@ -29,13 +29,17 @@ export default function RootLayout({
 
 	return (
 		<html lang={locale} dir={getDirection(locale)}>
-			<body className={`${ibmPlex.className}`}>
+			<body className={`${ibmPlex.className} bg-white text-slate-900`}>
 				<NextIntlClientProvider>
-					<main className="w-full">
-						<div className="absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2 w-full">
-							<DirectionLayout>{children}</DirectionLayout>
+					<DirectionLayout>
+						<div className="min-h-screen flex flex-col">
+							<PublicNavbar landingHrefPrefix="/landing" />
+							<main className="flex-1 flex items-center justify-center w-full px-4 pt-20 pb-8">
+								{children}
+							</main>
+							<PublicFooter />
 						</div>
-					</main>
+					</DirectionLayout>
 				</NextIntlClientProvider>
 			</body>
 		</html>
