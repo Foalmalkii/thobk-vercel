@@ -5,9 +5,23 @@ export function PublicFooter() {
 
 	return (
 		<footer className="border-t border-slate-800 bg-black">
-			<div className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 py-12 md:flex-row md:items-center md:justify-between">
+			<div className="mx-auto w-full max-w-7xl px-6 py-12">
+				<p className="mb-8 text-center text-sm text-slate-400">
+					<a
+						className="transition hover:text-white"
+						href="https://digip.sa"
+						rel="noopener noreferrer"
+						target="_blank"
+					>
+						© {currentYear} منصة ثوبك — جميع الحقوق محفوظة لمؤسسة المنظور الرقمي
+						للاتصالات وتقنية المعلومات
+					</a>
+				</p>
 				<div>
 					<DigipLogo className="mb-3 h-10 w-auto brightness-0 invert" />
+					<p className="mb-2 w-full text-right text-base text-slate-300">
+						السجل التجاري: 1010812332
+					</p>
 					<p className="text-base text-slate-300">
 						منصة سعودية لإدارة أعمال الخياطة.
 					</p>
@@ -38,10 +52,6 @@ export function PublicFooter() {
 						</a>
 					</div>
 				</div>
-				<p className="text-sm text-slate-400">
-					© {currentYear} منصة ثوبك — جميع الحقوق محفوظة لمؤسسة المنظور الرقمي
-					للاتصالات وتقنية المعلومات
-				</p>
 			</div>
 		</footer>
 	);

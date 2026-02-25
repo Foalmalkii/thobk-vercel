@@ -1,12 +1,12 @@
 import {
-	BadgeCheck,
+	RulerDimensionLine,
 	Check,
-	ClipboardCheck,
+	ListTodo,
 	CreditCard,
-	LayoutTemplate,
+	Store,
 	MessageCircle,
-	Package,
-	Sparkles,
+	Warehouse,
+	X,
 } from "lucide-react";
 import Link from "next/link";
 import { PublicFooter } from "@/components/public/public-footer";
@@ -15,13 +15,13 @@ import { Button } from "@/components/ui/button";
 
 const features = [
 	{
-		icon: BadgeCheck,
+		icon: RulerDimensionLine,
 		title: "قياسات موثوقة",
 		description:
 			"ملف قياسات موحد لكل عميل مع تاريخ تعديلات واضح وتقليل أخطاء التفصيل.",
 	},
 	{
-		icon: ClipboardCheck,
+		icon: ListTodo,
 		title: "إدارة الطلبات",
 		description: "سير عمل واضح من الاستلام حتى التسليم مع حالات متابعة دقيقة.",
 	},
@@ -31,14 +31,14 @@ const features = [
 		description: "فواتير جاهزة، إشعارات دفع، وتقارير مالية مفهومة بلحظة.",
 	},
 	{
-		icon: LayoutTemplate,
-		title: "قوالب تصميم",
-		description: "قوالب جاهزة للقصّات والياقات والأساور لتسريع الطلبات.",
+		icon: Store,
+		title: "إدارة الفروع والموظفين",
+		description: "إمكانية إدارة عدة فروع وحسابات الموظفين",
 	},
 	{
-		icon: Package,
-		title: "مخزون منظم",
-		description: "تتبّع الأقمشة والألوان مع تنبيهات عند انخفاض المخزون.",
+		icon: Warehouse,
+		title: "إدارة المخزون",
+		description: "تتبّع ذكي للأقمشة.",
 	},
 	{
 		icon: MessageCircle,
@@ -49,26 +49,83 @@ const features = [
 
 const plans = [
 	{
-		title: "الباقة الأساسية",
-		description: "الانطلاقة الذكية للمحلات الصغيرة.",
-		monthlyPrice: "99",
-		annualPrice: "999",
-		features: ["فرع واحد", "حتى 5 موظفين", "حتى 300 طلب شهريًا"],
+		title: "باقة البداية",
+		description: "مناسبة للانطلاق الأساسية.",
+		monthlyPrice: "49",
+		annualPrice: "499",
+		features: [
+			{ label: "فرع واحد", included: true },
+			{ label: "موظف واحد", included: true },
+			{ label: "حد أقصى 100 طلب شهريًا", included: true },
+			{ label: "إدارة المخزون", included: false },
+			{ label: "التقارير", included: false },
+			{ label: "رصيد SMS/واتساب ابتدائي", included: false },
+			{ label: "دعم العملاء", included: false },
+			{ label: "المصنع", included: false },
+		],
 		accent: false,
 	},
 	{
-		title: "الباقة المميزة",
-		description: "أفضل خيار للمحلات النشطة.",
-		monthlyPrice: "249",
-		annualPrice: "2,490",
-		features: ["حتى 5 فروع", "حتى 20 موظفًا", "طلبات غير محدودة"],
+		title: "الباقة الصغيرة",
+		description: "حل مناسب لنمو نشاطك.",
+		monthlyPrice: "99",
+		annualPrice: "999",
+		features: [
+			{ label: "فرع واحد", included: true },
+			{ label: "3 موظفين", included: true },
+			{ label: "حد أقصى 300 طلب شهريًا", included: true },
+			{ label: "إدارة المخزون", included: true },
+			{ label: "التقارير", included: true },
+			{ label: "50 رصيد SMS/واتساب ابتدائي", included: true },
+			{ label: "دعم العملاء عبر واتساب", included: true },
+			{ label: "المصنع", included: false },
+		],
 		accent: true,
+	},
+	{
+		title: "الباقة المتوسطة",
+		description: "للفروع النشطة والمتوسعة.",
+		monthlyPrice: "149",
+		annualPrice: "1499",
+		features: [
+			{ label: "3 فروع", included: true },
+			{ label: "10 موظفين", included: true },
+			{ label: "حد أقصى 1000 طلب شهريًا", included: true },
+			{ label: "إدارة المخزون", included: true },
+			{ label: "التقارير", included: true },
+			{ label: "100 رصيد SMS/واتساب ابتدائي", included: true },
+			{ label: "مدير حساب", included: true },
+			{ label: "المصنع", included: true },
+		],
+		accent: false,
+	},
+	{
+		title: "الباقة الكبيرة",
+		description: "للعمليات الكبيرة متعددة الفروع.",
+		monthlyPrice: "199",
+		annualPrice: "1999",
+		features: [
+			{ label: "10 فروع", included: true },
+			{ label: "50 موظفًا", included: true },
+			{ label: "طلبات شهرية غير محدودة", included: true },
+			{ label: "إدارة المخزون", included: true },
+			{ label: "التقارير", included: true },
+			{ label: "300 رصيد SMS/واتساب ابتدائي", included: true },
+			{ label: "مدير حساب", included: true },
+			{ label: "المصنع", included: true },
+		],
+		accent: false,
 	},
 ];
 
 const addons = [
 	{
 		title: "رصيد رسائل SMS",
+		description: "اشحن الرصيد حسب احتياجك لإشعارات العملاء.",
+		price: "حسب الاستخدام",
+	},
+	{
+		title: "رصيد رسائل WhatsApp",
 		description: "اشحن الرصيد حسب احتياجك لإشعارات العملاء.",
 		price: "حسب الاستخدام",
 	},
@@ -94,7 +151,7 @@ export default function LandingPage() {
 							<h1 className="text-5xl font-bold leading-[1.2] text-slate-900 md:text-6xl md:leading-[1.2] lg:text-7xl lg:leading-[1.2]">
 								نظام خياطة ذكي
 								<br />
-								<span className="text-slate-600">يرتب عملك ويكبر طلباتك</span>
+								<span className="text-slate-600">يدير عملك بكل احترافية وسهولة</span>
 							</h1>
 							<p className="mt-6 text-xl text-slate-600 leading-relaxed">
 								ثوبك يجمع القياسات والطلبات والفوترة في منصة واحدة. أسرع، أوضح،
@@ -145,12 +202,8 @@ export default function LandingPage() {
 								<img src="/images/zatca.png" className="h-5 w-5" alt="ZATCA" />
 							</div>
 							<p className="whitespace-nowrap text-sm font-semibold text-slate-800">
-								متوافق مع متطلبات هيئة الزكاة والضريبة والجمارك
+								متوافق مع متطلبات هيئة الزكاة والضريبة والجمارك - المرحلة الأولى
 							</p>
-							<div className="inline-flex shrink-0 items-center gap-1 rounded-full bg-emerald-600 px-3 py-1 text-[11px] font-bold text-white">
-								<Check className="h-3 w-3 stroke-[3]" />
-								<span>معتمد</span>
-							</div>
 						</div>
 					</div>
 				</section>
@@ -160,32 +213,31 @@ export default function LandingPage() {
 				>
 					<div className="text-center max-w-3xl mx-auto mb-16">
 						<h2 className="text-4xl font-bold text-slate-900 md:text-5xl mb-4">
-							كل الأدوات التي تحتاجها لإدارة ورشتك
+							كل الأدوات التي تحتاجها لإدارة محلك
 						</h2>
 						<p className="text-lg text-slate-600">
-							بسيطة، واضحة، ومصممة خصيصًا للخياطين والمحلات.
+							بسيطة، واضحة، ومصممة خصيصًا للخياطين.
 						</p>
 					</div>
-					<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-						{features.map((item, index) => (
-							<div
-								key={item.title}
-								className="group relative rounded-2xl border-2 border-slate-200 bg-white p-8 transition-all hover:border-slate-900 hover:shadow-xl"
-							>
-								<div className="absolute top-6 left-6 text-7xl font-bold text-slate-100 group-hover:text-slate-200 transition-colors">
-									{(index + 1).toString().padStart(2, "0")}
-								</div>
-								<div className="relative">
-									<div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-900 mb-6 group-hover:scale-110 transition-transform">
-										<item.icon className="h-7 w-7 text-white" />
+						<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+							{features.map((item) => (
+								<div
+									key={item.title}
+									className="group relative rounded-2xl border-2 border-slate-200 bg-white p-8 transition-all hover:border-slate-900 hover:shadow-xl"
+								>
+									<div className="relative">
+										<div className="mb-5 flex items-center gap-4">
+											<div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-900 group-hover:scale-110 transition-transform">
+												<item.icon className="h-7 w-7 text-white" />
+											</div>
+											<h3 className="text-xl font-bold text-slate-900">
+												{item.title}
+											</h3>
+										</div>
+										<p className="text-base text-slate-600 leading-relaxed">
+											{item.description}
+										</p>
 									</div>
-									<h3 className="text-xl font-bold text-slate-900 mb-3">
-										{item.title}
-									</h3>
-									<p className="text-base text-slate-600 leading-relaxed">
-										{item.description}
-									</p>
-								</div>
 							</div>
 						))}
 					</div>
@@ -207,13 +259,13 @@ export default function LandingPage() {
 						</div>
 
 						{/* Plans */}
-						<div className="grid gap-8 lg:grid-cols-2 max-w-5xl mx-auto mb-24">
-							{plans.map((plan, idx) => (
+						<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 max-w-7xl mx-auto mb-24">
+							{plans.map((plan) => (
 								<div
 									key={plan.title}
 									className={`relative rounded-3xl border-2 transition-all duration-300 hover:shadow-2xl ${
 										plan.accent
-											? "border-slate-900 bg-slate-900 text-white scale-105"
+											? "border-slate-900 bg-slate-900 text-white lg:scale-[1.02]"
 											: "border-slate-200 bg-white hover:border-slate-300"
 									}`}
 								>
@@ -225,7 +277,7 @@ export default function LandingPage() {
 										</div>
 									)}
 
-									<div className="p-10">
+										<div className="p-4 md:p-5">
 										{/* Header */}
 										<div className="text-center mb-8">
 											<h3
@@ -241,12 +293,12 @@ export default function LandingPage() {
 										</div>
 
 										{/* Pricing */}
-										<div className="mb-8">
-											<div
-												className={`text-center p-8 rounded-2xl ${
-													plan.accent ? "bg-slate-800" : "bg-slate-50"
-												}`}
-											>
+											<div className="mb-5">
+												<div
+													className={`text-center p-4 rounded-2xl ${
+														plan.accent ? "bg-slate-800" : "bg-slate-50"
+													}`}
+												>
 												<div className="mb-6">
 													<div className="flex items-baseline justify-center gap-2 mb-1">
 														<span
@@ -270,7 +322,7 @@ export default function LandingPage() {
 												</div>
 
 												<div
-													className={`pt-6 border-t ${plan.accent ? "border-slate-700" : "border-slate-200"}`}
+													className={`pt-4 border-t ${plan.accent ? "border-slate-700" : "border-slate-200"}`}
 												>
 													<p
 														className={`text-sm font-semibold mb-2 ${plan.accent ? "text-slate-400" : "text-slate-600"}`}
@@ -304,35 +356,44 @@ export default function LandingPage() {
 										{/* Features */}
 										<div className="space-y-4 mb-8">
 											{plan.features.map((feature) => (
-												<div key={feature} className="flex items-center gap-3">
+												<div key={feature.label} className="flex items-center gap-3">
 													<div
 														className={`flex h-6 w-6 items-center justify-center rounded-full flex-shrink-0 ${
-															plan.accent ? "bg-white" : "bg-slate-900"
+															feature.included
+																? plan.accent
+																	? "bg-white"
+																	: "bg-slate-900"
+																: plan.accent
+																	? "bg-slate-700"
+																	: "bg-slate-200"
 														}`}
 													>
-														<Check
-															className={`h-4 w-4 ${plan.accent ? "text-slate-900" : "text-white"} stroke-[3]`}
-														/>
+														{feature.included ? (
+															<Check
+																className={`h-4 w-4 ${plan.accent ? "text-slate-900" : "text-white"} stroke-[3]`}
+															/>
+														) : (
+															<X
+																className={`h-4 w-4 ${plan.accent ? "text-slate-300" : "text-slate-500"} stroke-[3]`}
+															/>
+														)}
 													</div>
 													<span
-														className={`text-base ${plan.accent ? "text-slate-200" : "text-slate-700"}`}
+														className={`text-base ${
+															feature.included
+																? plan.accent
+																	? "text-slate-200"
+																	: "text-slate-700"
+																: plan.accent
+																	? "text-slate-400"
+																	: "text-slate-500"
+														}`}
 													>
-														{feature}
+														{feature.label}
 													</span>
 												</div>
 											))}
 										</div>
-
-										{/* CTA Button */}
-										<Button
-											className={`w-full h-14 text-base font-bold rounded-xl transition-all ${
-												plan.accent
-													? "bg-white text-slate-900 hover:bg-slate-100"
-													: "bg-slate-900 text-white hover:bg-slate-800"
-											}`}
-										>
-											ابدأ الآن
-										</Button>
 									</div>
 								</div>
 							))}
@@ -375,13 +436,13 @@ export default function LandingPage() {
 								{/* Enterprise Card */}
 								<div className="group relative rounded-2xl border-2 border-slate-900 bg-slate-900 p-6 hover:shadow-xl transition-all">
 									<div className="absolute -top-3 -right-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full">
-										مؤسسات
+										المنشآت الكبيرة
 									</div>
 									<h4 className="text-lg font-bold text-white mb-2">
-										حلول المؤسسات
+										حلول خاصة
 									</h4>
 									<p className="text-sm text-slate-300 mb-4 leading-relaxed">
-										خصومات خاصة وميزات مخصصة للمؤسسات والسلاسل الكبيرة
+										خصومات خاصة وميزات مخصصة للمنشآت الكبيرة
 									</p>
 									<div className="pt-4 border-t border-slate-700">
 										<p className="text-sm font-semibold text-slate-400 mb-1">
