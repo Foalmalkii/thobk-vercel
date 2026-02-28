@@ -1,11 +1,10 @@
+"use client";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDirection } from "@radix-ui/react-direction";
-import { Asterisk } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
-import type React from "react";
-import { type SetStateAction, useEffect } from "react";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { mutate } from "swr";
 import z from "zod";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,6 +13,7 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
+	DialogTrigger,
 } from "@/components/ui/dialog";
 import {
 	Field,
@@ -23,12 +23,9 @@ import {
 } from "@/components/ui/field";
 import { FormWrapper } from "@/components/ui/form-wrapper";
 import { Input } from "@/components/ui/input";
-import { InputWrapper } from "@/components/ui/input-wrapper";
-import { Label } from "@/components/ui/label";
-import { useBranches } from "@/hooks/branches";
 import axios from "@/lib/axios";
 
-const branchSchema = z.object({
+const factorySchema = z.object({
 	name: z.string().nonempty(),
 	streetAddress: z.string().nonempty(),
 	phone: z
@@ -43,28 +40,27 @@ const branchSchema = z.object({
 	stateId: z.number(),
 	cityId: z.number(),
 	districtId: z.number(),
-	type: z.enum(["store", "factory"]),
 });
-export type branchRequest = z.infer<typeof branchSchema>;
 
-export const NewBranchDialog = ({
-	isAdmin,
-	open,
-	setOpen,
-}: {
-	isAdmin: boolean;
-	open: boolean;
-	setOpen: React.Dispatch<SetStateAction<boolean>>;
-}) => {
+type FactoryRequest = z.infer<typeof factorySchema>;
+
+interface AddFactoryDialogProps {
+	onCreated?: () => void;
+}
+
+export const AddFactoryDialog = ({ onCreated }: AddFactoryDialogProps) => {
 	const t = useTranslations("messages");
+	const tf = useTranslations("factory");
 	const dir = useDirection();
+	const [open, setOpen] = useState(false);
 
 	const {
 		control,
 		handleSubmit,
-		formState: { errors },
-	} = useForm<branchRequest>({
-		resolver: zodResolver(branchSchema),
+		reset,
+		formState: { errors, isSubmitting },
+	} = useForm<FactoryRequest>({
+		resolver: zodResolver(factorySchema),
 		defaultValues: {
 			name: "",
 			streetAddress: "",
@@ -75,41 +71,33 @@ export const NewBranchDialog = ({
 			postalCode: "",
 			countryId: 1,
 			stateId: 1,
-			type: "store",
 			cityId: 1,
 			districtId: 1,
 		},
 	});
 
-	const { mutateBranches } = useBranches();
-
-	const addBranch = async (data: branchRequest): Promise<boolean> => {
+	const onSubmit = async (data: FactoryRequest) => {
 		const status = await axios
-			.post("/api/v1/branch", data)
+			.post("/api/v1/branch", { ...data, type: "factory" })
 			.then((res) => res.status)
-			.catch((e) => console.log(e));
+			.catch((e) => console.error(e));
 
 		if (status === 200 || status === 201) {
-			mutateBranches();
-			return true;
-		} else return false;
+			reset();
+			setOpen(false);
+			onCreated?.();
+		}
 	};
-	const submitBranch = async (data: branchRequest) => {
-		const resultBranch = await addBranch(data);
-		if (resultBranch) setOpen(false);
-		else return;
-	};
-
-	useEffect(() => {
-		console.log(errors);
-	}, [errors]);
 
 	return (
-		<Dialog open={open && isAdmin} onOpenChange={setOpen}>
-			<form onSubmit={handleSubmit(submitBranch)}>
-				<DialogContent dir="rtl" className="gap-6">
+		<Dialog open={open} onOpenChange={setOpen}>
+			<DialogTrigger asChild>
+				<Button>{tf("create_factory")}</Button>
+			</DialogTrigger>
+			<DialogContent dir={dir}>
+				<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
 					<DialogHeader>
-						<DialogTitle>{t("add_branch")}</DialogTitle>
+						<DialogTitle>{tf("create_factory")}</DialogTitle>
 					</DialogHeader>
 
 					<FormWrapper>
@@ -119,7 +107,7 @@ export const NewBranchDialog = ({
 								name="name"
 								render={({ field, fieldState }) => (
 									<Field aria-invalid={fieldState.invalid}>
-										<FieldLabel> {t("branch_name")}</FieldLabel>
+										<FieldLabel>{t("branch_name")}</FieldLabel>
 										<Input {...field} aria-invalid={fieldState.invalid} />
 										<FieldError errors={[fieldState.error]} />
 									</Field>
@@ -130,7 +118,7 @@ export const NewBranchDialog = ({
 								name="streetAddress"
 								render={({ field, fieldState }) => (
 									<Field aria-invalid={fieldState.invalid}>
-										<FieldLabel> {t("streetAdress")}</FieldLabel>
+										<FieldLabel>{t("streetAdress")}</FieldLabel>
 										<Input {...field} aria-invalid={fieldState.invalid} />
 										<FieldError errors={[fieldState.error]} />
 									</Field>
@@ -141,7 +129,7 @@ export const NewBranchDialog = ({
 								name="phone"
 								render={({ field, fieldState }) => (
 									<Field aria-invalid={fieldState.invalid}>
-										<FieldLabel> {t("phone")}</FieldLabel>
+										<FieldLabel>{t("phone")}</FieldLabel>
 										<Input {...field} aria-invalid={fieldState.invalid} />
 										<FieldError errors={[fieldState.error]} />
 									</Field>
@@ -152,7 +140,7 @@ export const NewBranchDialog = ({
 								name="email"
 								render={({ field, fieldState }) => (
 									<Field aria-invalid={fieldState.invalid}>
-										<FieldLabel> {t("email")}</FieldLabel>
+										<FieldLabel>{t("email")}</FieldLabel>
 										<Input {...field} aria-invalid={fieldState.invalid} />
 										<FieldError errors={[fieldState.error]} />
 									</Field>
@@ -164,7 +152,7 @@ export const NewBranchDialog = ({
 									name="buildingNumber"
 									render={({ field, fieldState }) => (
 										<Field aria-invalid={fieldState.invalid}>
-											<FieldLabel> {t("buildingNumber")}</FieldLabel>
+											<FieldLabel>{t("buildingNumber")}</FieldLabel>
 											<Input {...field} aria-invalid={fieldState.invalid} />
 											<FieldError errors={[fieldState.error]} />
 										</Field>
@@ -175,7 +163,7 @@ export const NewBranchDialog = ({
 									name="additionalNumber"
 									render={({ field, fieldState }) => (
 										<Field aria-invalid={fieldState.invalid}>
-											<FieldLabel> {t("additionalNumber")}</FieldLabel>
+											<FieldLabel>{t("additionalNumber")}</FieldLabel>
 											<Input {...field} aria-invalid={fieldState.invalid} />
 											<FieldError errors={[fieldState.error]} />
 										</Field>
@@ -187,7 +175,7 @@ export const NewBranchDialog = ({
 								name="postalCode"
 								render={({ field, fieldState }) => (
 									<Field aria-invalid={fieldState.invalid}>
-										<FieldLabel> {t("postalCode")}</FieldLabel>
+										<FieldLabel>{t("postalCode")}</FieldLabel>
 										<Input {...field} aria-invalid={fieldState.invalid} />
 										<FieldError errors={[fieldState.error]} />
 									</Field>
@@ -197,12 +185,16 @@ export const NewBranchDialog = ({
 					</FormWrapper>
 
 					<DialogFooter>
-						<Button onClick={handleSubmit(submitBranch)} type="submit">
-							{t("add_branch")}
+						<Button
+							onClick={handleSubmit(onSubmit)}
+							type="submit"
+							disabled={isSubmitting}
+						>
+							{isSubmitting ? t("loading") : tf("create_factory")}
 						</Button>
 					</DialogFooter>
-				</DialogContent>
-			</form>
+				</form>
+			</DialogContent>
 		</Dialog>
 	);
 };

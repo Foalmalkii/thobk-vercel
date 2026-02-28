@@ -5,6 +5,35 @@ import type { GetBranch, GetOrder, OrderItem } from "@/lib/types";
 import { pdfStyles } from "../page";
 import { MeasurementImage } from "./MeasurementImage";
 
+const computePaymentSummary = (order: GetOrder) => {
+	const orderTotal = order.items.reduce(
+		(sum, i) => sum + i.quantity * i.price,
+		0,
+	);
+
+	const finalInvoice = order.invoices.find(
+		(inv) => inv.documentType === "invoice" && inv.status === "paid",
+	);
+
+	if (finalInvoice) {
+		const paidDebitNotes = order.invoices
+			.filter(
+				(inv) => inv.documentType === "debit_note" && inv.status === "paid",
+			)
+			.reduce((sum, inv) => sum + inv.total, 0);
+		const paid = finalInvoice.total + paidDebitNotes;
+		return { orderTotal, paid, remaining: orderTotal - paid };
+	}
+
+	const paidDeposits = order.invoices
+		.filter(
+			(inv) => inv.documentType === "invoice_deposit" && inv.status === "paid",
+		)
+		.reduce((sum, inv) => sum + inv.total, 0);
+
+	return { orderTotal, paid: paidDeposits, remaining: orderTotal - paidDeposits };
+};
+
 export const MeasurementPage = ({
 	order,
 	item,
@@ -14,6 +43,10 @@ export const MeasurementPage = ({
 	item: OrderItem;
 	branch: GetBranch;
 }) => {
+	const { orderTotal, paid, remaining } = computePaymentSummary(order);
+	const d = new Date();
+	const printDate = `${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}/${d.getFullYear()}`;
+
 	return (
 		<Page size="A4" style={{ padding: "15px", fontSize: "8px" }}>
 			{/* Compact Header */}
@@ -70,56 +103,36 @@ export const MeasurementPage = ({
 						>
 							ORDER INFO
 						</Text>
-						<View
-							style={{ flexDirection: "row", flexWrap: "wrap", gap: "4px" }}
-						>
-							<View
-								style={{
-									width: "48%",
-									padding: "4px",
-									border: "1px solid #e0e0e0",
-								}}
-							>
-								<Text
-									style={[{ fontSize: "6px", color: "#666" }, pdfStyles.light]}
-								>
-									Order #
-								</Text>
-								<Text style={[{ fontSize: "8px" }, pdfStyles.medium]}>
-									#{order.id}
-								</Text>
+						<View style={{ flexDirection: "column", gap: "4px" }}>
+							<View style={{ flexDirection: "row", gap: "4px" }}>
+								<View style={{ flex: 1, padding: "4px", border: "1px solid #e0e0e0" }}>
+									<Text style={[{ fontSize: "6px", color: "#666" }, pdfStyles.light]}>Order #</Text>
+									<Text style={[{ fontSize: "8px" }, pdfStyles.medium]}>#{order.id}</Text>
+								</View>
+								<View style={{ flex: 1, padding: "4px", border: "1px solid #e0e0e0" }}>
+									<Text style={[{ fontSize: "6px", color: "#666" }, pdfStyles.light]}>Date</Text>
+									<Text style={[{ fontSize: "8px" }, pdfStyles.medium]}>{order.createdAt.slice(0, 10)}</Text>
+								</View>
 							</View>
-							<View
-								style={{
-									width: "48%",
-									padding: "4px",
-									border: "1px solid #e0e0e0",
-								}}
-							>
-								<Text
-									style={[{ fontSize: "6px", color: "#666" }, pdfStyles.light]}
-								>
-									Date
-								</Text>
-								<Text style={[{ fontSize: "8px" }, pdfStyles.medium]}>
-									{order.createdAt.slice(0, 10)}
-								</Text>
+							<View style={{ flexDirection: "row", gap: "4px" }}>
+								<View style={{ flex: 1, padding: "4px", border: "1px solid #e0e0e0" }}>
+									<Text style={[{ fontSize: "6px", color: "#666" }, pdfStyles.light]}>Due Date</Text>
+									<Text style={[{ fontSize: "8px" }, pdfStyles.medium]}>{order.dueDate}</Text>
+								</View>
+								<View style={{ flex: 1, padding: "4px", border: "1px solid #e0e0e0" }}>
+									<Text style={[{ fontSize: "6px", color: "#666" }, pdfStyles.light]}>Total</Text>
+									<Text style={[{ fontSize: "8px" }, pdfStyles.bold]}>{orderTotal.toFixed(2)} SAR</Text>
+								</View>
 							</View>
-							<View
-								style={{
-									width: "48%",
-									padding: "4px",
-									border: "1px solid #e0e0e0",
-								}}
-							>
-								<Text
-									style={[{ fontSize: "6px", color: "#666" }, pdfStyles.light]}
-								>
-									Due Date
-								</Text>
-								<Text style={[{ fontSize: "8px" }, pdfStyles.medium]}>
-									{order.dueDate}
-								</Text>
+							<View style={{ flexDirection: "row", gap: "4px" }}>
+								<View style={{ flex: 1, padding: "4px", border: "1px solid #e0e0e0" }}>
+									<Text style={[{ fontSize: "6px", color: "#666" }, pdfStyles.light]}>Paid</Text>
+									<Text style={[{ fontSize: "8px" }, pdfStyles.medium]}>{paid.toFixed(2)} SAR</Text>
+								</View>
+								<View style={{ flex: 1, padding: "4px", border: "1px solid #e0e0e0" }}>
+									<Text style={[{ fontSize: "6px", color: "#666" }, pdfStyles.light]}>Remaining</Text>
+									<Text style={[{ fontSize: "8px" }, pdfStyles.bold]}>{remaining > 0 ? `${remaining.toFixed(2)} SAR` : "FULLY PAID"}</Text>
+								</View>
 							</View>
 						</View>
 					</View>
@@ -421,7 +434,8 @@ export const MeasurementPage = ({
 				</View>
 			</View>
 
-			{/* Measurements Section - Most space */}
+
+		{/* Measurements Section - Most space */}
 			<View style={{ flex: 1 }}>
 				<Text
 					style={[
@@ -449,14 +463,19 @@ export const MeasurementPage = ({
 					justifyContent: "space-between",
 				}}
 			>
-				<View style={{ width: "48%" }}>
+				<View style={{ width: "33%" }}>
 					<Text style={[{ fontSize: "7px" }, pdfStyles.regular]}>
 						Tailor: _______________
 					</Text>
 				</View>
-				<View style={{ width: "48%" }}>
+				<View style={{ width: "33%" }}>
 					<Text style={[{ fontSize: "7px" }, pdfStyles.regular]}>
 						QC: _______________
+					</Text>
+				</View>
+				<View style={{ width: "33%", alignItems: "flex-end" }}>
+					<Text style={[{ fontSize: "6px", color: "#666" }, pdfStyles.light]}>
+						Printed: {printDate}
 					</Text>
 				</View>
 			</View>

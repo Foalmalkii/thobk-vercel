@@ -1,16 +1,13 @@
-// app/(app)/storage/page.tsx
 "use client";
 
-import { Package, PlusCircleIcon } from "lucide-react";
+import { Loader2, Package, PlusCircleIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import React, { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useListStock } from "@/hooks/stock/listStock";
 import { Pagination } from "@/components/Pagination";
-import { StockTable } from "./components/StocksTable";
-import { AddFabricDialog } from "../orders/[orderId]/edit/components/AddFabricDialog";
+import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/auth";
+import { useListStock } from "@/hooks/stock/listStock";
+import { AddFabricDialog } from "../orders/[orderId]/edit/components/AddFabricDialog";
+import { StockTable } from "./components/StocksTable";
 
 export default function StoragePage() {
 	const t = useTranslations("storage");
@@ -19,59 +16,47 @@ export default function StoragePage() {
 		useListStock();
 
 	if (loadingStock) {
-		return <div className="p-8">Loading...</div>;
+		return (
+			<div className="flex items-center justify-center h-64 bg-gray-50">
+				<Loader2 className="w-5 h-5 animate-spin text-gray-400" />
+			</div>
+		);
 	}
 
 	return (
-		<div className="space-y-6 p-6">
-			{/* Header */}
-			<div className="space-y-2">
-				<div className="flex items-center gap-3">
-					<div className="w-10 h-10 bg-slate-900 rounded-lg flex items-center justify-center">
-						<Package className="w-6 h-6 text-white" strokeWidth={2} />
-					</div>
-					<div>
-						<h1 className="text-2xl font-bold text-slate-900">
-							{t("stock_management")}
-						</h1>
-						<p className="text-sm text-slate-600">
-							{t("stock_management_subtitle")}
-						</p>
-					</div>
+		<div className="p-6 space-y-6 bg-white min-h-full shadow-sm">
+			<div className="flex items-center gap-3">
+				<div className="w-10 h-10 rounded-xl bg-gray-900 flex items-center justify-center shrink-0">
+					<Package className="w-5 h-5 text-white" />
+				</div>
+				<div>
+					<h1 className="text-2xl font-bold tracking-tight text-gray-900">
+						{t("stock_management")}
+					</h1>
+					<p className="mt-0.5 text-sm text-gray-500">
+						{t("stock_management_subtitle")}
+					</p>
 				</div>
 			</div>
 
-			{/* Add Stock Button */}
-			<Card className="border-slate-200">
-				<CardContent className="p-6">
-					<div className="flex justify-end">
-						<AddFabricDialog
-							onFabricCreated={() => {
-								mutateStock();
-							}}
-							action={
-								<Button>
-									{t("add_item")} <PlusCircleIcon />
-								</Button>
-							}
-						/>
-					</div>
-				</CardContent>
-			</Card>
-
-			{/* Stock Table */}
-			<Card className="border-slate-200">
-				<CardHeader className="border-b border-slate-200 bg-slate-50">
-					<CardTitle className="text-lg font-semibold text-slate-900">
+			<div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+				<div className="flex items-center justify-between px-6 py-3.5 bg-gray-50 border-b border-gray-200">
+					<p className="text-sm font-semibold text-gray-900">
 						{t("stock_list")}
-					</CardTitle>
-				</CardHeader>
-				<CardContent className="p-0">
-					<StockTable branchId={isInBranch} stock={stock} />
-				</CardContent>
-			</Card>
+					</p>
+					<AddFabricDialog
+						onFabricCreated={() => mutateStock()}
+						action={
+							<Button size="sm">
+								<PlusCircleIcon className="w-4 h-4" />
+								{t("add_item")}
+							</Button>
+						}
+					/>
+				</div>
+				<StockTable branchId={isInBranch} stock={stock} />
+			</div>
 
-			{/* Pagination */}
 			<Pagination
 				currentPage={currentPage}
 				totalItems={totalItems}

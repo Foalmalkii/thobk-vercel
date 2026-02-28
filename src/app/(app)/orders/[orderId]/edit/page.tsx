@@ -79,36 +79,36 @@ export default function EditOrderPage({
 	const pendingPayment = useMemo(() => {
 		if (!order) return 0;
 
-		// Calculate total order amount from items
-		const orderTotal = order.items.reduce((total: number, item: any) => {
+		const orderTotal = order.items.reduce((total, item) => {
 			return total + item.quantity * item.price;
 		}, 0);
 
-		// Find all final invoices (documentType: "invoice")
-		const finalInvoices = order.invoices.filter(
-			(invoice: any) =>
+		const finalInvoice = order.invoices.find(
+			(invoice) =>
 				invoice.documentType === "invoice" && invoice.status === "paid",
 		);
 
-		// If there are final invoices, use the last one's total
-		if (finalInvoices.length > 0) {
-			const lastFinalInvoice = finalInvoices[finalInvoices.length - 1];
-			return orderTotal - lastFinalInvoice.total;
+		if (finalInvoice) {
+			// Final invoice + debit notes: orderTotal - (invoice.total + sum(paid debit notes))
+			const paidDebitNotes = order.invoices
+				.filter(
+					(invoice) =>
+						invoice.documentType === "debit_note" && invoice.status === "paid",
+				)
+				.reduce((sum, invoice) => sum + invoice.total, 0);
+			return orderTotal - (finalInvoice.total + paidDebitNotes);
 		}
 
-		// Otherwise, sum up all deposit invoices
-		const paidAmount = order.invoices.reduce((total: number, invoice: any) => {
-			if (
-				invoice.documentType === "invoice_deposit" &&
-				invoice.status === "paid"
-			) {
-				return total + invoice.total;
-			}
-			return total;
-		}, 0);
+		// Deposits only: orderTotal - sum(paid deposits)
+		const paidDeposits = order.invoices
+			.filter(
+				(invoice) =>
+					invoice.documentType === "invoice_deposit" &&
+					invoice.status === "paid",
+			)
+			.reduce((sum, invoice) => sum + invoice.total, 0);
 
-		// Calculate pending payment (difference)
-		return orderTotal - paidAmount;
+		return orderTotal - paidDeposits;
 	}, [order]);
 
 	// Initialize form with order data
@@ -370,7 +370,7 @@ export default function EditOrderPage({
 								</div>
 							</div>
 
-							<OrderItem />
+							<OrderItem branchId={isInBranch} orderId={orderId} />
 							<GeneralInfo />
 						</div>
 
