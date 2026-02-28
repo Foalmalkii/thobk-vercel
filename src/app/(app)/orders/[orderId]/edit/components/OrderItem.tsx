@@ -10,9 +10,15 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { OrderItemCard } from "../../../create/customer/[customerId]/_components/ui/order-item-card";
+import { EditOrderItemCard } from "./EditOrderItemCard";
 
-export const OrderItem = () => {
+export const OrderItem = ({
+	branchId,
+	orderId,
+}: {
+	branchId: number | null;
+	orderId: number;
+}) => {
 	const t = useTranslations("messages");
 
 	const { control, watch } = useFormContext();
@@ -139,11 +145,13 @@ export const OrderItem = () => {
 						)}
 
 						{fields.map((field, index) => (
-							<OrderItemCard
+							<EditOrderItemCard
 								key={field.id}
 								index={index}
 								onRemove={() => remove(index)}
 								onCopy={() => handleCopyItem(index)}
+								branchId={branchId}
+								orderId={orderId}
 							/>
 						))}
 					</TableBody>

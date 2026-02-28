@@ -1,11 +1,9 @@
 // app/(app)/storage/components/StockTable.tsx
 "use client";
 
-import { Package, Plus } from "lucide-react";
+import { Package } from "lucide-react";
 import { useTranslations } from "next-intl";
-import React from "react";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
 	Table,
 	TableBody,
@@ -27,12 +25,14 @@ export const StockTable = ({ stock, branchId }: StockTableProps) => {
 
 	if (!stock || stock.length === 0) {
 		return (
-			<div className="py-16 text-center">
-				<div className="inline-flex items-center justify-center w-16 h-16 bg-slate-100 rounded-full mb-4">
-					<Package className="w-8 h-8 text-slate-400" />
+			<div className="py-16 flex flex-col items-center gap-3">
+				<div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
+					<Package className="w-5 h-5 text-gray-400" />
 				</div>
-				<p className="text-slate-600 font-medium">{t("no_stock")}</p>
-				<p className="text-sm text-slate-500 mt-1">{t("add_first_stock")}</p>
+				<div className="text-center">
+					<p className="text-sm font-medium text-gray-900">{t("no_stock")}</p>
+					<p className="text-xs text-gray-500 mt-0.5">{t("add_first_stock")}</p>
+				</div>
 			</div>
 		);
 	}
@@ -45,71 +45,74 @@ export const StockTable = ({ stock, branchId }: StockTableProps) => {
 		};
 
 		return (
-			<Badge variant={variants[type] || "outline"}>{t(`type_${type}`)}</Badge>
+			<Badge variant={variants[type] || "outline"} className="text-xs">
+				{t(`type_${type}`)}
+			</Badge>
 		);
 	};
 
 	return (
 		<Table>
 			<TableHeader>
-				<TableRow className="bg-slate-50 hover:bg-slate-50">
-					<TableHead className="text-slate-700 font-semibold">#</TableHead>
-					<TableHead className="text-slate-700 font-semibold">
+				<TableRow className="bg-white hover:bg-white border-b border-gray-100">
+					<TableHead className="h-10 text-center text-xs font-medium text-gray-400 w-16">
+						#
+					</TableHead>
+					<TableHead className="h-10 text-center text-xs font-medium text-gray-400">
 						{t("name")}
 					</TableHead>
-					<TableHead className="text-slate-700 font-semibold">
+					<TableHead className="h-10 text-center text-xs font-medium text-gray-400">
 						{t("type")}
 					</TableHead>
-					<TableHead className="text-slate-700 font-semibold">
+					<TableHead className="h-10 text-center text-xs font-medium text-gray-400">
 						{t("color")}
 					</TableHead>
-					<TableHead className="text-slate-700 font-semibold">
+					<TableHead className="h-10 text-center text-xs font-medium text-gray-400">
 						{t("supplier")}
 					</TableHead>
-					<TableHead className="text-slate-700 font-semibold  text-center">
+					<TableHead className="h-10 text-center text-xs font-medium text-gray-400">
 						{t("remaining_meters")}
 					</TableHead>
-					<TableHead className="text-slate-700 font-semibold text-center">
+					<TableHead className="h-10 text-center text-xs font-medium text-gray-400">
 						{t("actions")}
 					</TableHead>
 				</TableRow>
 			</TableHeader>
-
 			<TableBody>
 				{stock.map((item) => (
 					<TableRow
 						key={item.id}
-						className="hover:bg-slate-50 transition-colors"
+						className="hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-0"
 					>
-						<TableCell className="font-medium text-slate-600 text-center">
+						<TableCell className="text-center text-sm text-gray-400 py-4">
 							{item.id}
 						</TableCell>
-						<TableCell className="font-medium text-slate-900 text-center">
+						<TableCell className="text-center text-sm font-medium text-gray-900 py-4">
 							{item.name}
 						</TableCell>
-						<TableCell className="text-center">
+						<TableCell className="text-center py-4">
 							{getTypeBadge(item.type)}
 						</TableCell>
-						<TableCell>
-							<div className="flex items-center text-center gap-2 justify-center">
+						<TableCell className="text-center py-4">
+							<div className="flex items-center justify-center gap-2">
 								{item.colorCode && (
 									<div
-										className="w-4 h-4 rounded-full border border-slate-300  text-center"
+										className="w-3 h-3 rounded-full border border-gray-200 shrink-0"
 										style={{ backgroundColor: item.colorCode }}
 									/>
 								)}
-								<span className="text-slate-700 ">{item.color}</span>
+								<span className="text-sm text-gray-500">{item.color}</span>
 							</div>
 						</TableCell>
-						<TableCell className="text-slate-700  text-center">
+						<TableCell className="text-center text-sm text-gray-500 py-4">
 							{item.supplier}
 						</TableCell>
-						<TableCell className="text-right font-mono text-slate-900  text-center">
+						<TableCell className="text-center font-mono text-sm text-gray-700 py-4">
 							{item.remainingMeters !== null
 								? `${item.remainingMeters.toFixed(2)} m`
-								: "N/A"}
+								: "—"}
 						</TableCell>
-						<TableCell className="text-center">
+						<TableCell className="text-center py-4">
 							<AddBatchesDialog stockId={item.id} branchId={branchId} />
 						</TableCell>
 					</TableRow>

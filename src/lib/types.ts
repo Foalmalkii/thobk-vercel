@@ -196,6 +196,29 @@ export interface CustomerInOrder {
 	phone: string;
 }
 
+export interface InvoiceLineItem {
+	id: number;
+	name: string;
+	quantity: number;
+	subtotal: number;
+	total: number;
+}
+
+export interface OrderInvoice {
+	id: number;
+	invoiceNumber: string;
+	documentType: string;
+	subtotal: number;
+	discount: number;
+	vat: number;
+	total: number;
+	status: string;
+	file: string;
+	items: InvoiceLineItem[];
+}
+
+export type InvoicesResponse = OrderInvoice[];
+
 export interface GetOrder {
 	id: number;
 	customer: CustomerInOrder;

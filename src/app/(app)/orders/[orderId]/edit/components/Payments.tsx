@@ -41,32 +41,12 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/hooks/auth";
 import axios from "@/lib/axios";
-
-interface InvoiceItem {
-	id: number;
-	name: string;
-	quantity: number;
-	subtotal: number;
-	total: number;
-}
-
-interface Invoice {
-	id: number;
-	invoiceNumber: string;
-	documentType: string;
-	subtotal: number;
-	discount: number;
-	vat: number;
-	total: number;
-	status: string;
-	file: string;
-	items: InvoiceItem[];
-}
+import type { OrderInvoice } from "@/lib/types";
 
 interface PaymentsProps {
-	invoices: Invoice[];
+	invoices: OrderInvoice[];
 	orderId: number;
-	pendingPayment: number; // Added prop
+	pendingPayment: number;
 }
 
 const STATUS_CONFIG = {
@@ -97,9 +77,19 @@ export const Payments = ({
 }: PaymentsProps) => {
 	const t = useTranslations("payments");
 	const { isInBranch } = useAuth({ middleware: "auth" });
+	const hasFinalInvoice = invoices.some(
+		(inv) => inv.documentType === "invoice" && inv.status === "paid",
+	);
+
 	const [open, setOpen] = useState(false);
 	const [amount, setAmount] = useState("");
-	const [type, setType] = useState("deposit");
+	const [type, setType] = useState(() =>
+		invoices.some(
+			(inv) => inv.documentType === "invoice" && inv.status === "paid",
+		)
+			? "final"
+			: "deposit",
+	);
 	const [isLoading, setIsLoading] = useState(false);
 
 	const handlePrint = (fileUrl: string) => {
@@ -140,7 +130,7 @@ export const Payments = ({
 
 			setOpen(false);
 			setAmount("");
-			setType("deposit");
+			setType(hasFinalInvoice ? "final" : "deposit");
 		} catch (error: any) {
 			const errorMessage =
 				error?.response?.data?.message || t("invoice_add_failed");
@@ -176,27 +166,26 @@ export const Payments = ({
 		return t(`document_type_${docType}`);
 	};
 
-	// Calculate totals directly from props
-	// Calculate totals directly from props
 	const totalPaid = useMemo(() => {
-		// Find all final invoices (documentType: "invoice")
-		const finalInvoices = invoices.filter(
-			(inv) => inv.documentType === "invoice" && inv.status === "paid",
-		);
-
-		// If there are final invoices, use the last one's total
-		if (finalInvoices.length > 0) {
-			return finalInvoices[finalInvoices.length - 1].total;
+		if (hasFinalInvoice) {
+			const finalInvoice = invoices.find(
+				(inv) => inv.documentType === "invoice" && inv.status === "paid",
+			);
+			const paidDebitNotes = invoices
+				.filter(
+					(inv) => inv.documentType === "debit_note" && inv.status === "paid",
+				)
+				.reduce((sum, inv) => sum + inv.total, 0);
+			return (finalInvoice?.total ?? 0) + paidDebitNotes;
 		}
 
-		// Otherwise, sum up all deposit invoices
 		return invoices
 			.filter(
 				(inv) =>
 					inv.documentType === "invoice_deposit" && inv.status === "paid",
 			)
 			.reduce((sum, inv) => sum + inv.total, 0);
-	}, [invoices]);
+	}, [invoices, hasFinalInvoice]);
 
 	const totalPending = invoices
 		.filter((inv) => inv.status === "pending")
@@ -208,7 +197,7 @@ export const Payments = ({
 	return (
 		<div className="space-y-6">
 			{/* Summary Cards */}
-			<div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+			<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 				<Card>
 					<CardContent className="p-6">
 						<div className="flex items-center justify-between">
@@ -238,24 +227,6 @@ export const Payments = ({
 							</div>
 							<div className="h-12 w-12 rounded-full bg-green-100 flex items-center justify-center">
 								<CheckCircleIcon className="h-6 w-6 text-green-600" />
-							</div>
-						</div>
-					</CardContent>
-				</Card>
-
-				<Card>
-					<CardContent className="p-6">
-						<div className="flex items-center justify-between">
-							<div>
-								<p className="text-sm font-medium text-muted-foreground">
-									{t("total_pending")}
-								</p>
-								<p className="text-2xl font-bold mt-1 text-yellow-600">
-									{totalPending.toFixed(2)} {t("currency")}
-								</p>
-							</div>
-							<div className="h-12 w-12 rounded-full bg-yellow-100 flex items-center justify-center">
-								<ClockIcon className="h-6 w-6 text-yellow-600" />
 							</div>
 						</div>
 					</CardContent>
@@ -350,10 +321,20 @@ export const Payments = ({
 											<SelectValue />
 										</SelectTrigger>
 										<SelectContent>
-											<SelectItem value="deposit">
-												{t("type_deposit")}
-											</SelectItem>
-											<SelectItem value="final">{t("type_full")}</SelectItem>
+											{hasFinalInvoice ? (
+												<SelectItem value="final">
+													{t("type_debit_note")}
+												</SelectItem>
+											) : (
+												<>
+													<SelectItem value="deposit">
+														{t("type_deposit")}
+													</SelectItem>
+													<SelectItem value="final">
+														{t("type_full")}
+													</SelectItem>
+												</>
+											)}
 										</SelectContent>
 									</Select>
 								</div>

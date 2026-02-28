@@ -1,11 +1,14 @@
 "use client";
 
 import {
+	ArrowLeft,
+	ArrowRight,
+	Boxes,
+	Building2,
+	Factory,
 	Package,
 	PlusCircle,
-	ArrowRight,
-	ArrowLeft,
-	Boxes,
+	Receipt,
 } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
@@ -35,6 +38,20 @@ export default function Home() {
 			description: t("stock_management_description"),
 			icon: Boxes,
 			href: "/storage",
+			gradient: "from-slate-800 to-slate-600",
+		},
+		{
+			title: t("factory_management"),
+			description: t("factory_management_description"),
+			icon: Factory,
+			href: "/factory",
+			gradient: "from-slate-900 to-slate-700",
+		},
+		{
+			title: t("erp_management"),
+			description: t("erp_management_description"),
+			icon: Building2,
+			href: "/erp",
 			gradient: "from-slate-800 to-slate-600",
 		},
 	];
@@ -92,6 +109,37 @@ export default function Home() {
 							</Link>
 						);
 					})}
+
+					{/* Coming Soon — Accounting */}
+					<div className="cursor-not-allowed opacity-70">
+						<Card className="border-2 border-transparent h-full pointer-events-none">
+							<CardContent className="p-0">
+								<div className="bg-gradient-to-br from-slate-400 to-slate-300 p-8 rounded-t-lg">
+									<div className="flex items-center justify-center">
+										<div className="w-24 h-24 bg-white rounded-full flex items-center justify-center">
+											<Receipt className="w-12 h-12 text-slate-400" strokeWidth={2} />
+										</div>
+									</div>
+								</div>
+
+								<div className="bg-white p-8 rounded-b-lg">
+									<div className="text-center space-y-3">
+										<div className="flex items-center justify-center gap-2">
+											<h2 className="text-2xl font-bold text-slate-900">
+												{t("accounting")}
+											</h2>
+											<span className="text-xs font-semibold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full">
+												{t("coming_soon")}
+											</span>
+										</div>
+										<p className="text-slate-600 text-base">
+											{t("accounting_description")}
+										</p>
+									</div>
+								</div>
+							</CardContent>
+						</Card>
+					</div>
 				</div>
 			</div>
 		</div>
