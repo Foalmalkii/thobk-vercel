@@ -6,6 +6,10 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import z from "zod";
+import { CitySelect } from "@/components/address/CitySelect";
+import { CountrySelect } from "@/components/address/CountrySelect";
+import { DistrictSelect } from "@/components/address/DistrictSelect";
+import { StateSelect } from "@/components/address/StateSelect";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -36,10 +40,10 @@ const factorySchema = z.object({
 	buildingNumber: z.string().nonempty(),
 	additionalNumber: z.string().nonempty(),
 	postalCode: z.string().nonempty(),
-	countryId: z.number(),
-	stateId: z.number(),
-	cityId: z.number(),
-	districtId: z.number(),
+	countryId: z.number().min(1),
+	stateId: z.number().min(1),
+	cityId: z.number().min(1),
+	districtId: z.number().min(1),
 });
 
 type FactoryRequest = z.infer<typeof factorySchema>;
@@ -58,7 +62,9 @@ export const AddFactoryDialog = ({ onCreated }: AddFactoryDialogProps) => {
 		control,
 		handleSubmit,
 		reset,
-		formState: { errors, isSubmitting },
+		watch,
+		setValue,
+		formState: { isSubmitting },
 	} = useForm<FactoryRequest>({
 		resolver: zodResolver(factorySchema),
 		defaultValues: {
@@ -69,12 +75,16 @@ export const AddFactoryDialog = ({ onCreated }: AddFactoryDialogProps) => {
 			buildingNumber: "",
 			additionalNumber: "",
 			postalCode: "",
-			countryId: 1,
-			stateId: 1,
-			cityId: 1,
-			districtId: 1,
+			countryId: 0,
+			stateId: 0,
+			cityId: 0,
+			districtId: 0,
 		},
 	});
+
+	const countryId = watch("countryId");
+	const stateId = watch("stateId");
+	const cityId = watch("cityId");
 
 	const onSubmit = async (data: FactoryRequest) => {
 		const status = await axios
@@ -94,12 +104,13 @@ export const AddFactoryDialog = ({ onCreated }: AddFactoryDialogProps) => {
 			<DialogTrigger asChild>
 				<Button>{tf("create_factory")}</Button>
 			</DialogTrigger>
-			<DialogContent dir={dir}>
-				<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
-					<DialogHeader>
+			<DialogContent dir={dir} className="max-h-[90vh] flex flex-col">
+				<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6 min-h-0">
+					<DialogHeader className="shrink-0">
 						<DialogTitle>{tf("create_factory")}</DialogTitle>
 					</DialogHeader>
 
+					<div className="overflow-y-auto min-h-0">
 					<FormWrapper>
 						<FieldGroup>
 							<Controller
@@ -181,10 +192,85 @@ export const AddFactoryDialog = ({ onCreated }: AddFactoryDialogProps) => {
 									</Field>
 								)}
 							/>
+							<Controller
+								control={control}
+								name="countryId"
+								render={({ field, fieldState }) => (
+									<Field aria-invalid={fieldState.invalid}>
+										<FieldLabel>{t("country")}</FieldLabel>
+										<CountrySelect
+											value={field.value || null}
+											onChange={(val) => {
+												field.onChange(val);
+												setValue("stateId", 0);
+												setValue("cityId", 0);
+												setValue("districtId", 0);
+											}}
+										/>
+										<FieldError errors={[fieldState.error]} />
+									</Field>
+								)}
+							/>
+							<Controller
+								control={control}
+								name="stateId"
+								render={({ field, fieldState }) => (
+									<Field aria-invalid={fieldState.invalid}>
+										<FieldLabel>{t("state")}</FieldLabel>
+										<StateSelect
+											value={field.value || null}
+											onChange={(val) => {
+												field.onChange(val);
+												setValue("cityId", 0);
+												setValue("districtId", 0);
+											}}
+											countryId={countryId || null}
+										/>
+										<FieldError errors={[fieldState.error]} />
+									</Field>
+								)}
+							/>
+							<Controller
+								control={control}
+								name="cityId"
+								render={({ field, fieldState }) => (
+									<Field aria-invalid={fieldState.invalid}>
+										<FieldLabel>{t("city")}</FieldLabel>
+										<CitySelect
+											value={field.value || null}
+											onChange={(val) => {
+												field.onChange(val);
+												setValue("districtId", 0);
+											}}
+											countryId={countryId || null}
+											stateId={stateId || null}
+										/>
+										<FieldError errors={[fieldState.error]} />
+									</Field>
+								)}
+							/>
+							<Controller
+								control={control}
+								name="districtId"
+								render={({ field, fieldState }) => (
+									<Field aria-invalid={fieldState.invalid}>
+										<FieldLabel>{t("district")}</FieldLabel>
+										<DistrictSelect
+											value={field.value || null}
+											onChange={field.onChange}
+											countryId={countryId || null}
+											stateId={stateId || null}
+											cityId={cityId || null}
+										/>
+										<FieldError errors={[fieldState.error]} />
+									</Field>
+								)}
+							/>
 						</FieldGroup>
 					</FormWrapper>
+					</div>
 
-					<DialogFooter>
+					<DialogFooter className="shrink-0">
 						<Button
 							onClick={handleSubmit(onSubmit)}
 							type="submit"
