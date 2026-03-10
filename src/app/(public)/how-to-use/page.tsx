@@ -17,7 +17,7 @@ export default function HowToUsePage() {
 						<div className="aspect-video w-full overflow-hidden rounded-xl">
 							<iframe
 								className="h-full w-full"
-								src="https://www.youtube-nocookie.com/embed/m2ZauYMrIYY"
+								src="https://www.youtube-nocookie.com/embed/1UDpMqMlMKw"
 								title="كيفية استخدام المنصة"
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 								referrerPolicy="strict-origin-when-cross-origin"
