@@ -28,12 +28,6 @@ export function PublicFooter() {
 					<div className="mt-4 flex items-center gap-6 text-sm">
 						<a
 							className="text-slate-400 transition hover:text-white"
-							href="/privacy-policy"
-						>
-							سياسة الخصوصية
-						</a>
-						<a
-							className="text-slate-400 transition hover:text-white"
 							href="/terms-and-conditions"
 						>
 							الشروط والأحكام
