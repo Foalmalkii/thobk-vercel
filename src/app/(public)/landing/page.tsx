@@ -199,7 +199,7 @@ export default function LandingPage() {
 							<div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white border border-emerald-200">
 								<img src="/images/zatca.png" className="h-5 w-5" alt="ZATCA" />
 							</div>
-							<p className="whitespace-nowrap text-sm font-semibold text-slate-800">
+							<p className="text-sm font-semibold text-slate-800 text-center leading-snug">
 								متوافق مع متطلبات هيئة الزكاة والضريبة والجمارك - المرحلة الأولى
 							</p>
 						</div>
