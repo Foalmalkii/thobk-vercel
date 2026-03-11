@@ -56,7 +56,6 @@ const plans = [
 		features: [
 			{ label: "فرع واحد", included: true },
 			{ label: "موظف واحد", included: true },
-			{ label: "حد أقصى 100 طلب شهريًا", included: true },
 			{ label: "إدارة المخزون", included: false },
 			{ label: "التقارير", included: false },
 			{ label: "رصيد SMS/واتساب ابتدائي", included: false },
@@ -73,12 +72,11 @@ const plans = [
 		features: [
 			{ label: "فرع واحد", included: true },
 			{ label: "3 موظفين", included: true },
-			{ label: "حد أقصى 300 طلب شهريًا", included: true },
 			{ label: "إدارة المخزون", included: true },
 			{ label: "التقارير", included: true },
 			{ label: "50 رصيد SMS/واتساب ابتدائي", included: true },
 			{ label: "دعم العملاء عبر واتساب", included: true },
-			{ label: "المصنع", included: false },
+			{ label: "المصنع", included: true }, //TODO: close it later, when packs are
 		],
 		accent: true,
 	},
@@ -90,7 +88,6 @@ const plans = [
 		features: [
 			{ label: "3 فروع", included: true },
 			{ label: "10 موظفين", included: true },
-			{ label: "حد أقصى 1000 طلب شهريًا", included: true },
 			{ label: "إدارة المخزون", included: true },
 			{ label: "التقارير", included: true },
 			{ label: "100 رصيد SMS/واتساب ابتدائي", included: true },
@@ -107,7 +104,6 @@ const plans = [
 		features: [
 			{ label: "10 فروع", included: true },
 			{ label: "50 موظفًا", included: true },
-			{ label: "طلبات شهرية غير محدودة", included: true },
 			{ label: "إدارة المخزون", included: true },
 			{ label: "التقارير", included: true },
 			{ label: "300 رصيد SMS/واتساب ابتدائي", included: true },
