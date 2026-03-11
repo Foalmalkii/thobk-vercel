@@ -12,6 +12,8 @@ import Link from "next/link";
 import { PublicFooter } from "@/components/public/public-footer";
 import { PublicNavbar } from "@/components/public/public-navbar";
 import { Button } from "@/components/ui/button";
+import { SmsCreditCard } from "@/components/public/sms-credit-modal";
+import { SarIcon } from "@/components/ui/sar-icon";
 
 const features = [
 	{
@@ -306,7 +308,7 @@ export default function LandingPage() {
 															<span
 																className={`text-2xl font-bold ${plan.accent ? "text-slate-300" : "text-slate-600"}`}
 															>
-																ر.س
+																<SarIcon className="h-5 w-auto" />
 															</span>
 															<p
 																className={`text-sm ${plan.accent ? "text-slate-400" : "text-slate-500"}`}
@@ -334,7 +336,7 @@ export default function LandingPage() {
 														<span
 															className={`text-lg ${plan.accent ? "text-slate-300" : "text-slate-600"}`}
 														>
-															ر.س / سنويًا
+															<SarIcon className="h-4 w-auto" /> / سنويًا
 														</span>
 													</div>
 													<div className="mt-2 inline-block bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full">
@@ -343,7 +345,7 @@ export default function LandingPage() {
 															parseFloat(plan.monthlyPrice) * 12 -
 															parseFloat(plan.annualPrice.replace(",", ""))
 														).toFixed(0)}{" "}
-														ر.س
+														<SarIcon className="h-2.5 w-auto" />
 													</div>
 												</div>
 											</div>
@@ -407,7 +409,8 @@ export default function LandingPage() {
 							</div>
 
 							<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-								{addons.map((addon) => (
+								<SmsCreditCard />
+								{addons.filter((addon) => addon.title !== "رصيد رسائل SMS").map((addon) => (
 									<div
 										key={addon.title}
 										className="group relative rounded-2xl border-2 border-slate-200 bg-white p-6 hover:border-slate-900 hover:shadow-xl transition-all"
@@ -423,7 +426,12 @@ export default function LandingPage() {
 												السعر
 											</p>
 											<p className="text-base font-bold text-slate-900">
-												{addon.price}
+												{addon.price.split("ر.س").map((part, i, arr) => (
+													<span key={i}>
+														{part}
+														{i < arr.length - 1 && <SarIcon className="h-3.5 w-auto mx-0.5" />}
+													</span>
+												))}
 											</p>
 										</div>
 									</div>
