@@ -56,7 +56,6 @@ export const AppSidebar = () => {
 					name: t("messages.accounting"),
 					href: "/accounting",
 					icon: CoinsIcon,
-					soon: true,
 				},
 			],
 		},
@@ -136,24 +135,9 @@ export const AppSidebar = () => {
 													if (isMobile) setOpenMobile(false);
 												}}
 											>
-												{item.soon ? (
-													<div className="flex items-center gap-2 w-full opacity-60 cursor-default">
-														<item.icon />
-
-														<span className="flex-1 flex ">
-															<span className="">{item.name}</span>
-														</span>
-														{open && (
-															<span className="text-[10px] font-semibold bg-slate-200 text-slate-600 px-1.5 py-0.5 rounded-full">
-																{t("messages.soon")}
-															</span>
-														)}
-													</div>
-												) : (
-													<Link href={item.href}>
-														<item.icon /> {item.name}
-													</Link>
-												)}
+												<Link href={item.href}>
+													<item.icon /> {item.name}
+												</Link>
 											</SidebarMenuButton>
 										</SidebarMenuItem>
 									))}
