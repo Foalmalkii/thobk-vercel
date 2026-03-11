@@ -208,6 +208,7 @@ export interface OrderInvoice {
 	id: number;
 	invoiceNumber: string;
 	documentType: string;
+	paymentMethod: "card" | "cash";
 	subtotal: number;
 	discount: number;
 	vat: number;

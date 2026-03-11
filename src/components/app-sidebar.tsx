@@ -52,7 +52,11 @@ export const AppSidebar = () => {
 				{ name: t("messages.storage"), href: "/storage", icon: WarehouseIcon },
 				{ name: t("messages.factory"), href: "/factory", icon: FactoryIcon },
 				{ name: t("messages.erp"), href: "/erp", icon: PencilRulerIcon },
-				{ name: t("messages.accounting"), href: "/accounting", icon: CoinsIcon, soon: true },
+				{
+					name: t("messages.accounting"),
+					href: "/accounting",
+					icon: CoinsIcon,
+				},
 			],
 		},
 	};
@@ -121,7 +125,7 @@ export const AppSidebar = () => {
 											key={item.name}
 										>
 											<SidebarMenuButton
-												asChild={!item.soon}
+												asChild={true}
 												isActive={
 													item.href !== "/"
 														? pathname.startsWith(item.href)
@@ -131,21 +135,9 @@ export const AppSidebar = () => {
 													if (isMobile) setOpenMobile(false);
 												}}
 											>
-												{item.soon ? (
-													<div className="flex items-center gap-2 w-full opacity-60 cursor-default">
-														<item.icon />
-														<span className="flex-1">{item.name}</span>
-														{open && (
-															<span className="text-[10px] font-semibold bg-slate-200 text-slate-600 px-1.5 py-0.5 rounded-full">
-																{t("messages.soon")}
-															</span>
-														)}
-													</div>
-												) : (
-													<Link href={item.href}>
-														<item.icon /> {item.name}
-													</Link>
-												)}
+												<Link href={item.href}>
+													<item.icon /> {item.name}
+												</Link>
 											</SidebarMenuButton>
 										</SidebarMenuItem>
 									))}

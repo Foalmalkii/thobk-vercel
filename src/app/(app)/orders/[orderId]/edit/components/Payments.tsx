@@ -1,6 +1,8 @@
 import {
+	BanknoteIcon,
 	CheckCircleIcon,
 	ClockIcon,
+	CreditCardIcon,
 	FileTextIcon,
 	Loader2Icon,
 	PlusIcon,
@@ -90,6 +92,8 @@ export const Payments = ({
 			? "final"
 			: "deposit",
 	);
+	const [method, setMethod] = useState("");
+	const [methodError, setMethodError] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 
 	const handlePrint = (fileUrl: string) => {
@@ -110,6 +114,11 @@ export const Payments = ({
 			return;
 		}
 
+		if (!method) {
+			setMethodError(true);
+			return;
+		}
+
 		setIsLoading(true);
 
 		try {
@@ -118,6 +127,7 @@ export const Payments = ({
 				{
 					amount: parseFloat(amount).toFixed(2),
 					type: type,
+					method: method,
 				},
 			);
 
@@ -125,12 +135,13 @@ export const Payments = ({
 				description: `${t("invoice_number")}: ${response.data.invoiceNumber}`,
 			});
 
-			// Mutate SWR cache to refresh order data
 			mutate(["get_order", isInBranch, orderId]);
 
 			setOpen(false);
 			setAmount("");
 			setType(hasFinalInvoice ? "final" : "deposit");
+			setMethod("");
+			setMethodError(false);
 		} catch (error: any) {
 			const errorMessage =
 				error?.response?.data?.message || t("invoice_add_failed");
@@ -275,7 +286,17 @@ export const Payments = ({
 						<CardTitle className="text-xl">{t("invoices_list")}</CardTitle>
 						<CardDescription>{t("invoices_description")}</CardDescription>
 					</div>
-					<Dialog open={open} onOpenChange={setOpen}>
+					<Dialog
+					open={open}
+					onOpenChange={(val) => {
+						setOpen(val);
+						if (!val) {
+							setMethod("");
+							setMethodError(false);
+							setAmount("");
+						}
+					}}
+				>
 						<DialogTrigger asChild>
 							<Button disabled={isFullyPaid}>
 								<PlusIcon className="w-4 h-4" />
@@ -338,7 +359,41 @@ export const Payments = ({
 										</SelectContent>
 									</Select>
 								</div>
-								<div className="flex gap-3 pt-4">
+								<div className="space-y-2">
+								<Label>{t("payment_method")}</Label>
+								<div className="flex gap-3">
+									{(["card", "cash"] as const).map((m) => {
+										const Icon = m === "card" ? CreditCardIcon : BanknoteIcon;
+										const isSelected = method === m;
+										return (
+											<button
+												key={m}
+												type="button"
+												onClick={() => {
+													setMethod(m);
+													setMethodError(false);
+												}}
+												className={`flex-1 flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-colors cursor-pointer ${
+													isSelected
+														? "border-gray-900 bg-gray-50"
+														: methodError
+															? "border-red-500 bg-red-50"
+															: "border-gray-200 hover:border-gray-300"
+												}`}
+											>
+												<Icon className={`w-5 h-5 ${isSelected ? "text-gray-900" : methodError ? "text-red-500" : "text-gray-400"}`} />
+												<span className={`text-sm font-medium ${isSelected ? "text-gray-900" : methodError ? "text-red-500" : "text-gray-500"}`}>
+													{t(`method_${m}`)}
+												</span>
+											</button>
+										);
+									})}
+								</div>
+								{methodError && (
+									<p className="text-xs text-red-500">{t("method_required")}</p>
+								)}
+							</div>
+							<div className="flex gap-3 pt-4">
 									<Button
 										onClick={handleAddInvoice}
 										disabled={isLoading}
@@ -407,6 +462,21 @@ export const Payments = ({
 														<p className="font-semibold">
 															{getDocumentTypeLabel(invoice.documentType)}
 														</p>
+													</div>
+													<div>
+														<p className="text-xs text-muted-foreground mb-1">
+															{t("payment_method")}
+														</p>
+														<div className="flex items-center gap-1.5">
+															{invoice.paymentMethod === "card" ? (
+																<CreditCardIcon className="w-3.5 h-3.5 text-muted-foreground" />
+															) : (
+																<BanknoteIcon className="w-3.5 h-3.5 text-muted-foreground" />
+															)}
+															<p className="font-semibold">
+																{t(`method_${invoice.paymentMethod}`)}
+															</p>
+														</div>
 													</div>
 													<div>
 														<p className="text-xs text-muted-foreground mb-1">
