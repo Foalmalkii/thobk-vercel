@@ -6,6 +6,8 @@ import { IBM_Plex_Sans_Arabic } from "next/font/google";
 import { NextIntlClientProvider, useLocale } from "next-intl";
 import { getDirection } from "@/lib/types";
 import { DirectionLayout } from "@/components/layout/DirectionLayout";
+import { GuestLayout } from "@/components/layout/guest-layout";
+import { useAuth } from "@/hooks/auth";
 
 const ibmPlex = IBM_Plex_Sans_Arabic({
 	subsets: ["arabic"],
@@ -29,7 +31,9 @@ export default function PublicLayout({
 		<html lang={locale} dir={getDirection(locale)}>
 			<body className={`${ibmPlex.className} bg-white text-slate-900`}>
 				<NextIntlClientProvider>
-					<DirectionLayout>{children}</DirectionLayout>
+					<DirectionLayout>
+						<GuestLayout>{children}</GuestLayout>
+					</DirectionLayout>
 				</NextIntlClientProvider>
 			</body>
 		</html>

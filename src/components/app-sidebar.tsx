@@ -46,7 +46,7 @@ export const AppSidebar = () => {
 		general: {
 			label: t("messages.general"),
 			items: [
-				{ name: t("messages.general"), href: "/", icon: HomeIcon },
+				{ name: t("messages.general"), href: "/dashboard", icon: HomeIcon },
 				{ name: t("messages.orders"), href: "/orders", icon: UsersIcon },
 
 				{ name: t("messages.storage"), href: "/storage", icon: WarehouseIcon },
@@ -126,11 +126,7 @@ export const AppSidebar = () => {
 										>
 											<SidebarMenuButton
 												asChild={true}
-												isActive={
-													item.href !== "/"
-														? pathname.startsWith(item.href)
-														: pathname === item.href
-												}
+												isActive={pathname.startsWith(item.href)}
 												onClick={() => {
 													if (isMobile) setOpenMobile(false);
 												}}

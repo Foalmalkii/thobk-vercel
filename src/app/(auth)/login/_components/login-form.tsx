@@ -39,7 +39,7 @@ export const LoginForm = () => {
 
 	const { login } = useAuth({
 		middleware: "guest",
-		redirectIfAuthenticated: "/",
+		redirectIfAuthenticated: "/dashboard",
 	});
 
 	const onSubmit = async (data: FormData) => {

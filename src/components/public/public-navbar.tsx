@@ -15,7 +15,7 @@ export function PublicNavbar({ landingHrefPrefix = "" }: PublicNavbarProps) {
 		>
 			<div className="mx-auto flex h-full w-full max-w-7xl items-center justify-between px-6">
 				<div className="flex items-center gap-4">
-					<Link href="/landing">
+					<Link href="/">
 						<DigipLogo className="h-10 w-auto" />
 					</Link>
 				</div>

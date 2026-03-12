@@ -33,7 +33,7 @@ export default function RootLayout({
 				<NextIntlClientProvider>
 					<DirectionLayout>
 						<div className="min-h-screen flex flex-col">
-							<PublicNavbar landingHrefPrefix="/landing" />
+							<PublicNavbar landingHrefPrefix="/" />
 							<main className="flex-1 flex items-center justify-center w-full px-4 pt-20 pb-8">
 								{children}
 							</main>
