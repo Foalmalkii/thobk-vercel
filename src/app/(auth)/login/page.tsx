@@ -9,9 +9,9 @@ import { LoginForm } from "./_components/login-form";
 
 export default function Login() {
 	const t = useTranslations("auth");
-	const { isLoading, isValidating, user } = useAuth({
+	const { isLoading, isValidating, user, login } = useAuth({
 		middleware: "guest",
-		redirectIfAuthenticated: "/",
+		redirectIfAuthenticated: "/dashboard",
 	});
 
 	if (isLoading || isValidating || user) return <Loading />;
@@ -24,7 +24,7 @@ export default function Login() {
 						{t("enter_credentials")}
 					</p>
 				</div>
-				<LoginForm />
+				<LoginForm login={login} />
 			</div>
 		</div>
 	);

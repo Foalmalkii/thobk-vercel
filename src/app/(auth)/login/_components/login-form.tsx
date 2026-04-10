@@ -1,5 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { useTranslations } from "next-intl";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -7,9 +8,11 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { useAuth } from "@/hooks/auth";
+import type { useAuth } from "@/hooks/auth";
 
-export const LoginForm = () => {
+type LoginFn = ReturnType<typeof useAuth>["login"];
+
+export const LoginForm = ({ login }: { login: LoginFn }) => {
 	const t = useTranslations("auth");
 
 	const loginSchema = z.object({
@@ -35,11 +38,6 @@ export const LoginForm = () => {
 		setError,
 	} = useForm<FormData>({
 		resolver: zodResolver(loginSchema),
-	});
-
-	const { login } = useAuth({
-		middleware: "guest",
-		redirectIfAuthenticated: "/dashboard",
 	});
 
 	const onSubmit = async (data: FormData) => {
@@ -147,6 +145,16 @@ export const LoginForm = () => {
 				>
 					{isSubmitting ? t("logging_in") : t("login")}
 				</Button>
+				<p className="text-center text-xs text-slate-400">
+					{t("sla_disclaimer")}{" "}
+					<Link href="/sla" className="underline hover:text-slate-600">
+						{t("sla_link")}
+					</Link>
+					{" "}{t("and")}{" "}
+					<Link href="/terms-and-conditions" className="underline hover:text-slate-600">
+						{t("terms_link")}
+					</Link>
+				</p>
 			</div>
 		</form>
 	);

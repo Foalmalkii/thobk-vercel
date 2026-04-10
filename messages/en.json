@@ -275,7 +275,11 @@
 		"v_phone_length": "Phone must be exactly 10 digits",
 		"v_password_min": "Password must be at least 5 characters",
 		"error_network": "An error occurred. Please try again.",
-		"error_invalid_credentials": "Invalid phone number or password"
+		"error_invalid_credentials": "Invalid phone number or password",
+		"sla_disclaimer": "By logging in and using this software you agree to the",
+		"sla_link": "Service Level Agreement",
+		"and": "and",
+		"terms_link": "Terms & Conditions"
 	},
 	"insights": {
 		"title": "Smart Analytics Dashboard",

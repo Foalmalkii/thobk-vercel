@@ -1,9 +1,15 @@
 "use client";
-import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect } from "react";
 import useSWR from "swr";
 import axios from "@/lib/axios";
 import type { User } from "@/lib/types";
+
+const clearAuthCookies = () => {
+	Cookies.remove("XSRF-TOKEN", { path: "/" });
+	Cookies.remove("laravel_session", { path: "/" });
+};
 
 export const useAuth = ({
 	middleware,
@@ -13,7 +19,6 @@ export const useAuth = ({
 	redirectIfAuthenticated?: string;
 }) => {
 	const router = useRouter();
-	const params = useParams();
 
 	const {
 		data: user,
@@ -49,16 +54,15 @@ export const useAuth = ({
 				throw error;
 			});
 	};
-	const logout = async () => {
-		await csrf();
-		if (!error) {
-			await axios.post("/logout").then(() => mutateUser());
-		}
+
+	const logout = useCallback(async () => {
+		await axios.post("/logout").catch(() => null);
+		clearAuthCookies();
 		mutateUser(undefined, false);
 		router.push("/login");
-	};
+	}, [mutateUser, router]);
+
 	useEffect(() => {
-		// Only run redirects when not loading
 		if (isLoading) return;
 
 		if (middleware === "guest" && redirectIfAuthenticated && user) {
@@ -68,7 +72,8 @@ export const useAuth = ({
 		if (middleware === "auth" && error) {
 			logout();
 		}
-	}, [user, error, isLoading, middleware]);
+	}, [user, error, isLoading, middleware, redirectIfAuthenticated, logout, router]);
+
 	return {
 		user,
 		login,
